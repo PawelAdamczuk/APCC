@@ -50,6 +50,7 @@ namespace APCC.Forms
                         {
                             LoginData.Login(int.Parse(tmpString));
                             MessageBox.Show( "Zalogowano jako " + LoginData.GetUserName() );
+                            parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
                             parent.setPrivilegeMode(LoginData.GetUserRoleID());
                             parent.disableLogIn();

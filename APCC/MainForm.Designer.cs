@@ -44,6 +44,10 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.userToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.componentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.componentTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -99,7 +103,8 @@
             this.editMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userToolStripMenuItem,
             this.buildToolStripMenuItem,
-            this.componentToolStripMenuItem});
+            this.componentToolStripMenuItem,
+            this.componentTypeToolStripMenuItem});
             this.editMenu.Name = "editMenu";
             this.editMenu.Size = new System.Drawing.Size(51, 24);
             this.editMenu.Text = "&New";
@@ -164,6 +169,30 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // userToolStripMenuItem
+            // 
+            this.userToolStripMenuItem.Name = "userToolStripMenuItem";
+            this.userToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.userToolStripMenuItem.Text = "User";
+            // 
+            // buildToolStripMenuItem
+            // 
+            this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
+            this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.buildToolStripMenuItem.Text = "Build";
+            // 
+            // componentToolStripMenuItem
+            // 
+            this.componentToolStripMenuItem.Name = "componentToolStripMenuItem";
+            this.componentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.componentToolStripMenuItem.Text = "Component";
+            // 
+            // componentTypeToolStripMenuItem
+            // 
+            this.componentTypeToolStripMenuItem.Name = "componentTypeToolStripMenuItem";
+            this.componentTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.componentTypeToolStripMenuItem.Text = "Component type";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -189,8 +218,6 @@
 
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripMenuItem editMenu;
         private System.Windows.Forms.ToolStripMenuItem toolsMenu;
@@ -203,6 +230,9 @@
         private System.Windows.Forms.ToolStripMenuItem userToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem componentToolStripMenuItem;
+        public System.Windows.Forms.StatusStrip statusStrip;
+        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem componentTypeToolStripMenuItem;
     }
 }
 
