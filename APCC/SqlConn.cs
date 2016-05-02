@@ -15,15 +15,13 @@ namespace APCC
 
         static SqlConn()
         {
-            //SqlConnectionStringBuilder lConnStr = new SqlConnectionStringBuilder();
+            SqlConnectionStringBuilder lConnStr = new SqlConnectionStringBuilder();
 
-            //lConnStr.Add("Data Source", "(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = xe)))");
-            //lConnStr.Add("User Id", "test");
-            //lConnStr.Add("Password", "test");
-
-            string connectionString = "Data Source=paweladamczuk.com.pl,4100;Initial Catalog=Foka;User ID=sa;Password=foka";
-
-            mSC = new SqlConnection(connectionString);
+            lConnStr.Add("Data Source", "(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = xe)))");
+            lConnStr.Add("User Id", "test");
+            lConnStr.Add("Password", "test");
+            
+            mSC = new SqlConnection(lConnStr.ConnectionString);
         }
 
         public static SqlConnection Connection
