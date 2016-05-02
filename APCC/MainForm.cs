@@ -15,6 +15,7 @@ namespace APCC
     {
         private int childFormNumber = 0;
         private PrivilegeMode privilegeMode = PrivilegeMode.CONFIGURATOR;
+
         enum PrivilegeMode : int
         {
             NULL = 0,
@@ -153,11 +154,6 @@ namespace APCC
             }
         }
 
-        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm(this);
@@ -174,5 +170,6 @@ namespace APCC
         {
 
         }
+
     }
 }

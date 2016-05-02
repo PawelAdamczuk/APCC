@@ -59,9 +59,13 @@ namespace APCC
         }
 
         // Logout
-        public static void LogOut()
-        {
+        public static void LogOut(){
             isAdmin = false;
+
+            FName = "";
+            SName = "";
+            RoleID = 0;
+            UserID = 0;
         }
 
         public static int GetUserID()
