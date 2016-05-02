@@ -29,7 +29,7 @@ namespace APCC
             {
                 lStmt = "select usrFName, usrLName, usrRoleID from appUser where usrID = :pID";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                lCommand.Parameters.Add("pID", SqlDbType.Decimal, pID, ParameterDirection.Input);
+                lCommand.Parameters.Add("pID", SqlDbType.Decimal, pID);
 
                 SqlDataReader lDataReader = lCommand.ExecuteReader();
 
