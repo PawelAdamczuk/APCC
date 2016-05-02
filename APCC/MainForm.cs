@@ -14,13 +14,18 @@ namespace APCC
     public partial class MainForm : Form
     {
         private int childFormNumber = 0;
-        private PrivilegeMode privilegeMode = PrivilegeMode.NULL;
+        private PrivilegeMode privilegeMode = PrivilegeMode.CONFIGURATOR;
         enum PrivilegeMode : int
         {
             NULL = 0,
             CONFIGURATOR = 1,
             TESTER = 2,
             ADMINISTRATOR = 3
+        }
+
+        public void disableLogIn ()
+        {
+            menuStrip.Items[3].Visible = false;
         }
 
         public void setPrivilegeMode(int _n)
@@ -37,12 +42,29 @@ namespace APCC
                     {
                         item.Enabled = false;
                     }
+                    if (menuStrip.Items[3] != null)
+                    {
+                        menuStrip.Items[3].Enabled = true;
+                    }
                     break;
                 case PrivilegeMode.CONFIGURATOR:
                     break;
                 case PrivilegeMode.TESTER:
                     break;
                 case PrivilegeMode.ADMINISTRATOR:
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.Enabled = true;
+                        foreach (var item2 in item.DropDownItems)
+                        {
+                            if(item2 is ToolStripDropDownItem)
+                            {
+                                ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
+                                typed.Enabled = true;
+                            }
+                        }
+                                
+                    }
                     break;
                 default:
                     break;
@@ -53,6 +75,7 @@ namespace APCC
         public MainForm()
         {
             InitializeComponent();
+            this.setPrivilegeMode(0);
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -102,16 +125,6 @@ namespace APCC
         {
         }
 
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
-        }
-
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.Cascade);
@@ -148,7 +161,6 @@ namespace APCC
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm(this);
-            this.setPrivilegeMode(0);
             loginForm.MdiParent = this;
             loginForm.Show();
         }
