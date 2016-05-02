@@ -28,16 +28,6 @@ namespace APCC.Forms
         {
             string password = textBox2.Text;
             string login = textBox1.Text;
-            try
-            {
-                using (SqlConnection conn = "Klasa Maćka")
-                {
-                    conn.Open();
-                    using 
-                }
-
-
-            }
         }
     }
 }
