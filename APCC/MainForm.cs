@@ -124,10 +124,5 @@ namespace APCC
             loginForm.MdiParent = this;
             loginForm.Show();
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
