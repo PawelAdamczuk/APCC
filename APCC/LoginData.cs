@@ -14,7 +14,7 @@ namespace APCC
         private static bool isAdmin = false;
 
         private static string FName = "";
-        private static string LName = "";
+        private static string SName = "";
         private static int RoleID = 0;
         private static int UserID = 0;
 
@@ -22,25 +22,26 @@ namespace APCC
         public static void Login(int pID)
         {
             string lStmt;
-
             UserID = pID;
 
             try
             {
-                lStmt = "select usrFName, usrLName, usrRoleID from appUser where usrID = :pID";
+                lStmt = "select usrFName, usrSName, usrRoleID from dbo.USERS where usrID = @pID";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                lCommand.Parameters.Add("pID", SqlDbType.Decimal, pID);
-
+                lCommand.Parameters.Add("@pID", SqlDbType.Int);
+                lCommand.Parameters["@pID"].Value = pID;
+                
                 SqlDataReader lDataReader = lCommand.ExecuteReader();
 
                 while (lDataReader.Read())
                 {
                     FName = lDataReader.GetString(0);
-                    LName = lDataReader.GetString(1);
+                    SName = lDataReader.GetString(1);
                     RoleID = lDataReader.GetInt32(2);
                 }
 
-                if (RoleID == 0)
+                // 3 is for admin 
+                if (RoleID == 3)
                     isAdmin = true;
                 else
                     isAdmin = false;
@@ -54,7 +55,7 @@ namespace APCC
 
         public static string GetUserName()
         {
-            return FName + " " + LName;
+            return FName + " " + SName;
         }
 
         // Logout
@@ -66,6 +67,11 @@ namespace APCC
         public static int GetUserID()
         {
             return UserID;
+        }
+
+        public static int GetUserRoleID()
+        {
+            return RoleID;
         }
 
         // Check if current user is admin
