@@ -28,6 +28,20 @@ namespace APCC.Forms
         {
             string password = textBox2.Text;
             string login = textBox1.Text;
+            try
+            {
+                using (SqlConnection conn = SqlConn.Connection)
+                {
+                    conn.Open();
+                    //using 
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Connection failed!\n" + ex.Message);
+            }
         }
     }
 }
