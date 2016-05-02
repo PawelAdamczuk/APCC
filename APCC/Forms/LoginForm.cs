@@ -13,11 +13,16 @@ namespace APCC.Forms
 {
     public partial class LoginForm : Form
     {
-      
-        public LoginForm()
+
+        private MainForm parent;
+
+        public LoginForm(MainForm _parent)
         {
             InitializeComponent();
             label3.Visible = false;
+
+            parent = _parent;
+
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -47,8 +52,7 @@ namespace APCC.Forms
                             textBox2.Clear();
                         }else
                         {
-                           // MainForm.PrivilegeMode = (int)com.ExecuteScalar();
-                           
+                            parent.setPrivilegeMode(int.Parse(s));
                             this.Close();
                         }
                     } 

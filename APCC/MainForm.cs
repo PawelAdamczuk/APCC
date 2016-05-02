@@ -147,7 +147,7 @@ namespace APCC
 
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm();
+            LoginForm loginForm = new LoginForm(this);
             this.setPrivilegeMode(0);
             loginForm.MdiParent = this;
             loginForm.Show();
