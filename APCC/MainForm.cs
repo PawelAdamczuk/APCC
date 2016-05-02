@@ -14,6 +14,14 @@ namespace APCC
     public partial class MainForm : Form
     {
         private int childFormNumber = 0;
+        private PrivilegeMode privilegeMode = PrivilegeMode.NULL;
+        enum PrivilegeMode : int
+        {
+            NULL = 0,
+            CONFIGURATOR = 1,
+            TESTER = 2,
+            ADMINISTRATOR = 3
+        }
 
         public MainForm()
         {
@@ -113,10 +121,11 @@ namespace APCC
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm();
+            loginForm.MdiParent = this;
             loginForm.Show();
         }
 
-        private void fileMenu_Click(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
