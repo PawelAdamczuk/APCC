@@ -13,7 +13,6 @@ namespace APCC.Forms
 {
     public partial class LoginForm : Form
     {
-
         private MainForm parent;
 
         public LoginForm(MainForm _parent)
@@ -22,7 +21,6 @@ namespace APCC.Forms
             label3.Visible = false;
 
             parent = _parent;
-
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -42,7 +40,7 @@ namespace APCC.Forms
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
 
-                    string s = com.ExecuteScalar().ToString();
+                        string s = com.ExecuteScalar().ToString();
 
                         if (s == "")
                         {
