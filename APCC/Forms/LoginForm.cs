@@ -46,6 +46,9 @@ namespace APCC.Forms
                             label3.Visible = true;
                             textBox1.Clear();
                             textBox2.Clear();
+                        }else
+                        {
+                            this.Close();
                         }
                     } 
                 }
