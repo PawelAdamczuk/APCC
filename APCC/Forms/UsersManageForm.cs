@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,22 @@ namespace APCC.Forms
 
         private void UsersManageForm_Load(object sender, EventArgs e)
         {
+            DataSet users = null;
+            SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM UsersManage");
+            SqlDataReader r = giveMeUsers.ExecuteReader();
+
+            int id;
+            string fName, sName, rName;
+
+            while (r.Read())
+            {
+                id = (int)r["usrID"];
+                fName = (string)r["usrFName"];
+                sName = (string)r["usrSName"];
+                rName = (string)r["rlsName"];
+
+                listBox1.Text += (id + " " + fName + " " + sName + " " + rName + "\n");   
+            }
 
         }
     }
