@@ -115,5 +115,10 @@ namespace APCC
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
         }
+
+        private void fileMenu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
