@@ -86,6 +86,7 @@
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
             this.usersToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
             this.usersToolStripMenuItem.Text = "Users";
+            this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
             // componentsToolStripMenuItem
             // 
@@ -107,19 +108,19 @@
             // userToolStripMenuItem
             // 
             this.userToolStripMenuItem.Name = "userToolStripMenuItem";
-            this.userToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.userToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.userToolStripMenuItem.Text = "User";
             // 
             // buildToolStripMenuItem
             // 
             this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
-            this.buildToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.buildToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.buildToolStripMenuItem.Text = "Build";
             // 
             // componentToolStripMenuItem
             // 
             this.componentToolStripMenuItem.Name = "componentToolStripMenuItem";
-            this.componentToolStripMenuItem.Size = new System.Drawing.Size(162, 26);
+            this.componentToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.componentToolStripMenuItem.Text = "Component";
             // 
             // toolsMenu
@@ -133,7 +134,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // toolStripMenuItem_login

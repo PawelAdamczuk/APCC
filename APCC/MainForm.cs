@@ -171,5 +171,11 @@ namespace APCC
 
         }
 
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UsersManageForm usersManageForm = new UsersManageForm();
+            usersManageForm.MdiParent = this;
+            usersManageForm.Show();
+        }
     }
 }
