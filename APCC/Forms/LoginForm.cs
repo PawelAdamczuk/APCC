@@ -26,8 +26,8 @@ namespace APCC.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string password = textBox2.Text;
-            string login = textBox1.Text;
+            string password = textBox1.Text;
+            string login = textBox2.Text;
             try
             {
                 using (SqlConnection conn = SqlConn.Connection)
@@ -37,6 +37,13 @@ namespace APCC.Forms
                     {
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
+
+                        int roleId = (int)com.ExecuteScalar();
+
+                        if(roleId == 0)
+                        {
+
+                        }
                     } 
                 }
 

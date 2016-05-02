@@ -550,6 +550,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "MDIParent1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
