@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace APCC.Forms
 {
@@ -20,7 +21,6 @@ namespace APCC.Forms
         {
             InitializeComponent();
             label3.Visible = false;
-
             parent = _parent;
 
         }
@@ -29,6 +29,7 @@ namespace APCC.Forms
         {
 
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
