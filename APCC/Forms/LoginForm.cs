@@ -33,7 +33,11 @@ namespace APCC.Forms
                 using (SqlConnection conn = SqlConn.Connection)
                 {
                     conn.Open();
-                    //using 
+                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login,@password", conn))
+                    {
+                        com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
+                        com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
+                    } 
                 }
 
 
