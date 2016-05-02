@@ -45,10 +45,11 @@ namespace APCC.Forms
                         if (tmpString == "")
                         {
                             MessageBox.Show("Incorrect login or password!");
-                            txbLogin.Clear();
-                        }else
-                        {
-                            parent.setPrivilegeMode(int.Parse(tmpString));
+                            txbPswd.Clear();
+                        }else{
+                            LoginData.Login(int.Parse(tmpString));
+
+                            parent.setPrivilegeMode(LoginData.GetUserRoleID());
                             this.Close();
                         }
                     } 
