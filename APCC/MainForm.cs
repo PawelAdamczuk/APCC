@@ -103,5 +103,10 @@ namespace APCC
                 childForm.Close();
             }
         }
+
+        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
