@@ -31,27 +31,28 @@ namespace APCC.Forms
             string login = textBox2.Text;
             try
             {
-                using (SqlConnection conn = SqlConn.Connection)
-                {
-                    conn.Open();
-                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login,@password", conn))
+                SqlConnection conn = SqlConn.Connection;
+                
+                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", conn))
                     {
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
 
-                        int PrivilegeMode = (int)com.ExecuteScalar();
+                    string s = com.ExecuteScalar().ToString();
 
-                        if(PrivilegeMode == 0)
+                        if (s == "")
                         {
                             label3.Visible = true;
                             textBox1.Clear();
                             textBox2.Clear();
                         }else
                         {
+                           // MainForm.PrivilegeMode = (int)com.ExecuteScalar();
+                           
                             this.Close();
                         }
                     } 
-                }
+                
 
 
             }

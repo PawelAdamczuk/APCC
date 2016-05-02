@@ -126,7 +126,7 @@
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(44, 24);
             this.fileMenu.Text = "&File";
-            this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
+           // this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
             // 
             // newToolStripMenuItem
             // 
@@ -557,7 +557,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "MDIParent1";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+           // this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
