@@ -20,23 +20,31 @@ namespace APCC.Forms
 
         private void UsersManageForm_Load(object sender, EventArgs e)
         {
-            DataSet users = null;
-            SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM UsersManage");
-            SqlDataReader r = giveMeUsers.ExecuteReader();
-
-            int id;
-            string fName, sName, rName;
-
-            while (r.Read())
+            try
             {
-                id = (int)r["usrID"];
-                fName = (string)r["usrFName"];
-                sName = (string)r["usrSName"];
-                rName = (string)r["rlsName"];
+                SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
 
-                listBox1.Text += (id + " " + fName + " " + sName + " " + rName + "\n");   
+                SqlDataReader reader = giveMeUsers.ExecuteReader();
+
+                int id;
+                string fName, sName, rName;
+
+                while (reader.Read())
+                {
+                    id = (int)reader["usrID"];
+                    fName = (string)reader["usrFName"];
+                    sName = (string)reader["usrSName"];
+                    rName = (string)reader["rlsName"];
+
+                    listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
+                }
+
+                reader.Close();
+
+            }catch(Exception ex)
+            {
+                listBox1.Items.Add(ex.Message.ToString());
             }
-
         }
     }
 }
