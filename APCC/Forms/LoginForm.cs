@@ -17,6 +17,7 @@ namespace APCC.Forms
         public LoginForm()
         {
             InitializeComponent();
+            label3.Visible = false;
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -38,11 +39,13 @@ namespace APCC.Forms
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
 
-                        int roleId = (int)com.ExecuteScalar();
+                        int PrivilegeMode = (int)com.ExecuteScalar();
 
-                        if(roleId == 0)
+                        if(PrivilegeMode == 0)
                         {
-
+                            label3.Visible = true;
+                            textBox1.Clear();
+                            textBox2.Clear();
                         }
                     } 
                 }
@@ -53,6 +56,11 @@ namespace APCC.Forms
             {
                 MessageBox.Show("Connection failed!\n" + ex.Message);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
