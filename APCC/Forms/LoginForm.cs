@@ -34,11 +34,10 @@ namespace APCC.Forms
         {
             string password = textBox1.Text;
             string login = textBox2.Text;
+
             try
-            {
-                SqlConnection conn = SqlConn.Connection;
-                
-                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", conn))
+            {   
+                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
                     {
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
