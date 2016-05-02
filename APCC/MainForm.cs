@@ -25,7 +25,7 @@ namespace APCC
 
         public void disableLogIn ()
         {
-            menuStrip.Items[3].Visible = false;
+            menuStrip.Items["toolStripMenuItem_login"].Visible = false;
         }
 
         public void setPrivilegeMode(int _n)
@@ -42,12 +42,25 @@ namespace APCC
                     {
                         item.Enabled = false;
                     }
-                    if (menuStrip.Items[3] != null)
-                    {
-                        menuStrip.Items[3].Enabled = true;
-                    }
+                    this.disableLogIn();
                     break;
                 case PrivilegeMode.CONFIGURATOR:
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.Enabled = true;
+                        foreach (var item2 in item.DropDownItems)
+                        {
+                            if (item2 is ToolStripDropDownItem)
+                            {
+                                ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
+                                typed.Enabled = true;
+                            }
+                        }
+
+                    }
+
+                    menuStrip.Items["editMenu"].Enabled = false;
+                    //menuStrip.Items["fileMenu"]. = false;
                     break;
                 case PrivilegeMode.TESTER:
                     break;

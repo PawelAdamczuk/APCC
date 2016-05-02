@@ -44,6 +44,7 @@
             this.userToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.componentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.componentTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +99,8 @@
             this.editMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userToolStripMenuItem,
             this.buildToolStripMenuItem,
-            this.componentToolStripMenuItem});
+            this.componentToolStripMenuItem,
+            this.componentTypeToolStripMenuItem});
             this.editMenu.Name = "editMenu";
             this.editMenu.Size = new System.Drawing.Size(43, 20);
             this.editMenu.Text = "&New";
@@ -162,6 +164,12 @@
             this.componentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.componentToolStripMenuItem.Text = "Component";
             // 
+            // componentTypeToolStripMenuItem
+            // 
+            this.componentTypeToolStripMenuItem.Name = "componentTypeToolStripMenuItem";
+            this.componentTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.componentTypeToolStripMenuItem.Text = "Component type";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,8 +193,6 @@
 
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripMenuItem editMenu;
         private System.Windows.Forms.ToolStripMenuItem toolsMenu;
@@ -199,6 +205,9 @@
         private System.Windows.Forms.ToolStripMenuItem userToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem componentToolStripMenuItem;
+        public System.Windows.Forms.StatusStrip statusStrip;
+        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem componentTypeToolStripMenuItem;
     }
 }
 
