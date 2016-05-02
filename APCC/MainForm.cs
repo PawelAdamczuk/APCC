@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using APCC.Forms;
 
 namespace APCC
 {
@@ -111,7 +112,8 @@ namespace APCC
 
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
-            
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
         }
     }
 }

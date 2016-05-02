@@ -432,10 +432,11 @@
             // 
             // toolStripMenuItem_login
             // 
+            this.toolStripMenuItem_login.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.toolStripMenuItem_login.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripMenuItem_login.Name = "toolStripMenuItem_login";
-            this.toolStripMenuItem_login.Size = new System.Drawing.Size(125, 20);
-            this.toolStripMenuItem_login.Text = "toolStripMenuItem1";
+            this.toolStripMenuItem_login.Size = new System.Drawing.Size(52, 20);
+            this.toolStripMenuItem_login.Text = "Log in";
             this.toolStripMenuItem_login.Click += new System.EventHandler(this.toolStripMenuItem_login_Click);
             // 
             // toolStrip
