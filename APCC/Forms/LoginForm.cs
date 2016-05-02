@@ -49,6 +49,7 @@ namespace APCC.Forms
                         }else
                         {
                             parent.setPrivilegeMode(int.Parse(tmpString));
+                            parent.disableLogIn();
                             this.Close();
                         }
                     } 

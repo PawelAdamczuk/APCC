@@ -23,6 +23,11 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
+        public void disableLogIn ()
+        {
+            menuStrip.Items[3].Visible = false;
+        }
+
         public void setPrivilegeMode(int _n)
         {
             if (_n < 0 || _n > 3)
@@ -37,9 +42,9 @@ namespace APCC
                     {
                         item.Enabled = false;
                     }
-                    if (menuStrip.Items[6] != null)
+                    if (menuStrip.Items[3] != null)
                     {
-                        menuStrip.Items[6].Enabled = true;
+                        menuStrip.Items[3].Enabled = true;
                     }
                     break;
                 case PrivilegeMode.CONFIGURATOR:
@@ -118,16 +123,6 @@ namespace APCC
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        }
-
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
