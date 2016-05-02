@@ -104,8 +104,8 @@
             this.componentsToolStripMenuItem});
             this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(48, 20);
-            this.fileMenu.Text = "&Show";
+            this.fileMenu.Size = new System.Drawing.Size(44, 24);
+            this.fileMenu.Text = "&File";
             this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
             // 
             // buildsToolStripMenuItem

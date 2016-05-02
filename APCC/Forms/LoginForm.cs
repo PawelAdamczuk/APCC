@@ -8,21 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace APCC.Forms
 {
     public partial class LoginForm : Form
     {
-
         private MainForm parent;
 
         public LoginForm(MainForm _parent)
         {
             InitializeComponent();
-            label3.Visible = false;
-
             parent = _parent;
-
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -30,29 +27,28 @@ namespace APCC.Forms
 
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
-            string password = textBox1.Text;
-            string login = textBox2.Text;
+            string password = txbPswd.Text;
+            string login = txbLogin.Text;
+
             try
-            {
-                SqlConnection conn = SqlConn.Connection;
-                
-                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", conn))
+            {   
+                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
                     {
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
 
-                    string s = com.ExecuteScalar().ToString();
+                        string tmpString = com.ExecuteScalar().ToString();
 
-                        if (s == "")
+                        if (tmpString == "")
                         {
-                            label3.Visible = true;
-                            textBox1.Clear();
-                            textBox2.Clear();
+                            MessageBox.Show("Incorrect login or password!");
+                            txbLogin.Clear();
                         }else
                         {
-                            parent.setPrivilegeMode(int.Parse(s));
+                            parent.setPrivilegeMode(int.Parse(tmpString));
                             this.Close();
                         }
                     } 
