@@ -14,7 +14,7 @@ namespace APCC
     public partial class MainForm : Form
     {
         private int childFormNumber = 0;
-        private PrivilegeMode privilegeMode = PrivilegeMode.NULL;
+        private PrivilegeMode privilegeMode = PrivilegeMode.CONFIGURATOR;
         enum PrivilegeMode : int
         {
             NULL = 0,
@@ -37,12 +37,29 @@ namespace APCC
                     {
                         item.Enabled = false;
                     }
+                    if (menuStrip.Items[6] != null)
+                    {
+                        menuStrip.Items[6].Enabled = true;
+                    }
                     break;
                 case PrivilegeMode.CONFIGURATOR:
                     break;
                 case PrivilegeMode.TESTER:
                     break;
                 case PrivilegeMode.ADMINISTRATOR:
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.Enabled = true;
+                        foreach (var item2 in item.DropDownItems)
+                        {
+                            if(item2 is ToolStripDropDownItem)
+                            {
+                                ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
+                                typed.Enabled = true;
+                            }
+                        }
+                                
+                    }
                     break;
                 default:
                     break;
@@ -53,6 +70,7 @@ namespace APCC
         public MainForm()
         {
             InitializeComponent();
+            this.setPrivilegeMode(0);
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -148,7 +166,6 @@ namespace APCC
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm(this);
-            this.setPrivilegeMode(0);
             loginForm.MdiParent = this;
             loginForm.Show();
         }
