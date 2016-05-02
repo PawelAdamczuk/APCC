@@ -33,7 +33,7 @@ namespace APCC
             switch (this.privilegeMode)
             {
                 case PrivilegeMode.NULL:
-                    foreach (MenuItem item in menuStrip.Items)
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
                         item.Enabled = false;
                     }
