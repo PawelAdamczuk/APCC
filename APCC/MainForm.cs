@@ -23,6 +23,33 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
+        public void setPrivilegeMode(int _n)
+        {
+            if (_n < 0 || _n > 3)
+                return;
+
+            this.privilegeMode = (PrivilegeMode)_n;
+
+            switch (this.privilegeMode)
+            {
+                case PrivilegeMode.NULL:
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.Enabled = false;
+                    }
+                    break;
+                case PrivilegeMode.CONFIGURATOR:
+                    break;
+                case PrivilegeMode.TESTER:
+                    break;
+                case PrivilegeMode.ADMINISTRATOR:
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -121,8 +148,19 @@ namespace APCC
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm();
+            this.setPrivilegeMode(0);
             loginForm.MdiParent = this;
             loginForm.Show();
+        }
+
+        private void editMenu_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileMenu_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
