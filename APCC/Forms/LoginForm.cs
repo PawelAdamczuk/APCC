@@ -30,13 +30,17 @@ namespace APCC.Forms
             string login = textBox1.Text;
             try
             {
-                using (SqlConnection conn = "Klasa Maćka")
+                using (SqlConnection conn = SqlConn.Connection)
                 {
                     conn.Open();
-                    using 
+                    //using 
                 }
 
 
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Connection failed!\n" + ex.Message);
             }
         }
     }
