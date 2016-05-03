@@ -6,10 +6,28 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.IO;
+using System.Windows.Forms;
+
 namespace APCC
 {
     public static class Utilities
     {
+        // Is there specific Form opened as MDI in MdiWindowForm
+        // @childType - type of searching child
+        // @parentForm - Form to search in
+        public static Form FindMdiFormByType( Type childType, Form parentForm )
+        {
+            for (int i = 0; i < parentForm.MdiChildren.Count(); i++)
+            {
+                if (parentForm.MdiChildren.ElementAt(i).GetType() == childType)
+                {
+                    return parentForm.MdiChildren.ElementAt(i);
+                }
+            }
+
+            return null;
+        }
+
         public static string StringHash(string _input)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(_input);
