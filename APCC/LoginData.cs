@@ -40,7 +40,7 @@ namespace APCC
                     RoleID = lDataReader.GetInt32(2);
                 }
 
-                lDataReader.Close();
+                //lDataReader.Close();
                 // 3 is for admin 
                 if (RoleID == 3)
                     isAdmin = true;

@@ -39,11 +39,14 @@ namespace APCC
             switch (this.privilegeMode)
             {
                 case PrivilegeMode.NULL:
+                    // Unlogged user
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
                         item.Enabled = false;
                     }
-                    this.disableLogIn();
+
+                    // Enable login button
+                    toolStripMenuItem_login.Enabled = true;
                     break;
                 case PrivilegeMode.CONFIGURATOR:
                     foreach (ToolStripMenuItem item in menuStrip.Items)
@@ -76,8 +79,7 @@ namespace APCC
                                 ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
                                 typed.Enabled = true;
                             }
-                        }
-                                
+                        }         
                     }
                     break;
                 default:
@@ -167,11 +169,21 @@ namespace APCC
             }
         }
 
+        // Open login window
         private void toolStripMenuItem_login_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm(this);
-            loginForm.MdiParent = this;
-            loginForm.Show();
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(LoginForm), this);
+
+            if (tmpForm == null)
+            {
+                LoginForm loginForm = new LoginForm(this);
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
         }
 
         private void editMenu_Click(object sender, EventArgs e)
