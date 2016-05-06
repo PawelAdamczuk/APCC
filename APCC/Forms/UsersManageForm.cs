@@ -21,32 +21,32 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
-        private void UsersManageForm_Load(object sender, EventArgs e)
+        private void LoadUsers()
         {
-            try
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+            SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
+
+            int id;
+            string fName, sName, rName;
+            using (SqlDataReader reader = giveMeUsers.ExecuteReader())
             {
-                SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
-
-                int id;
-                string fName, sName, rName;
-                using (SqlDataReader reader = giveMeUsers.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        id = (int)reader["usrID"];
-                        fName = (string)reader["usrFName"];
-                        sName = (string)reader["usrSName"];
-                        rName = (string)reader["rlsName"];
+                    id = (int)reader["usrID"];
+                    fName = (string)reader["usrFName"];
+                    sName = (string)reader["usrSName"];
+                    rName = (string)reader["rlsName"];
 
-                        listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
-                    }
-
+                    listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
                 }
 
-            }catch(Exception ex)
-            {
-                listBox1.Items.Add(ex.Message.ToString());
             }
+        }
+
+        private void UsersManageForm_Load(object sender, EventArgs e)
+        {
+            LoadUsers();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -87,5 +87,22 @@ namespace APCC.Forms
             }
        }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var selectedUser = listBox1.SelectedItem;
+            
+            if(selectedUser != null)
+            {
+                int idUsr = Int32.Parse(selectedUser.ToString().Split(' ')[0]);
+                using (SqlCommand deleteUser = new SqlCommand("deleteUser", SqlConn.Connection) { CommandType = CommandType.StoredProcedure})
+                {
+                    deleteUser.Parameters.Add("@pID", SqlDbType.Int);
+                    deleteUser.Parameters["@pID"].Value = idUsr;
+                    deleteUser.ExecuteNonQuery();
+                }
+            }
+
+            LoadUsers();
+        }
     }
 }
