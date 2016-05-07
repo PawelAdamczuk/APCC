@@ -28,6 +28,7 @@ namespace APCC
             {
                 lStmt = "select usrFName, usrSName, usrRoleID from dbo.USERS where usrID = @pID";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
+
                 lCommand.Parameters.Add("@pID", SqlDbType.Int);
                 lCommand.Parameters["@pID"].Value = pID;
                 
@@ -40,7 +41,8 @@ namespace APCC
                     RoleID = lDataReader.GetInt32(2);
                 }
 
-                //lDataReader.Close();
+                lDataReader.Close();
+
                 // 3 is for admin 
                 if (RoleID == 3)
                     isAdmin = true;

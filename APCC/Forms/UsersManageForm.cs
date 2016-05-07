@@ -38,12 +38,10 @@ namespace APCC.Forms
 
                     listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
                 }
+                
+            }catch(Exception ex){
 
-                reader.Close();
-
-            }catch(Exception ex)
-            {
-                listBox1.Items.Add(ex.Message.ToString());
+                MessageBox.Show(ex.Message.ToString());
             }
         }
     }

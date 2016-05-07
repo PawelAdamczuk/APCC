@@ -42,6 +42,7 @@
             this.dgvTypes.Location = new System.Drawing.Point(12, 12);
             this.dgvTypes.Name = "dgvTypes";
             this.dgvTypes.RowTemplate.Height = 24;
+            this.dgvTypes.ShowEditingIcon = false;
             this.dgvTypes.Size = new System.Drawing.Size(240, 415);
             this.dgvTypes.TabIndex = 0;
             // 
