@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace APCC
 {
@@ -95,10 +96,80 @@ namespace APCC
             appendToFile(text);
         }
 
-        //public static String getComponentDescription(int id)
-        //{
+        public static string getParamName(int compTypeId, int paramType, int paramNo)
+        {
+            string connString = String.Format("SELECT cmpParamName FROM COMPONENTS_PARAMS WHERE cmpComTypeID = {0} AND cmpParamType = {1} AND cmpParamNumber = {2}", compTypeId.ToString(), paramType.ToString(), paramNo.ToString());
+            SqlCommand cmd = new SqlCommand(connString, SqlConn.Connection);
+            try
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return (string)reader["cmpParamName"];
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
+            return null;
+         }
 
-        //}
+        public static string getComponentDescription(int id)
+        {
+            StringBuilder result = new StringBuilder();
+            string connString = String.Format("SELECT * FROM COMPONENTS WHERE comID = {0}", id.ToString());
+            SqlCommand cmd = new SqlCommand(connString, SqlConn.Connection);
+
+            string[] fields = new string[23];
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; ++i)
+                        fields[i] = reader[i].ToString();
+                }
+            }
+
+            ArrayList intParamNames = new ArrayList();
+            ArrayList strParamNames = new ArrayList();
+
+            for (int i=3; i<13; ++i)
+            {
+                if (fields[i] == "")
+                    break;
+
+                intParamNames.Add(getParamName(int.Parse(fields[2]), 0, i - 2));
+            }
+
+            for (int i = 13; i < 23; ++i)
+            {
+                if (fields[i] == "")
+                    break;
+
+                strParamNames.Add(getParamName(int.Parse(fields[2]), 1, i - 12));
+            }
+
+            result.Append(fields[1] + "\n\n");
+
+
+            int j = 3;
+            foreach(string s in intParamNames)
+            {
+                result.Append(s + ": "  + fields[j++] + "\n");
+            }
+
+            j = 13;
+
+            foreach (string s in strParamNames)
+            {
+                result.Append(s + ": " + fields[j++] + "\n");
+            }
+
+            return result.ToString();
+        }
 
 
 
