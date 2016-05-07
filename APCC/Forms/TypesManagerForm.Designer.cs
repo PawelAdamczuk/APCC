@@ -38,12 +38,20 @@
             // 
             // dgvTypes
             // 
+            this.dgvTypes.AllowUserToAddRows = false;
+            this.dgvTypes.AllowUserToDeleteRows = false;
+            this.dgvTypes.AllowUserToResizeColumns = false;
             this.dgvTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTypes.ColumnHeadersVisible = false;
             this.dgvTypes.Location = new System.Drawing.Point(12, 12);
+            this.dgvTypes.MultiSelect = false;
             this.dgvTypes.Name = "dgvTypes";
+            this.dgvTypes.ReadOnly = true;
             this.dgvTypes.RowTemplate.Height = 24;
+            this.dgvTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTypes.ShowEditingIcon = false;
             this.dgvTypes.Size = new System.Drawing.Size(240, 415);
-            this.dgvTypes.TabIndex = 0;
+            this.dgvTypes.TabIndex = 2;
             // 
             // btnExit
             // 
@@ -63,6 +71,7 @@
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnEdit
             // 
@@ -72,6 +81,7 @@
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
@@ -81,6 +91,7 @@
             this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // TypesManagerForm
             // 
@@ -92,6 +103,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.dgvTypes);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TypesManagerForm";
             this.Text = "Components types manager";
             this.Load += new System.EventHandler(this.TypesManagerForm_Load);

@@ -35,7 +35,7 @@ namespace APCC.Forms
 
             try
             {   
-                    using(SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
+                using (SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
                     {
                         com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
                         com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
@@ -46,10 +46,12 @@ namespace APCC.Forms
                         {
                             MessageBox.Show("Incorrect login or password!");
                             txbPswd.Clear();
-                        }else
+                    }
+                    else
                         {
                             LoginData.Login(int.Parse(tmpString));
-                            MessageBox.Show("Zalogowano jako " + LoginData.GetUserName());
+
+                        MessageBox.Show("Logged as " + LoginData.GetUserName());
                             parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
                             parent.setPrivilegeMode(LoginData.GetUserRoleID());
@@ -58,9 +60,6 @@ namespace APCC.Forms
                             this.Close();
                         }
                     } 
-                
-
-
             }
             catch(SqlException ex)
             {
