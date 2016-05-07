@@ -202,5 +202,12 @@ namespace APCC
             usersManageForm.MdiParent = this;
             usersManageForm.Show();
         }
+
+        private void userToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            addingNewUserForm addingNewUserForm = new addingNewUserForm();
+            addingNewUserForm.MdiParent = this;
+            addingNewUserForm.Show();
+        }
     }
 }
