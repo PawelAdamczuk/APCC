@@ -241,5 +241,12 @@ namespace APCC
             addingNewUserForm.MdiParent = this;
             addingNewUserForm.Show();
         }
+
+        private void buildsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showBuildsForm showBuildsForm = new showBuildsForm();
+            showBuildsForm.MdiParent = this;
+            showBuildsForm.Show();
+        }
     }
 }

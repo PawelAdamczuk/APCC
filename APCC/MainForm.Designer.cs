@@ -80,6 +80,7 @@
             this.buildsToolStripMenuItem.Name = "buildsToolStripMenuItem";
             this.buildsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.buildsToolStripMenuItem.Text = "Builds";
+            this.buildsToolStripMenuItem.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
             // 
             // usersToolStripMenuItem
             // 
@@ -142,7 +143,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // toolStripMenuItem_login

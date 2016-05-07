@@ -52,11 +52,11 @@
     <Compile Include="Forms\addingNewUserForm.Designer.cs">
       <DependentUpon>addingNewUserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\showBuilds.cs">
+    <Compile Include="Forms\showBuildsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\showBuilds.Designer.cs">
-      <DependentUpon>showBuilds.cs</DependentUpon>
+    <Compile Include="Forms\showBuildsForm.Designer.cs">
+      <DependentUpon>showBuildsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TypesManagerForm.cs">
       <SubType>Form</SubType>
@@ -102,8 +102,8 @@
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\showBuilds.resx">
-      <DependentUpon>showBuilds.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\showBuildsForm.resx">
+      <DependentUpon>showBuildsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TypesManagerForm.resx">
       <DependentUpon>TypesManagerForm.cs</DependentUpon>
