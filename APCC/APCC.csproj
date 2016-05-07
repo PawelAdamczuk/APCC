@@ -58,6 +58,18 @@
     <Compile Include="Forms\EditForms\TypesEditForm.Designer.cs">
       <DependentUpon>TypesEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Description.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Description.Designer.cs">
+      <DependentUpon>Description.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\showBuildsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\showBuildsForm.Designer.cs">
+      <DependentUpon>showBuildsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TypesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,11 +111,17 @@
     <EmbeddedResource Include="Forms\addingNewUserForm.resx">
       <DependentUpon>addingNewUserForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Description.resx">
+      <DependentUpon>Description.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditForms\TypesEditForm.resx">
       <DependentUpon>TypesEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\showBuildsForm.resx">
+      <DependentUpon>showBuildsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TypesManagerForm.resx">
       <DependentUpon>TypesManagerForm.cs</DependentUpon>

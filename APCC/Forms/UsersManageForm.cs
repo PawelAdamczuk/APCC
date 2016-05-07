@@ -94,15 +94,21 @@ namespace APCC.Forms
             if(selectedUser != null)
             {
                 int idUsr = Int32.Parse(selectedUser.ToString().Split(' ')[0]);
-                using (SqlCommand deleteUser = new SqlCommand("deleteUser", SqlConn.Connection) { CommandType = CommandType.StoredProcedure})
+
+                if (idUsr != LoginData.GetUserID())
                 {
-                    deleteUser.Parameters.Add("@pID", SqlDbType.Int);
-                    deleteUser.Parameters["@pID"].Value = idUsr;
-                    deleteUser.ExecuteNonQuery();
+                    using (SqlCommand deleteUser = new SqlCommand("deleteUser", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
+                    {
+                        deleteUser.Parameters.AddWithValue("@pID",idUsr);
+                        deleteUser.ExecuteNonQuery();
+                    }
+                    LoadUsers();
+                }
+                else
+                {
+                    MessageBox.Show("You cannot delete yourself, moron!");
                 }
             }
-
-            LoadUsers();
         }
     }
 }

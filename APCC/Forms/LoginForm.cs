@@ -34,34 +34,34 @@ namespace APCC.Forms
             string login = txbLogin.Text;
 
             try
-            {
+            {   
                 using (SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
-                {
-                    com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
-                    com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
-
-                    string tmpString = com.ExecuteScalar().ToString();
-
-                    if (tmpString == "")
                     {
-                        MessageBox.Show("Incorrect login or password!");
-                        txbPswd.Clear();
+                        com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
+                        com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
+
+                        string tmpString = com.ExecuteScalar().ToString();
+
+                        if (tmpString == "")
+                        {
+                            MessageBox.Show("Incorrect login or password!");
+                            txbPswd.Clear();
                     }
                     else
-                    {
-                        LoginData.Login(int.Parse(tmpString));
+                        {
+                            LoginData.Login(int.Parse(tmpString));
 
-                        MessageBox.Show("Zalogowano jako " + LoginData.GetUserName());
-                        parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
+                        MessageBox.Show("Logged as " + LoginData.GetUserName());
+                            parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
-                        parent.setPrivilegeMode(LoginData.GetUserRoleID());
-                        parent.disableLogIn();
+                            parent.setPrivilegeMode(LoginData.GetUserRoleID());
+                            parent.disableLogIn();
 
-                        this.Close();
-                    }
-                }
+                            this.Close();
+                        }
+                    } 
             }
-            catch (Exception ex)
+            catch(SqlException ex)
             {
                 MessageBox.Show("Connection failed!\n" + ex.Message);
             }

@@ -38,6 +38,8 @@ namespace APCC
 
             switch (this.privilegeMode)
             {
+
+
                 case PrivilegeMode.NULL:
                     // Unlogged user
                     foreach (ToolStripMenuItem item in menuStrip.Items)
@@ -48,26 +50,54 @@ namespace APCC
                     // Enable login button
                     toolStripMenuItem_login.Enabled = true;
                     break;
+
+
                 case PrivilegeMode.CONFIGURATOR:
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
-                        item.Enabled = true;
+                        item.Enabled = false;
                         foreach (var item2 in item.DropDownItems)
                         {
                             if (item2 is ToolStripDropDownItem)
                             {
                                 ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
-                                typed.Enabled = true;
+                                typed.Enabled = false;
                             }
                         }
 
                     }
 
-                    menuStrip.Items["editMenu"].Enabled = false;
-                    //menuStrip.Items["fileMenu"]. = false;
+                    menuStrip.Items["editMenu"].Enabled = true;
+                    ToolStripMenuItem typedItem1 = (ToolStripMenuItem)menuStrip.Items["editMenu"];
+                    typedItem1.DropDownItems["buildToolStripMenuItem"].Enabled = true;
+
+                    menuStrip.Items["fileMenu"].Enabled = true;
+                    ToolStripMenuItem typedItem2 = (ToolStripMenuItem)menuStrip.Items["fileMenu"];
+                    typedItem1.DropDownItems["componentsToolStripMenuItem"].Enabled = true;
                     break;
+
+
                 case PrivilegeMode.TESTER:
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.Enabled = false;
+                        foreach (var item2 in item.DropDownItems)
+                        {
+                            if (item2 is ToolStripDropDownItem)
+                            {
+                                ToolStripDropDownItem typed = (ToolStripDropDownItem)item2;
+                                typed.Enabled = false;
+                            }
+                        }
+                    }
+
+                    menuStrip.Items["fileMenu"].Enabled = true;
+                    ToolStripMenuItem typedItem4 = (ToolStripMenuItem)menuStrip.Items["fileMenu"];
+                    typedItem4.DropDownItems["buildsToolStripMenuItem"].Enabled = true;
+                    typedItem4.DropDownItems["componentsToolStripMenuItem"].Enabled = true;
                     break;
+
+
                 case PrivilegeMode.ADMINISTRATOR:
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
@@ -82,6 +112,8 @@ namespace APCC
                         }         
                     }
                     break;
+
+
                 default:
                     break;
             }
@@ -241,6 +273,13 @@ namespace APCC
         private void componentTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.openComponentTypesWindow();
+        }
+
+        private void buildsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showBuildsForm showBuildsForm = new showBuildsForm();
+            showBuildsForm.MdiParent = this;
+            showBuildsForm.Show();
         }
     }
 }
