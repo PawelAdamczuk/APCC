@@ -62,7 +62,7 @@ namespace APCC.Forms
 
 
             }
-            catch(Exception ex)
+            catch(ConnectionException ex)
             {
                 MessageBox.Show("Connection failed!\n" + ex.Message);
             }

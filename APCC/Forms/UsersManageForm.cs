@@ -100,9 +100,10 @@ namespace APCC.Forms
                     deleteUser.Parameters["@pID"].Value = idUsr;
                     deleteUser.ExecuteNonQuery();
                 }
+                LoadUsers();
             }
 
-            LoadUsers();
+            
         }
     }
 }
