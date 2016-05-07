@@ -46,11 +46,15 @@ namespace APCC.Forms
 
             using (SqlCommand checkLogin = new SqlCommand("SELECT usrLogin FROM USERS WHERE usrLogin = '" + login + "'", SqlConn.Connection) { CommandType = CommandType.Text })
             {
-                if (checkLogin.ExecuteReader().HasRows == true)
+                using (SqlDataReader r = checkLogin.ExecuteReader())
                 {
-                    MessageBox.Show("The user name has taken");
-                    return false;
+                    if (r.HasRows == true)
+                    {
+                        MessageBox.Show("The user name has taken");
+                        return false;
+                    }
                 }
+                
             }
                 return true;
         }
