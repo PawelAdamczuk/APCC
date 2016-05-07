@@ -67,9 +67,46 @@ namespace APCC.Forms
             dgvTypes.AutoResizeColumns();
         }
 
+        // **************
+        // *** BUTTONS
+        // **************
+
+        // Exit button
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        // Edit button
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
+
+            // Fill type data
+            childForm.txbID.Text = this.dgvTypes.SelectedRows[0].Cells["typID"].Value.ToString();
+            childForm.txbID.Enabled = false;
+
+            childForm.txbName.Text = this.dgvTypes.SelectedRows[0].Cells["typName"].Value.ToString(); ;
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
+        }
+
+        // Add button
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
+
+            childForm.txbID.Enabled = false;
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
+        }
+
+        // Delete button
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

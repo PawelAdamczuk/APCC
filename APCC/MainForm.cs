@@ -88,10 +88,13 @@ namespace APCC
 
         }
 
+        // Constructor 
         public MainForm()
         {
             InitializeComponent();
             this.setPrivilegeMode(0);
+
+            this.openLoginWindow();
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -169,9 +172,8 @@ namespace APCC
             }
         }
 
-        // Open login window
-        private void toolStripMenuItem_login_Click(object sender, EventArgs e)
-        {
+        //Open login window function
+        private void openLoginWindow() {
             Form tmpForm = Utilities.FindMdiFormByType(typeof(LoginForm), this);
 
             if (tmpForm == null)
@@ -180,10 +182,35 @@ namespace APCC
                 loginForm.MdiParent = this;
                 loginForm.Show();
             }
-            else {
+            else
+            {
                 tmpForm.Activate();
                 tmpForm.WindowState = FormWindowState.Normal;
             }
+        }
+
+        //Open component types window function
+        private void openComponentTypesWindow()
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(TypesManagerForm), this);
+
+            if (tmpForm == null)
+            {
+                TypesManagerForm loginForm = new TypesManagerForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        // Open login window
+        private void toolStripMenuItem_login_Click(object sender, EventArgs e)
+        {
+            this.openLoginWindow();
         }
 
         private void editMenu_Click(object sender, EventArgs e)
@@ -208,6 +235,12 @@ namespace APCC
             addingNewUserForm addingNewUserForm = new addingNewUserForm();
             addingNewUserForm.MdiParent = this;
             addingNewUserForm.Show();
+        }
+
+        // Open TypesManagerForm
+        private void componentTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.openComponentTypesWindow();
         }
     }
 }
