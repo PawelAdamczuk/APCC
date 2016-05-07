@@ -49,7 +49,7 @@ namespace APCC.Forms
                         }else
                         {
                             LoginData.Login(int.Parse(tmpString));
-                            MessageBox.Show( "Zalogowano jako " + LoginData.GetUserName() );
+                            MessageBox.Show("Zalogowano jako " + LoginData.GetUserName());
                             parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
                             parent.setPrivilegeMode(LoginData.GetUserRoleID());
@@ -62,7 +62,7 @@ namespace APCC.Forms
 
 
             }
-            catch(ConnectionException ex)
+            catch(SqlException ex)
             {
                 MessageBox.Show("Connection failed!\n" + ex.Message);
             }
