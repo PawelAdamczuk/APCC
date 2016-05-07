@@ -126,5 +126,19 @@ namespace APCC.Forms
                 loadBuilds();
             }
         }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedComponents = listBox2.SelectedItem;
+
+            if(selectedComponents != null)
+            {
+                int id = Int32.Parse(selectedComponents.ToString().Split(' ')[0]);
+                Description Description = new Description(id);
+                Description.MdiParent = this.MdiParent;
+                Description.Show();
+            }
+           
+        }
     }
 }
