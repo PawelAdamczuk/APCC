@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddComponentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddComponentForm.Designer.cs">
+      <DependentUpon>AddComponentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\addingNewUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     <Compile Include="SqlConn.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddComponentForm.resx">
+      <DependentUpon>AddComponentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\addingNewUserForm.resx">
       <DependentUpon>addingNewUserForm.cs</DependentUpon>
