@@ -28,9 +28,13 @@ namespace APCC.Forms
                 lStmt = @"
                             select
                                 typID,
-                                typName
+                                typName,
+                                int1,int2,int3,int4,int5,
+                                int6,int7,int8,int9,int10,
+                                string11,string12,string13,string14,string15,
+                                string16,string17,string18,string19,string20
                             from
-                                TYPES
+                                vTypesParamNames
                          ";
 
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
@@ -46,6 +50,12 @@ namespace APCC.Forms
 
                 dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvTypes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                // Hide parameter's names
+                for( int i = 1; i <= 10; i++ )
+                    dgvTypes.Columns["int" + i.ToString()].Visible = false;
+                for (int i = 11; i <= 20; i++)
+                    dgvTypes.Columns["string" + i.ToString()].Visible = false;
             }
             catch (Exception ex)
             {
@@ -88,6 +98,33 @@ namespace APCC.Forms
 
             childForm.txbName.Text = this.dgvTypes.SelectedRows[0].Cells["typName"].Value.ToString(); ;
 
+            // Fill parameter's names
+            {
+                childForm.txbIntParam1.Text = this.dgvTypes.SelectedRows[0].Cells["int1"].Value.ToString();
+                childForm.txbIntParam2.Text = this.dgvTypes.SelectedRows[0].Cells["int2"].Value.ToString();
+                childForm.txbIntParam3.Text = this.dgvTypes.SelectedRows[0].Cells["int3"].Value.ToString();
+                childForm.txbIntParam4.Text = this.dgvTypes.SelectedRows[0].Cells["int4"].Value.ToString();
+                childForm.txbIntParam5.Text = this.dgvTypes.SelectedRows[0].Cells["int5"].Value.ToString();
+
+                childForm.txbIntParam6.Text = this.dgvTypes.SelectedRows[0].Cells["int6"].Value.ToString();
+                childForm.txbIntParam7.Text = this.dgvTypes.SelectedRows[0].Cells["int7"].Value.ToString();
+                childForm.txbIntParam8.Text = this.dgvTypes.SelectedRows[0].Cells["int8"].Value.ToString();
+                childForm.txbIntParam9.Text = this.dgvTypes.SelectedRows[0].Cells["int9"].Value.ToString();
+                childForm.txbIntParam10.Text = this.dgvTypes.SelectedRows[0].Cells["int10"].Value.ToString();
+
+                childForm.txbStringParam1.Text = this.dgvTypes.SelectedRows[0].Cells["string11"].Value.ToString();
+                childForm.txbStringParam2.Text = this.dgvTypes.SelectedRows[0].Cells["string12"].Value.ToString();
+                childForm.txbStringParam3.Text = this.dgvTypes.SelectedRows[0].Cells["string13"].Value.ToString();
+                childForm.txbStringParam4.Text = this.dgvTypes.SelectedRows[0].Cells["string14"].Value.ToString();
+                childForm.txbStringParam5.Text = this.dgvTypes.SelectedRows[0].Cells["string15"].Value.ToString();
+
+                childForm.txbStringParam6.Text = this.dgvTypes.SelectedRows[0].Cells["string16"].Value.ToString();
+                childForm.txbStringParam7.Text = this.dgvTypes.SelectedRows[0].Cells["string17"].Value.ToString();
+                childForm.txbStringParam8.Text = this.dgvTypes.SelectedRows[0].Cells["string18"].Value.ToString();
+                childForm.txbStringParam9.Text = this.dgvTypes.SelectedRows[0].Cells["string19"].Value.ToString();
+                childForm.txbStringParam10.Text = this.dgvTypes.SelectedRows[0].Cells["string20"].Value.ToString();
+            }
+
             childForm.Owner = this;
             childForm.ShowDialog();
         }
@@ -98,7 +135,7 @@ namespace APCC.Forms
             EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
 
             childForm.txbID.Enabled = false;
-
+            
             childForm.Owner = this;
             childForm.ShowDialog();
         }
@@ -106,8 +143,51 @@ namespace APCC.Forms
         // Delete button
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if ( dgvTypes.SelectedRows.Count == 0 )
+                return;  
+
+            string lStmt;
+
+            SqlCommand lSCmd;
+
+            SqlParameter lID;
+            SqlParameter lMsg;
+
+            try
+            {
+                // (@pID, @oMsg)
+                lStmt = "deleteComponentType";
+                lSCmd = new SqlCommand(lStmt, SqlConn.Connection);
+                lSCmd.CommandType = CommandType.StoredProcedure;
+
+                lID = lSCmd.Parameters.Add("@pID", SqlDbType.Int);
+
+                lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
+                lMsg.Direction = ParameterDirection.Output;
+
+                // lID
+                lSCmd.Parameters["@pID"].Value = this.dgvTypes.SelectedRows[0].Cells["typID"].Value;
+
+                lSCmd.ExecuteNonQuery();
+
+                if (lMsg.Value.ToString() != "OK")
+                {
+                    MessageBox.Show(lMsg.Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Type deleted!");
+                    this.refreshGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
+
+
 
     }
 }
