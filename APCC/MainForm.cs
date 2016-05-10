@@ -29,8 +29,9 @@ namespace APCC
             menuStrip.Items["toolStripMenuItem_login"].Visible = false;
         }
 
-        public void setPrivilegeMode(int _n)
+        public void setPrivilegeMode()
         {
+            int _n = LoginData.GetUserRoleID();
             if (_n < 0 || _n > 3)
                 return;
 
@@ -124,7 +125,8 @@ namespace APCC
         public MainForm()
         {
             InitializeComponent();
-            this.setPrivilegeMode(0);
+
+            this.setPrivilegeMode();
 
             this.openLoginWindow();
         }
