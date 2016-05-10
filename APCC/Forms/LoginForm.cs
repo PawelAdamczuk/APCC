@@ -54,7 +54,7 @@ namespace APCC.Forms
                         MessageBox.Show("Logged as " + LoginData.GetUserName());
                             parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
-                            parent.setPrivilegeMode(LoginData.GetUserRoleID());
+                            parent.setPrivilegeMode();
                             parent.disableLogIn();
 
                             this.Close();
