@@ -105,6 +105,7 @@
             this.Controls.Add(this.dgvTypes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TypesManagerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Components types manager";
             this.Load += new System.EventHandler(this.TypesManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTypes)).EndInit();

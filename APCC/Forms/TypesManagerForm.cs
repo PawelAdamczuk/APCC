@@ -144,7 +144,10 @@ namespace APCC.Forms
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if ( dgvTypes.SelectedRows.Count == 0 )
-                return;  
+                return;
+
+            if ( MessageBox.Show("Are you sure to delete this type and all data connected with it ?", "Warning", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
 
             string lStmt;
 

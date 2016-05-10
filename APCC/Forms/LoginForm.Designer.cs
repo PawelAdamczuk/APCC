@@ -79,7 +79,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(211, 198);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(109, 26);
             this.button1.TabIndex = 3;
@@ -120,6 +120,7 @@
             this.Controls.Add(this.txbPswd);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User login";
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
