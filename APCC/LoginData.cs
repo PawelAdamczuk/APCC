@@ -17,6 +17,16 @@ namespace APCC
         private static string SName = "";
         private static int RoleID = 0;
         private static int UserID = 0;
+        private static string RoleName = "";
+
+        // Role enum
+        public enum Role : int
+        {
+            NULL = 0,
+            CONFIGURATOR = 1,
+            TESTER = 2,
+            ADMINISTRATOR = 3
+        }
 
         // Login with role
         public static void Login(int pID)
@@ -26,7 +36,17 @@ namespace APCC
 
             try
             {
-                lStmt = "select usrFName, usrSName, usrRoleID from dbo.USERS where usrID = @pID";
+                lStmt = @"SELECT
+                             usrFName, 
+                             usrSName, 
+                             usrRoleID, 
+                             rlsName 
+                          FROM 
+                             dbo.ROLES,
+                             dbo.USERS 
+                          WHERE 
+                             usrID = @pID AND
+                             rlsID = usrRoleID";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
 
                 lCommand.Parameters.Add("@pID", SqlDbType.Int);
@@ -39,6 +59,7 @@ namespace APCC
                     FName = lDataReader.GetString(0);
                     SName = lDataReader.GetString(1);
                     RoleID = lDataReader.GetInt32(2);
+                    RoleName = lDataReader.GetString(3);
                 }
 
                 lDataReader.Close();
@@ -79,6 +100,12 @@ namespace APCC
         public static int GetUserRoleID()
         {
             return RoleID;
+        }
+
+        // Return name of user role
+        public static string GetUserRoleName()
+        {
+            return RoleName;
         }
 
         // Check if current user is admin

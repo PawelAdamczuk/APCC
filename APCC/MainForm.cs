@@ -48,7 +48,11 @@ namespace APCC
                         item.Enabled = false;
                     }
 
+                    // Disable logout button
+                    this.toolStripMenuItem_LogOut.Visible = false;
+
                     // Enable login button
+                    toolStripMenuItem_login.Visible = true;
                     toolStripMenuItem_login.Enabled = true;
                     break;
 
@@ -117,6 +121,12 @@ namespace APCC
 
                 default:
                     break;
+            }
+
+            // Enable logout button
+            if (this.privilegeMode != PrivilegeMode.NULL){
+                this.toolStripMenuItem_LogOut.Visible = true;
+                this.toolStripMenuItem_LogOut.Visible = true;
             }
 
         }
@@ -247,6 +257,24 @@ namespace APCC
             this.openLoginWindow();
         }
 
+        // Logout
+        private void toolStripMenuItem_LogOut_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to log out?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                LoginData.LogOut();
+                this.setPrivilegeMode();
+            }
+
+            // Close all mdi windows 
+            foreach (Form childForm in MdiChildren)
+            {
+                childForm.Close();
+            }
+
+            this.statusStrip.Items[0].Text = "Logged out";
+        }
+
         private void editMenu_Click(object sender, EventArgs e)
         {
 
@@ -282,6 +310,24 @@ namespace APCC
             showBuildsForm showBuildsForm = new showBuildsForm();
             showBuildsForm.MdiParent = this;
             showBuildsForm.Show();
+        }
+
+        // Builds manager
+        private void buildToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(BuildsManagerForm), this);
+
+            if (tmpForm == null)
+            {
+                BuildsManagerForm loginForm = new BuildsManagerForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
         }
     }
 }

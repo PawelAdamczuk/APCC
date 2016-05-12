@@ -36,30 +36,32 @@ namespace APCC.Forms
             try
             {   
                 using (SqlCommand com = new SqlCommand("SELECT dbo.getUsrId(@login, @password)", SqlConn.Connection))
+                {
+                    com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
+                    com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
+
+                    string tmpString = com.ExecuteScalar().ToString();
+
+                    if (tmpString == "")
                     {
-                        com.Parameters.Add("@login", SqlDbType.VarChar).Value = login;
-                        com.Parameters.Add("@password", SqlDbType.VarChar).Value = Utilities.StringHash(password);
-
-                        string tmpString = com.ExecuteScalar().ToString();
-
-                        if (tmpString == "")
-                        {
-                            MessageBox.Show("Incorrect login or password!");
-                            txbPswd.Clear();
+                        MessageBox.Show("Incorrect login or password!");
+                        txbPswd.Clear();
                     }
                     else
-                        {
-                            LoginData.Login(int.Parse(tmpString));
+                    {
+                        LoginData.Login(int.Parse(tmpString));
 
                         MessageBox.Show("Logged as " + LoginData.GetUserName());
-                            parent.statusStrip.Items[0].Text = "Logged in as " + LoginData.GetUserName();
 
-                            parent.setPrivilegeMode();
-                            parent.disableLogIn();
+                        string tmpString2 = "Logged in as " + LoginData.GetUserName() + " (" + LoginData.GetUserRoleName() + ")";
+                        parent.statusStrip.Items[0].Text = tmpString2;
 
-                            this.Close();
-                        }
-                    } 
+                        parent.setPrivilegeMode();
+                        parent.disableLogIn();
+
+                        this.Close();
+                    }
+                } 
             }
             catch(SqlException ex)
             {
