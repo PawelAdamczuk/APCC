@@ -18,15 +18,73 @@ namespace APCC.Forms.EditForms
         //
         private bool cmbTypesFilled;
 
+        public int CreatorID;
+        public int TesterID;
+        public bool isTester;
+
+        // Change accept state
+        public void changeStatus(bool lAccept)
+        {
+            cbxAccept.Checked = lAccept;
+
+            if (lAccept)
+            {
+                labStatus.Text = "Accepted";
+                labStatus.ForeColor = Color.Lime;
+
+                this.isTester = true;
+                this.TesterID = LoginData.GetUserID();
+                this.txbTesterName.Text = LoginData.GetUserName();
+            }
+            else
+            {
+                labStatus.Text = "Not accepted";
+                labStatus.ForeColor = Color.Red;
+
+                this.isTester = false;
+                this.TesterID = 0;
+                this.txbTesterName.Text = "";
+            }
+        }
+
         public BuildEditForm()
         {
             cmbTypesFilled = false;
             InitializeComponent();
         }
 
+        // Add one more selected component
         private void button1_Click(object sender, EventArgs e)
         {
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
 
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount++;
+
+            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+        }
+
+        // Delete one selected component
+        private void btnMinus_Click(object sender, EventArgs e)
+        {
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount--;
+
+            if (tmpCount > 0)
+            {
+                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+            }
+            else {
+                dgvComponents.Rows.RemoveAt( dgvComponents.SelectedRows[0].Index );
+            }
         }
 
         // Fill combobox with components types
@@ -61,14 +119,16 @@ namespace APCC.Forms.EditForms
 
         // Load dgvComponents
         private void refreshDgvComponents()
-        {            
+        {
+            bool lNewBuild = false;
+
             // txbID is empty, probably new build
             if (txbID.Text == "")
-                return;
+                lNewBuild = true;
 
             // txbID is not a number
             int lBuildID = 0;
-            if (Int32.TryParse(txbID.Text, out lBuildID) == false)
+            if ( ( lNewBuild == false ) && ( Int32.TryParse(txbID.Text, out lBuildID) == false ) )
             {
                 MessageBox.Show("Error: Cannot convert build ID to number.");
                 return;
@@ -78,6 +138,7 @@ namespace APCC.Forms.EditForms
 
             try
             {
+                // ROW( comID, typName, comName, comCount )
                 lStmt = @"
                             SELECT
                                 comID,
@@ -91,7 +152,10 @@ namespace APCC.Forms.EditForms
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
 
                 lCommand.Parameters.Add("@pBuildID", SqlDbType.Int);
-                lCommand.Parameters["@pBuildID"].Value = lBuildID;
+                if( lNewBuild )
+                    lCommand.Parameters["@pBuildID"].Value = DBNull.Value;
+                else
+                    lCommand.Parameters["@pBuildID"].Value = lBuildID;
 
                 SqlDataReader lDataReader = lCommand.ExecuteReader();
 
@@ -143,12 +207,10 @@ namespace APCC.Forms.EditForms
 
                 dgvComponentsList.DataSource = lTable;
 
-                // Set autosize
-                //for( int i = 0; i < dgvComponentsList.ColumnCount; i++ )
-                //dgvComponentsList.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
                 dgvComponentsList.Columns["comID"].Visible = false;
+                dgvComponentsList.Columns["typName"].Visible = false;
                 dgvComponentsList.Columns["comTypeID"].Visible = false;
+                dgvComponentsList.Columns["typID"].Visible = false;
 
                 dgvComponentsList.Columns["comName"].HeaderText = "Component name";
                 dgvComponentsList.Columns["comName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -215,7 +277,7 @@ namespace APCC.Forms.EditForms
             this.refreshDgvComponentsList();
         }
 
-        // Change 
+        // Refresh dgvComponentsList on type change 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if( this.cmbTypesFilled == true )
@@ -223,6 +285,7 @@ namespace APCC.Forms.EditForms
 
         }
 
+        // Change description on row change
         private void dgvComponents_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             // For any other operation except, StateChanged, do nothing
@@ -236,5 +299,280 @@ namespace APCC.Forms.EditForms
             }
 
        }
+
+        // Accept build
+        private void acceptBuild()
+        {
+            SqlCommand lSCmd;
+            SqlParameter lMsg;
+
+            try
+            {
+                // (@pBuildID, @pTesterID, @oMsg)
+                lSCmd = new SqlCommand("acceptBuild", SqlConn.Connection);
+                lSCmd.CommandType = CommandType.StoredProcedure;
+
+                lSCmd.Parameters.Add("@pBuildID", SqlDbType.Int);
+
+                lSCmd.Parameters.Add("@pTesterID", SqlDbType.Int);
+
+                lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
+                lMsg.Direction = ParameterDirection.Output;
+
+                // Param values
+                lSCmd.Parameters["@pBuildID"].Value = Int32.Parse(this.txbID.Text);
+
+                lSCmd.Parameters["@pTesterID"].Value = LoginData.GetUserID();
+
+                lSCmd.ExecuteNonQuery();
+
+                if (lMsg.Value.ToString() != "OK")
+                {
+                    MessageBox.Show(lMsg.Value.ToString());
+                }
+                else
+                {
+                    this.changeStatus(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        // Save build
+        private void saveBuild()
+        {
+            SqlCommand lSCmd;
+
+            SqlParameter lID;
+            SqlParameter lBuildName;
+            SqlParameter lCreatorID;
+            SqlParameter lTesterID;
+            SqlParameter lAccepted;
+            SqlParameter lComArray;
+            SqlParameter lMsg;
+
+            try
+            {
+                // saveBuild( @pBuildID, @pBuildName, @pCreatorID, @pTesterID, @pAccepted, @pComArray, @oMsg )
+                lSCmd = new SqlCommand("saveBuild", SqlConn.Connection);
+                lSCmd.CommandType = CommandType.StoredProcedure;
+
+                //
+                // Define parameters
+                //
+
+                lID = lSCmd.Parameters.Add("@pBuildID", SqlDbType.Int);
+                lBuildName = lSCmd.Parameters.Add("@pBuildName", SqlDbType.VarChar, 256);
+                lCreatorID = lSCmd.Parameters.Add("@pCreatorID", SqlDbType.Int);
+                lTesterID = lSCmd.Parameters.Add("@pTesterID", SqlDbType.Int);
+                lAccepted = lSCmd.Parameters.Add("@pAccepted", SqlDbType.Bit);
+                lComArray = lSCmd.Parameters.Add("@pComArray", SqlDbType.Structured);
+                lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
+
+                lID.Direction = ParameterDirection.InputOutput;
+                lMsg.Direction = ParameterDirection.Output;
+                
+                //
+                // Fill parameters
+                //
+
+                if (txbID.Text == "")
+                    lSCmd.Parameters["@pBuildID"].Value = DBNull.Value;
+                else
+                    lSCmd.Parameters["@pBuildID"].Value = int.Parse(txbID.Text);
+                
+                lSCmd.Parameters["@pBuildName"].Value = txbName.Text;
+
+                lSCmd.Parameters["@pCreatorID"].Value = this.CreatorID;
+
+                if( this.isTester )
+                    lSCmd.Parameters["@pTesterID"].Value = this.TesterID;
+                else
+                    lSCmd.Parameters["@pTesterID"].Value = DBNull.Value;
+
+                lSCmd.Parameters["@pAccepted"].Value = cbxAccept.Checked;
+
+                DataTable comTable = new DataTable();
+                comTable.Columns.Add("ID");
+                comTable.Columns.Add("comID");
+                comTable.Columns.Add("comCount");
+
+                int i = 0;
+                foreach( DataGridViewRow lRow in dgvComponents.Rows ){
+                    comTable.Rows.Add(i++, lRow.Cells["comID"].Value, lRow.Cells["comCount"].Value);
+                }
+
+                lSCmd.Parameters["@pComArray"].Value = comTable;
+
+                // Execute
+                lSCmd.ExecuteNonQuery();
+
+                if (lMsg.Value.ToString() != "OK")
+                {
+                    MessageBox.Show( "Database error: " + lMsg.Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Build saved!");
+                    txbID.Text = lID.Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        // Close button
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        // On close
+        private void BuildEditForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ((BuildsManagerForm)this.Owner).refreshDataGrid();
+        }
+
+        // Hide info when there is no rows in dgvComponents
+        private void dgvComponents_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if (dgvComponents.Rows.Count <= 0 ){
+                rtxDescription.Text = "";
+            }
+        }
+
+        // Delete all components from list
+        private void btnClearAll_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to delete all components from list ?", 
+                                "Notification",
+                                MessageBoxButtons.YesNo)
+                                == DialogResult.Yes)
+            {
+
+                while( dgvComponents.Rows.Count > 0 )
+                    dgvComponents.Rows.RemoveAt(0);
+            }
+
+        }
+
+        // Delete selected component
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int tmpIndex = dgvComponents.SelectedRows[0].Index;
+
+            dgvComponents.Rows.RemoveAt(tmpIndex);
+
+            // Select next row and check is there any rows
+            tmpIndex--;
+            if (dgvComponents.Rows.Count > 0)
+            {
+                if (tmpIndex >= 0)
+                {
+                    dgvComponents.Rows[tmpIndex].Selected = true;
+                }
+                else
+                {
+                    dgvComponents.Rows[0].Selected = true;
+                }
+            }
+
+        }
+
+        // Add slected component to list
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            // No selested item
+            if (dgvComponentsList.SelectedRows.Count == 0)
+            {
+                labLog.Text = "No item selected.";
+                return;
+            }
+
+            // Selected item already in build
+            foreach (DataGridViewRow lRow in dgvComponents.Rows)
+            {
+                if ( (int)(lRow.Cells["comID"].Value) == (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value) ) {
+
+                    lRow.Cells["comCount"].Value = 
+                        Int32.Parse(lRow.Cells["comCount"].Value.ToString() )  + 1;
+                    
+                    labLog.Text = 
+                        "Increase number of " + 
+                        dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + 
+                        " (Count:" + lRow.Cells["comCount"].Value.ToString() + ")";
+                    return;
+                }
+            }
+
+            // New item
+            // row_dgvComponents( comID, typName, comName, comCount )
+            int     lComID   = (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value);
+            string  lTypName = dgvComponentsList.SelectedRows[0].Cells["typName"].Value.ToString();
+            string  lComName = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
+
+            ((DataTable)(dgvComponents.DataSource)).Rows.Add( lComID, lTypName, lComName, 1);
+
+            labLog.Text = "Added " + dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + " to build.";
+
+        }
+
+        // Change state info after checked changed
+        private void cbxAccept_CheckedChanged(object sender, EventArgs e)
+        {
+            DialogResult lResult;
+
+            if (cbxAccept.Checked) {
+                lResult = MessageBox.Show(
+                            "Do you want accept this build as " + LoginData.GetUserName() + "?",
+                            "Notification",
+                            MessageBoxButtons.YesNo
+                          );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(true);
+                }
+                else {
+                    cbxAccept.Checked = false;
+                }
+            }
+            else {
+                lResult = MessageBox.Show(
+                            "Do you want change status of build and remove current tester?",
+                            "Notification",
+                            MessageBoxButtons.YesNo
+                          );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(false);
+                }
+                else {
+                    cbxAccept.Checked = true;
+                }
+            }
+        }
+
+        // Save button
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER) {
+                this.acceptBuild();
+            }
+
+            if (LoginData.GetUserRoleID() == (int)LoginData.Role.ADMINISTRATOR ||
+                LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR )
+            {
+                this.saveBuild();
+            }
+        }
+
     }
 }

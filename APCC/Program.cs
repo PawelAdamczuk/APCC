@@ -16,18 +16,37 @@ namespace APCC
         [STAThread]
         static void Main()
         {
-            try
+            bool lRetry = true;
+            bool lConnected = false;
+
+            while (lRetry && !(lConnected))
             {
-                SqlConn.Connection.Open();
-            }
-            catch (Exception ex) {
-                MessageBox.Show("Cannot connect to database.");
+                try
+                {
+                    SqlConn.Connection.Open();
+                    lConnected = true;
+                }
+                catch (Exception ex)
+                {
+                    DialogResult tmpResult;
+
+                    tmpResult = MessageBox.Show("Cannot connect to database. Reconnect ?", 
+                                                "Error", 
+                                                MessageBoxButtons.YesNo);
+
+                    if (tmpResult == DialogResult.No) {
+                        lRetry = false;
+                    }
+                }
             }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-
+            // Run aplication
+            if (lConnected)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
         }
     }
 }

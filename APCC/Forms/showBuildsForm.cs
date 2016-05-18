@@ -103,11 +103,20 @@ namespace APCC.Forms
                 int idBuild = Int32.Parse(selectedBuild.ToString().Split(' ')[0]);
                 using(SqlCommand acceptBuild = new SqlCommand("acceptBuild", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    acceptBuild.Parameters.AddWithValue("@id", idBuild);
+                    acceptBuild.Parameters.Add("@pBuildID", SqlDbType.Int);
+                    acceptBuild.Parameters.Add("@pTesterID", SqlDbType.Int);
+
+                    acceptBuild.Parameters["@pBuildID"].Value = idBuild;
+                    acceptBuild.Parameters["@pTesterID"].Value = LoginData.GetUserID();
+
+                    SqlParameter oMsg = acceptBuild.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
+                    oMsg.Direction = ParameterDirection.Output;
+
                     acceptBuild.ExecuteNonQuery();
                 }
                 loadBuilds();
             }
+            
         }
         private void button2_Click(object sender, EventArgs e)//deleteBuild
         {

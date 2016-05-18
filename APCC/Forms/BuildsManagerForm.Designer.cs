@@ -46,6 +46,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.bnsComponents = new System.Windows.Forms.BindingSource(this.components);
             this.bnsBuilds = new System.Windows.Forms.BindingSource(this.components);
+            this.btnAccept = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuilds)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComponents)).BeginInit();
@@ -183,16 +184,17 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(931, 430);
+            this.btnDelete.Location = new System.Drawing.Point(780, 430);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(145, 44);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(629, 430);
+            this.btnAddNew.Location = new System.Drawing.Point(629, 478);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(145, 44);
             this.btnAddNew.TabIndex = 2;
@@ -202,7 +204,7 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(780, 430);
+            this.btnEdit.Location = new System.Drawing.Point(629, 430);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(145, 44);
             this.btnEdit.TabIndex = 2;
@@ -220,6 +222,16 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Builds";
             // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(931, 430);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(145, 44);
+            this.btnAccept.TabIndex = 2;
+            this.btnAccept.Text = "Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            // 
             // BuildsManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -227,6 +239,7 @@
             this.ClientSize = new System.Drawing.Size(1088, 534);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAddNew);
+            this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClose);
@@ -267,5 +280,6 @@
         private System.Windows.Forms.TextBox txbCreator;
         private System.Windows.Forms.TextBox txbTester;
         private System.Windows.Forms.Label labState;
+        private System.Windows.Forms.Button btnAccept;
     }
 }

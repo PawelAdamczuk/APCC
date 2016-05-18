@@ -33,7 +33,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txbTesterName = new System.Windows.Forms.TextBox();
             this.txbID = new System.Windows.Forms.TextBox();
-            this.btnAccept = new System.Windows.Forms.Button();
             this.txbName = new System.Windows.Forms.TextBox();
             this.txbCreatorName = new System.Windows.Forms.TextBox();
             this.labStatus = new System.Windows.Forms.Label();
@@ -51,10 +50,13 @@
             this.rtxDescription = new System.Windows.Forms.RichTextBox();
             this.dgvComponents = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.labLog = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.dgvComponentsList = new System.Windows.Forms.DataGridView();
+            this.cbxAccept = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -95,9 +97,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbxAccept);
             this.groupBox1.Controls.Add(this.txbTesterName);
             this.groupBox1.Controls.Add(this.txbID);
-            this.groupBox1.Controls.Add(this.btnAccept);
             this.groupBox1.Controls.Add(this.txbName);
             this.groupBox1.Controls.Add(this.txbCreatorName);
             this.groupBox1.Controls.Add(this.labStatus);
@@ -128,15 +130,6 @@
             this.txbID.Name = "txbID";
             this.txbID.Size = new System.Drawing.Size(289, 22);
             this.txbID.TabIndex = 1;
-            // 
-            // btnAccept
-            // 
-            this.btnAccept.Location = new System.Drawing.Point(310, 167);
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(72, 27);
-            this.btnAccept.TabIndex = 5;
-            this.btnAccept.Text = "Accept";
-            this.btnAccept.UseVisualStyleBackColor = true;
             // 
             // txbName
             // 
@@ -216,6 +209,7 @@
             this.btnClose.TabIndex = 5;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -225,6 +219,7 @@
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDelete
             // 
@@ -234,6 +229,7 @@
             this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnMinus
             // 
@@ -243,7 +239,7 @@
             this.btnMinus.TabIndex = 5;
             this.btnMinus.Text = "-";
             this.btnMinus.UseVisualStyleBackColor = true;
-            this.btnMinus.Click += new System.EventHandler(this.button1_Click);
+            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
             // 
             // btnPlus
             // 
@@ -263,7 +259,7 @@
             this.btnClearAll.TabIndex = 5;
             this.btnClearAll.Text = "Clear all";
             this.btnClearAll.UseVisualStyleBackColor = true;
-            this.btnClearAll.Click += new System.EventHandler(this.button1_Click);
+            this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
             // 
             // rtxDescription
             // 
@@ -290,10 +286,13 @@
             this.dgvComponents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvComponents.Size = new System.Drawing.Size(569, 527);
             this.dgvComponents.TabIndex = 3;
+            this.dgvComponents.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvComponents_RowsRemoved);
             this.dgvComponents.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgvComponents_RowStateChanged);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.labLog);
             this.tabPage2.Controls.Add(this.btnAdd);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.cmbType);
@@ -306,6 +305,25 @@
             this.tabPage2.Text = "Components";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label9.Location = new System.Drawing.Point(224, 549);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 17);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Log:";
+            // 
+            // labLog
+            // 
+            this.labLog.AutoSize = true;
+            this.labLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labLog.Location = new System.Drawing.Point(270, 549);
+            this.labLog.Name = "labLog";
+            this.labLog.Size = new System.Drawing.Size(0, 17);
+            this.labLog.TabIndex = 4;
+            // 
             // btnAdd
             // 
             this.btnAdd.Location = new System.Drawing.Point(6, 514);
@@ -314,6 +332,7 @@
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label5
             // 
@@ -348,8 +367,18 @@
             this.dgvComponentsList.RowHeadersVisible = false;
             this.dgvComponentsList.RowTemplate.Height = 24;
             this.dgvComponentsList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvComponentsList.Size = new System.Drawing.Size(904, 560);
+            this.dgvComponentsList.Size = new System.Drawing.Size(904, 536);
             this.dgvComponentsList.TabIndex = 0;
+            // 
+            // cbxAccept
+            // 
+            this.cbxAccept.AutoSize = true;
+            this.cbxAccept.Location = new System.Drawing.Point(368, 172);
+            this.cbxAccept.Name = "cbxAccept";
+            this.cbxAccept.Size = new System.Drawing.Size(18, 17);
+            this.cbxAccept.TabIndex = 2;
+            this.cbxAccept.UseVisualStyleBackColor = true;
+            this.cbxAccept.Click += new System.EventHandler(this.cbxAccept_CheckedChanged);
             // 
             // BuildEditForm
             // 
@@ -360,6 +389,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "BuildEditForm";
             this.Text = "Build edition";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BuildEditForm_FormClosed);
             this.Load += new System.EventHandler(this.BuildEditForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -400,6 +430,8 @@
         public System.Windows.Forms.TextBox txbName;
         public System.Windows.Forms.TextBox txbCreatorName;
         public System.Windows.Forms.Label labStatus;
-        public System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labLog;
+        public System.Windows.Forms.CheckBox cbxAccept;
     }
 }
