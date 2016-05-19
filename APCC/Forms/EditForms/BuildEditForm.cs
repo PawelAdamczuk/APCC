@@ -132,16 +132,18 @@ namespace APCC.Forms.EditForms
                                 TYPES
                          ";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
 
-                DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
+                    DataTable lTable = new DataTable();
+                    lTable.Load(lDataReader);
 
-                cmbType.DataSource = lTable;
-                cmbType.DisplayMember = "typName";
-                cmbType.ValueMember = "typID";
+                    cmbType.DataSource = lTable;
+                    cmbType.DisplayMember = "typName";
+                    cmbType.ValueMember = "typID";
 
-                this.cmbTypesFilled = true;
+                    this.cmbTypesFilled = true;
+                }
             }
             catch (Exception ex)
             {

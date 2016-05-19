@@ -51,18 +51,18 @@ namespace APCC
 
                 lCommand.Parameters.Add("@pID", SqlDbType.Int);
                 lCommand.Parameters["@pID"].Value = pID;
-                
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
 
-                while (lDataReader.Read())
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
                 {
-                    FName = lDataReader.GetString(0);
-                    SName = lDataReader.GetString(1);
-                    RoleID = lDataReader.GetInt32(2);
-                    RoleName = lDataReader.GetString(3);
-                }
+                    while (lDataReader.Read())
+                    {
+                        FName = lDataReader.GetString(0);
+                        SName = lDataReader.GetString(1);
+                        RoleID = lDataReader.GetInt32(2);
+                        RoleName = lDataReader.GetString(3);
+                    }
 
-                lDataReader.Close();
+                }
 
                 // 3 is for admin 
                 if (RoleID == 3)
