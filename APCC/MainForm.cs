@@ -130,7 +130,7 @@ namespace APCC
             // Enable logout button
             if (this.privilegeMode != PrivilegeMode.NULL){
                 this.toolStripMenuItem_LogOut.Visible = true;
-                this.toolStripMenuItem_LogOut.Visible = true;
+                this.toolStripMenuItem_LogOut.Enabled = true;
             }
 
         }
@@ -315,7 +315,7 @@ namespace APCC
             showBuildsForm.MdiParent = this;
             showBuildsForm.Show();
 
-            
+ 
         }
 
         // Builds manager
