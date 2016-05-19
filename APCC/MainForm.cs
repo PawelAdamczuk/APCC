@@ -311,9 +311,11 @@ namespace APCC
 
         private void buildsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showBuildsForm showBuildsForm = new showBuildsForm();
+            BuildsManagerForm showBuildsForm = new BuildsManagerForm();
             showBuildsForm.MdiParent = this;
             showBuildsForm.Show();
+
+            
         }
 
         // Builds manager
