@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace APCC.Forms
+namespace APCC.Forms.EditForms
 {
     public partial class AddComponentForm : Form
     {
@@ -38,11 +38,6 @@ namespace APCC.Forms
 
 
 
-
-        }
-
-        private void AddComponentForm_Load(object sender, EventArgs e)
-        {
 
         }
     }

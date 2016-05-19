@@ -1,6 +1,6 @@
-﻿namespace APCC
+﻿namespace APCC.Forms.EditForms
 {
-    partial class Form1
+    partial class AddComponentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,20 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.comboBox_ = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // Form1
+            // comboBox_
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.comboBox_.FormattingEnabled = true;
+            this.comboBox_.Location = new System.Drawing.Point(13, 13);
+            this.comboBox_.Name = "comboBox_";
+            this.comboBox_.Size = new System.Drawing.Size(318, 21);
+            this.comboBox_.TabIndex = 0;
+            // 
+            // AddComponentForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 321);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(343, 488);
+            this.Controls.Add(this.comboBox_);
+            this.Name = "AddComponentForm";
+            this.Text = "AddComponentForm";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.ComboBox comboBox_;
     }
 }
-

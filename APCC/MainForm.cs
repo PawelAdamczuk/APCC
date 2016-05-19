@@ -78,7 +78,7 @@ namespace APCC
 
                     menuStrip.Items["fileMenu"].Enabled = true;
                     ToolStripMenuItem typedItem2 = (ToolStripMenuItem)menuStrip.Items["fileMenu"];
-                    typedItem2.DropDownItems["componentsToolStripMenuItem"].Enabled = true;
+                    componentsToolStripMenuItem.Enabled = true;
                     break;
 
 

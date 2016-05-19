@@ -40,7 +40,7 @@ namespace APCC.Forms
         {
             if(fName == "" || lName == "" || login == "" || password == "" || position == "")
             {
-                MessageBox.Show("You entered incorrect date");
+                MessageBox.Show("You entered incorrect data");
                 return false;
             }
 
@@ -50,7 +50,7 @@ namespace APCC.Forms
                 {
                     if (r.HasRows == true)
                     {
-                        MessageBox.Show("The user name has taken");
+                        MessageBox.Show("The user name has been taken");
                         return false;
                     }
                 }
@@ -115,6 +115,12 @@ namespace APCC.Forms
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             ignoreWhiteChar(textBox4);
+        }
+        
+        // On load
+        private void addingNewUserForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

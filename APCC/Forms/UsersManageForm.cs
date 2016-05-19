@@ -46,6 +46,12 @@ namespace APCC.Forms
 
         private void UsersManageForm_Load(object sender, EventArgs e)
         {
+            // Privilege
+            if (!(LoginData.GetUserRoleID() == (int)LoginData.Role.ADMINISTRATOR))
+            {
+                btnAdd.Visible = false;
+            }
+
             LoadUsers();
         }
 
@@ -109,6 +115,15 @@ namespace APCC.Forms
                     MessageBox.Show("You cannot delete yourself, moron!");
                 }
             }
+        }
+
+        // Add user
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            addingNewUserForm addingNewUserForm = new addingNewUserForm();
+
+            addingNewUserForm.Owner = this;
+            addingNewUserForm.ShowDialog();
         }
     }
 }

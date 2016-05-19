@@ -155,5 +155,29 @@ namespace APCC.Forms
         {
             this.Close();
         }
+
+        // Show details
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            if (dgvComponentsList.SelectedRows.Count > 0) {
+
+                int lComponentID = (int)dgvComponentsList.SelectedRows[0].Cells["comID"].Value;
+
+                Description childForm = new Description( lComponentID );
+
+                childForm.MdiParent = this.MdiParent;
+                childForm.Show();
+            }
+        }
+
+        // Add new
+        private void button2_Click(object sender, EventArgs e)
+        {
+            EditForms.AddComponentForm childForm = new EditForms.AddComponentForm();
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
+        }
+
     }
 }
