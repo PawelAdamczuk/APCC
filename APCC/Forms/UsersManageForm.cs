@@ -21,7 +21,7 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
-        private void LoadUsers()
+        public void LoadUsers()
         {
             listBox1.Items.Clear();
             listBox2.Items.Clear();

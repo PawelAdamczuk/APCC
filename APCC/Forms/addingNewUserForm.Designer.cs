@@ -85,7 +85,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(10, 40);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(191, 22);
             this.textBox1.TabIndex = 4;
@@ -94,7 +94,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(10, 87);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(191, 22);
             this.textBox2.TabIndex = 5;
@@ -103,7 +103,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(209, 40);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(195, 22);
             this.textBox3.TabIndex = 6;
@@ -112,7 +112,7 @@
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(211, 88);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(191, 22);
             this.textBox4.TabIndex = 7;
@@ -131,7 +131,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(212, 174);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(91, 28);
             this.button1.TabIndex = 10;
@@ -142,7 +142,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(311, 174);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 28);
             this.button2.TabIndex = 11;
@@ -159,7 +159,7 @@
             "Tester",
             "Administrator"});
             this.listBox1.Location = new System.Drawing.Point(10, 134);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(191, 68);
             this.listBox1.TabIndex = 12;
@@ -181,8 +181,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "addingNewUserForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editing user";
             this.Load += new System.EventHandler(this.addingNewUserForm_Load);
             this.ResumeLayout(false);

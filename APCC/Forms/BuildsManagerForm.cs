@@ -209,7 +209,9 @@ namespace APCC.Forms
             }
 
             this.refreshDataGrid();
-            
+
+            // TODO
+            ((BindingSource)dgvBuilds.DataSource).Filter = "bldCreatorID = 8";
        }
 
         private void button3_Click(object sender, EventArgs e)

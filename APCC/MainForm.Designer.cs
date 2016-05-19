@@ -30,20 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShow = new System.Windows.Forms.ToolStripMenuItem();
             this.buildsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.builds2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.componentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.componentTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_login = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_LogOut = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.componentTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.builds2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -52,9 +52,9 @@
             // 
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileMenu,
-            this.administrationToolStripMenuItem,
-            this.toolsMenu,
+            this.menuShow,
+            this.menuAdmin,
+            this.manuTools,
             this.toolStripMenuItem_login,
             this.toolStripMenuItem_LogOut});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -64,17 +64,17 @@
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
-            // fileMenu
+            // menuShow
             // 
-            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuShow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buildsToolStripMenuItem,
             this.builds2ToolStripMenuItem,
             this.componentsToolStripMenuItem});
-            this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
-            this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(57, 24);
-            this.fileMenu.Text = "&Show";
-            this.fileMenu.Click += new System.EventHandler(this.fileMenu_Click);
+            this.menuShow.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
+            this.menuShow.Name = "menuShow";
+            this.menuShow.Size = new System.Drawing.Size(57, 24);
+            this.menuShow.Text = "&Show";
+            this.menuShow.Click += new System.EventHandler(this.fileMenu_Click);
             // 
             // buildsToolStripMenuItem
             // 
@@ -83,6 +83,13 @@
             this.buildsToolStripMenuItem.Text = "Builds";
             this.buildsToolStripMenuItem.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
             // 
+            // builds2ToolStripMenuItem
+            // 
+            this.builds2ToolStripMenuItem.Name = "builds2ToolStripMenuItem";
+            this.builds2ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.builds2ToolStripMenuItem.Text = "Builds2";
+            this.builds2ToolStripMenuItem.Click += new System.EventHandler(this.buildToolStripMenuItem_Click);
+            // 
             // componentsToolStripMenuItem
             // 
             this.componentsToolStripMenuItem.Name = "componentsToolStripMenuItem";
@@ -90,18 +97,41 @@
             this.componentsToolStripMenuItem.Text = "Components";
             this.componentsToolStripMenuItem.Click += new System.EventHandler(this.componentsToolStripMenuItem_Click);
             // 
-            // toolsMenu
+            // menuAdmin
             // 
-            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.usersToolStripMenuItem1,
+            this.componentTypesToolStripMenuItem});
+            this.menuAdmin.Name = "menuAdmin";
+            this.menuAdmin.Size = new System.Drawing.Size(119, 24);
+            this.menuAdmin.Text = "Administration";
+            // 
+            // usersToolStripMenuItem1
+            // 
+            this.usersToolStripMenuItem1.Name = "usersToolStripMenuItem1";
+            this.usersToolStripMenuItem1.Size = new System.Drawing.Size(201, 26);
+            this.usersToolStripMenuItem1.Text = "Users";
+            this.usersToolStripMenuItem1.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
+            // 
+            // componentTypesToolStripMenuItem
+            // 
+            this.componentTypesToolStripMenuItem.Name = "componentTypesToolStripMenuItem";
+            this.componentTypesToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
+            this.componentTypesToolStripMenuItem.Text = "Component types";
+            this.componentTypesToolStripMenuItem.Click += new System.EventHandler(this.componentTypeToolStripMenuItem_Click);
+            // 
+            // manuTools
+            // 
+            this.manuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
-            this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(57, 24);
-            this.toolsMenu.Text = "&Tools";
+            this.manuTools.Name = "manuTools";
+            this.manuTools.Size = new System.Drawing.Size(57, 24);
+            this.manuTools.Text = "&Tools";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // toolStripMenuItem_login
@@ -140,36 +170,6 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // administrationToolStripMenuItem
-            // 
-            this.administrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersToolStripMenuItem1,
-            this.componentTypesToolStripMenuItem});
-            this.administrationToolStripMenuItem.Name = "administrationToolStripMenuItem";
-            this.administrationToolStripMenuItem.Size = new System.Drawing.Size(119, 24);
-            this.administrationToolStripMenuItem.Text = "Administration";
-            // 
-            // usersToolStripMenuItem1
-            // 
-            this.usersToolStripMenuItem1.Name = "usersToolStripMenuItem1";
-            this.usersToolStripMenuItem1.Size = new System.Drawing.Size(201, 26);
-            this.usersToolStripMenuItem1.Text = "Users";
-            this.usersToolStripMenuItem1.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
-            // 
-            // componentTypesToolStripMenuItem
-            // 
-            this.componentTypesToolStripMenuItem.Name = "componentTypesToolStripMenuItem";
-            this.componentTypesToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.componentTypesToolStripMenuItem.Text = "Component types";
-            this.componentTypesToolStripMenuItem.Click += new System.EventHandler(this.componentTypeToolStripMenuItem_Click);
-            // 
-            // builds2ToolStripMenuItem
-            // 
-            this.builds2ToolStripMenuItem.Name = "builds2ToolStripMenuItem";
-            this.builds2ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.builds2ToolStripMenuItem.Text = "Builds2";
-            this.builds2ToolStripMenuItem.Click += new System.EventHandler(this.buildToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -183,6 +183,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "APCC";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -195,8 +196,8 @@
 
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileMenu;
-        private System.Windows.Forms.ToolStripMenuItem toolsMenu;
+        private System.Windows.Forms.ToolStripMenuItem menuShow;
+        private System.Windows.Forms.ToolStripMenuItem manuTools;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_login;
@@ -206,7 +207,7 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_LogOut;
         private System.Windows.Forms.ToolStripMenuItem builds2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem administrationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuAdmin;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem componentTypesToolStripMenuItem;
     }
