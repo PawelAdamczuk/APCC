@@ -100,6 +100,10 @@ namespace APCC
                     ToolStripMenuItem typedItem4 = (ToolStripMenuItem)menuStrip.Items["fileMenu"];
                     typedItem4.DropDownItems["buildsToolStripMenuItem"].Enabled = true;
                     typedItem4.DropDownItems["componentsToolStripMenuItem"].Enabled = true;
+
+                    menuStrip.Items["editMenu"].Enabled = true;
+                    typedItem4 = (ToolStripMenuItem)menuStrip.Items["editMenu"];
+                    typedItem4.DropDownItems["buildToolStripMenuItem"].Enabled = true;
                     break;
 
 
@@ -329,5 +333,24 @@ namespace APCC
                 tmpForm.WindowState = FormWindowState.Normal;
             }
         }
+
+        // Show components
+        private void componentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(ShowComponentsForm), this);
+
+            if (tmpForm == null)
+            {
+                ShowComponentsForm loginForm = new ShowComponentsForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
     }
 }

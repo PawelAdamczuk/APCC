@@ -81,22 +81,23 @@
             // buildsToolStripMenuItem
             // 
             this.buildsToolStripMenuItem.Name = "buildsToolStripMenuItem";
-            this.buildsToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.buildsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.buildsToolStripMenuItem.Text = "Builds";
             this.buildsToolStripMenuItem.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.usersToolStripMenuItem.Text = "Users";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
             // componentsToolStripMenuItem
             // 
             this.componentsToolStripMenuItem.Name = "componentsToolStripMenuItem";
-            this.componentsToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.componentsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.componentsToolStripMenuItem.Text = "Components";
+            this.componentsToolStripMenuItem.Click += new System.EventHandler(this.componentsToolStripMenuItem_Click);
             // 
             // editMenu
             // 
@@ -196,7 +197,7 @@
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "APCC";

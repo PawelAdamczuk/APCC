@@ -34,19 +34,22 @@
             // comboBox_
             // 
             this.comboBox_.FormattingEnabled = true;
-            this.comboBox_.Location = new System.Drawing.Point(13, 13);
+            this.comboBox_.Location = new System.Drawing.Point(17, 16);
+            this.comboBox_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox_.Name = "comboBox_";
-            this.comboBox_.Size = new System.Drawing.Size(318, 21);
+            this.comboBox_.Size = new System.Drawing.Size(423, 24);
             this.comboBox_.TabIndex = 0;
             // 
             // AddComponentForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(343, 488);
+            this.ClientSize = new System.Drawing.Size(457, 601);
             this.Controls.Add(this.comboBox_);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "AddComponentForm";
             this.Text = "AddComponentForm";
+            this.Load += new System.EventHandler(this.AddComponentForm_Load);
             this.ResumeLayout(false);
 
         }

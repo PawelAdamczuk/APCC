@@ -33,7 +33,8 @@ namespace APCC.Forms
                 labState.Text = "Not accepted";
                 labState.ForeColor = Color.Red;
 
-                btnAccept.Enabled = true;
+                if( LoginData.GetUserRoleID() != (int)LoginData.Role.CONFIGURATOR )
+                    btnAccept.Enabled = true;
             }
         }
 
@@ -195,14 +196,28 @@ namespace APCC.Forms
 
         private void BuildsManagerForm_Load(object sender, EventArgs e)
         {
+            // Privilage
+            if (LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR)
+            {
+                btnAccept.Enabled = false;
+            }
+
+            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER)
+            {
+                btnDelete.Enabled = false;
+                btnAddNew.Enabled = false;
+            }
+
             this.refreshDataGrid();
-        }
+            
+       }
 
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Add new build
         private void button1_Click(object sender, EventArgs e)
         {
             EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
@@ -255,8 +270,6 @@ namespace APCC.Forms
 
             childForm.CreatorID = (int)(dgvBuilds.SelectedRows[0].Cells["bldCreatorID"].Value);
             
-            // Privileage set
-
             // Show window
             childForm.Owner = this;
             childForm.ShowDialog();

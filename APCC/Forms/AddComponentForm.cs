@@ -40,5 +40,10 @@ namespace APCC.Forms
 
 
         }
+
+        private void AddComponentForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -22,6 +22,44 @@ namespace APCC.Forms.EditForms
         public int TesterID;
         public bool isTester;
 
+        public BuildEditForm()
+        {
+            cmbTypesFilled = false;
+            InitializeComponent();
+        }
+
+        // On load
+        private void BuildEditForm_Load(object sender, EventArgs e)
+        {
+            // Privilage
+            if ( LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR ) {
+                cbxAccept.Enabled = false;
+            }
+
+            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER)
+            {
+                btnAdd.Enabled = false;
+                txbName.Enabled = false;
+
+                btnPlus.Enabled = false;
+                btnMinus.Enabled = false;
+
+                btnDelete.Enabled = false;
+                btnClearAll.Enabled = false;
+            }
+
+            //
+            // Summary tab
+            //
+            this.refreshDgvComponents();
+
+            //
+            // Components tab
+            //
+            this.loadCmbTypes();
+            this.refreshDgvComponentsList();
+        }
+
         // Change accept state
         public void changeStatus(bool lAccept)
         {
@@ -45,12 +83,6 @@ namespace APCC.Forms.EditForms
                 this.TesterID = 0;
                 this.txbTesterName.Text = "";
             }
-        }
-
-        public BuildEditForm()
-        {
-            cmbTypesFilled = false;
-            InitializeComponent();
         }
 
         // Add one more selected component
@@ -262,21 +294,6 @@ namespace APCC.Forms.EditForms
             }
         }
 
-        // On load
-        private void BuildEditForm_Load(object sender, EventArgs e)
-        {
-            //
-            // Summary tab
-            //
-            this.refreshDgvComponents();
-
-            //
-            // Components tab
-            //
-            this.loadCmbTypes();
-            this.refreshDgvComponentsList();
-        }
-
         // Refresh dgvComponentsList on type change 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -301,6 +318,7 @@ namespace APCC.Forms.EditForms
        }
 
         // Accept build
+        /*
         private void acceptBuild()
         {
             SqlCommand lSCmd;
@@ -340,6 +358,7 @@ namespace APCC.Forms.EditForms
                 MessageBox.Show(ex.Message);
             }
         }
+        */
 
         // Save build
         private void saveBuild()
@@ -563,15 +582,7 @@ namespace APCC.Forms.EditForms
         // Save button
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER) {
-                this.acceptBuild();
-            }
-
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.ADMINISTRATOR ||
-                LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR )
-            {
-                this.saveBuild();
-            }
+            this.saveBuild();
         }
 
     }
