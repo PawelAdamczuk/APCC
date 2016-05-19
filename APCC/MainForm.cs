@@ -58,7 +58,7 @@ namespace APCC
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
                         item.Visible = true;
-                    }
+                            }
 
                     menuAdmin.Visible = false;
 
@@ -67,7 +67,7 @@ namespace APCC
                     foreach (ToolStripMenuItem item in menuStrip.Items)
                     {
                         item.Visible = true;
-                    }
+                            }
 
                     menuAdmin.Visible = false;
 
@@ -146,13 +146,13 @@ namespace APCC
                 this.setPrivilegeMode();
 
 
-                // Close all mdi windows 
-                foreach (Form childForm in MdiChildren)
-                {
-                    childForm.Close();
-                }
+            // Close all mdi windows 
+            foreach (Form childForm in MdiChildren)
+            {
+                childForm.Close();
+            }
 
-                this.statusStrip.Items[0].Text = "Logged out";
+            this.statusStrip.Items[0].Text = "Logged out";
                 this.openLoginWindow();
             }
         }
@@ -203,9 +203,11 @@ namespace APCC
         // Builds1
         private void buildsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showBuildsForm showBuildsForm = new showBuildsForm();
+            BuildsManagerForm showBuildsForm = new BuildsManagerForm();
             showBuildsForm.MdiParent = this;
             showBuildsForm.Show();
+
+ 
         }
 
         // Builds manager
@@ -247,6 +249,6 @@ namespace APCC
         private void MainForm_Load(object sender, EventArgs e)
         {
 
-        }
     }
+}
 }

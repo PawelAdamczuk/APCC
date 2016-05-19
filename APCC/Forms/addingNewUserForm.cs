@@ -82,6 +82,11 @@ namespace APCC.Forms
 
                     addUser.ExecuteNonQuery();
                     MessageBox.Show("You have added a new user");
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    textBox4.Clear();
+
 
                     ((UsersManageForm)this.Owner).LoadUsers();
                 }
