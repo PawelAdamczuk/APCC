@@ -64,6 +64,12 @@
     <Compile Include="Forms\EditForms\BuildEditForm.Designer.cs">
       <DependentUpon>BuildEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RolesManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RolesManagerForm.Designer.cs">
+      <DependentUpon>RolesManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditForms\TypesEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditForms\BuildEditForm.resx">
       <DependentUpon>BuildEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RolesManagerForm.resx">
+      <DependentUpon>RolesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditForms\TypesEditForm.resx">
       <DependentUpon>TypesEditForm.cs</DependentUpon>

@@ -249,6 +249,24 @@ namespace APCC
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        // Manage roles
+        private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.RolesManagerForm), this);
+
+            if (tmpForm == null)
+            {
+                Forms.RolesManagerForm loginForm = new Forms.RolesManagerForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
     }
-}
 }

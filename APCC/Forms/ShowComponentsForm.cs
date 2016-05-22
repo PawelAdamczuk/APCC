@@ -17,6 +17,7 @@ namespace APCC.Forms
         // Var 
         // 
         private bool cmbTypesFilled;
+        private DataTable typesDataTable;
 
         public ShowComponentsForm()
         {
@@ -120,21 +121,26 @@ namespace APCC.Forms
             {
                 lStmt = @"
                             select
-                                *
+                                typID,
+                                typName
                             from
                                 TYPES
                          ";
+
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
 
-                DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader()){
 
-                cmbType.DataSource = lTable;
-                cmbType.DisplayMember = "typName";
-                cmbType.ValueMember = "typID";
+                    this.typesDataTable = new DataTable();
+                    typesDataTable.Load(lDataReader);
 
-                this.cmbTypesFilled = true;
+                    cmbType.DataSource = typesDataTable;
+
+                    cmbType.DisplayMember = "typName";
+                    cmbType.ValueMember = "typID";
+
+                    this.cmbTypesFilled = true;
+                }
             }
             catch (Exception ex)
             {

@@ -19,6 +19,8 @@ namespace APCC
         private static int UserID = 0;
         private static string RoleName = "";
 
+        private static bool[] userPermissions = new bool[10];
+
         // Role enum
         public enum Role : int
         {
@@ -28,7 +30,27 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
-        // Login with role
+        // Permission enum
+        public enum Permission : int
+        {
+            ADMIN_PANEL = 0,
+            SHOW_COMPONENTS = 1,
+            MANAGE_COMPONENTS = 2,
+            SHOW_BUILDS = 3,
+            SHOW_OWN_BUILDS = 4,
+            MANAGE_BUILDS = 5,
+            MANAGE_OWN_BUILDS = 6,
+            MANAGE_BUILD_STATE = 7,
+            MANAGE_OWN_BUILD_STATE = 8,
+            MANAGE_OWN_ACCOUNT = 9
+        }
+
+        // Check if user have specific permission
+        public static bool havePermission( Permission pPerm ) {
+            return userPermissions[(int)pPerm];
+        } 
+
+        // Login with user id
         public static void Login(int pID)
         {
             string lStmt;
@@ -75,7 +97,37 @@ namespace APCC
                 MessageBox.Show(ex.ToString());
             }
 
+            // Get permissions for current role
+            getPermissions();
         }
+
+        private static void getPermissions()
+        { 
+            string lStmt;
+
+            try
+            {
+                lStmt = "SELECT * FROM getPermissionByRoleID(@pRoleID)";
+
+                SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
+
+                lCommand.Parameters.Add("@pRoleID", SqlDbType.Int);
+                lCommand.Parameters["@pRoleID"].Value = LoginData.RoleID;
+                
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
+                    while (lDataReader.Read()) {
+                        userPermissions[(int)(lDataReader["rlpPerm"])] = true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cannot load permissions: " + ex.ToString());
+            }
+        }
+
 
         public static string GetUserName()
         {
@@ -90,6 +142,9 @@ namespace APCC
             SName = "";
             RoleID = 0;
             UserID = 0;
+
+            for (int i = 0; i < userPermissions.Length; i++)
+                userPermissions[i] = false;
         }
 
         public static int GetUserID()
