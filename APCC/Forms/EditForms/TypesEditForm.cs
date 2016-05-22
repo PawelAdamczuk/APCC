@@ -128,5 +128,9 @@ namespace APCC.Forms.EditForms
             this.Close();
         }
 
+        private void TypesEditForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
