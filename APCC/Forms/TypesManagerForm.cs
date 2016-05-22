@@ -38,24 +38,26 @@ namespace APCC.Forms
                          ";
 
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
 
-                DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
+                    DataTable lTable = new DataTable();
+                    lTable.Load(lDataReader);
 
-                dgvTypes.DataSource = lTable;
+                    dgvTypes.DataSource = lTable;
 
-                dgvTypes.Columns[0].HeaderText = "ID";
-                dgvTypes.Columns[1].HeaderText = "Name";
+                    dgvTypes.Columns[0].HeaderText = "ID";
+                    dgvTypes.Columns[1].HeaderText = "Name";
 
-                dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dgvTypes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvTypes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-                // Hide parameter's names
-                for( int i = 1; i <= 10; i++ )
-                    dgvTypes.Columns["int" + i.ToString()].Visible = false;
-                for (int i = 11; i <= 20; i++)
-                    dgvTypes.Columns["string" + i.ToString()].Visible = false;
+                    // Hide parameter's names
+                    for (int i = 1; i <= 10; i++)
+                        dgvTypes.Columns["int" + i.ToString()].Visible = false;
+                    for (int i = 11; i <= 20; i++)
+                        dgvTypes.Columns["string" + i.ToString()].Visible = false;
+                }
             }
             catch (Exception ex)
             {

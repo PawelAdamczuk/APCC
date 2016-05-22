@@ -47,63 +47,64 @@ namespace APCC.Forms
                 lCommand.Parameters.Add("@pTypeID", SqlDbType.Int);
                 lCommand.Parameters["@pTypeID"].Value = cmbType.SelectedValue;
 
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
-
-                DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
-
-                dgvComponentsList.DataSource = lTable;
-
-                dgvComponentsList.Columns["comID"].Visible = false;
-                dgvComponentsList.Columns["typName"].Visible = false;
-                dgvComponentsList.Columns["comTypeID"].Visible = false;
-                dgvComponentsList.Columns["typID"].Visible = false;
-
-                dgvComponentsList.Columns["comName"].HeaderText = "Component name";
-                dgvComponentsList.Columns["comName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-                // Set parameters name
-                if (dgvComponentsList.Rows.Count > 0)
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
                 {
-                    // Int
-                    for (int i = 1; i <= 10; i++)
+
+                    DataTable lTable = new DataTable();
+                    lTable.Load(lDataReader);
+
+                    dgvComponentsList.DataSource = lTable;
+
+                    dgvComponentsList.Columns["comID"].Visible = false;
+                    dgvComponentsList.Columns["typName"].Visible = false;
+                    dgvComponentsList.Columns["comTypeID"].Visible = false;
+                    dgvComponentsList.Columns["typID"].Visible = false;
+
+                    dgvComponentsList.Columns["comName"].HeaderText = "Component name";
+                    dgvComponentsList.Columns["comName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+                    // Set parameters name
+                    if (dgvComponentsList.Rows.Count > 0)
                     {
-                        if (dgvComponentsList.Rows[0].Cells["comParamInt" + i + "Name"].Value.ToString() != "")
+                        // Int
+                        for (int i = 1; i <= 10; i++)
                         {
-                            dgvComponentsList.Columns["comParamInt" + i].Visible = true;
-                            dgvComponentsList.Columns["comParamInt" + i].HeaderText =
-                                dgvComponentsList.Rows[0].Cells["comParamInt" + i + "Name"].Value.ToString();
+                            if (dgvComponentsList.Rows[0].Cells["comParamInt" + i + "Name"].Value.ToString() != "")
+                            {
+                                dgvComponentsList.Columns["comParamInt" + i].Visible = true;
+                                dgvComponentsList.Columns["comParamInt" + i].HeaderText =
+                                    dgvComponentsList.Rows[0].Cells["comParamInt" + i + "Name"].Value.ToString();
+
+                            }
+                            else
+                            {
+                                dgvComponentsList.Columns["comParamInt" + i].Visible = false;
+                            }
+
+                            dgvComponentsList.Columns["comParamInt" + i + "Name"].Visible = false;
+                        }
+
+                        // String
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            if (dgvComponentsList.Rows[0].Cells["comParamString" + i + "Name"].Value.ToString() != "")
+                            {
+                                dgvComponentsList.Columns["comParamString" + i].Visible = true;
+                                dgvComponentsList.Columns["comParamString" + i].HeaderText =
+                                    dgvComponentsList.Rows[0].Cells["comParamString" + i + "Name"].Value.ToString();
+
+                            }
+                            else
+                            {
+                                dgvComponentsList.Columns["comParamString" + i].Visible = false;
+                            }
+
+                            dgvComponentsList.Columns["comParamString" + i + "Name"].Visible = false;
 
                         }
-                        else
-                        {
-                            dgvComponentsList.Columns["comParamInt" + i].Visible = false;
-                        }
-
-                        dgvComponentsList.Columns["comParamInt" + i + "Name"].Visible = false;
                     }
 
-                    // String
-                    for (int i = 1; i <= 10; i++)
-                    {
-                        if (dgvComponentsList.Rows[0].Cells["comParamString" + i + "Name"].Value.ToString() != "")
-                        {
-                            dgvComponentsList.Columns["comParamString" + i].Visible = true;
-                            dgvComponentsList.Columns["comParamString" + i].HeaderText =
-                                dgvComponentsList.Rows[0].Cells["comParamString" + i + "Name"].Value.ToString();
-
-                        }
-                        else
-                        {
-                            dgvComponentsList.Columns["comParamString" + i].Visible = false;
-                        }
-
-                        dgvComponentsList.Columns["comParamString" + i + "Name"].Visible = false;
-
-                    }
                 }
-
-                lDataReader.Close();
             }
             catch (Exception ex)
             {
@@ -125,16 +126,18 @@ namespace APCC.Forms
                                 TYPES
                          ";
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
 
-                DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
+                    DataTable lTable = new DataTable();
+                    lTable.Load(lDataReader);
 
-                cmbType.DataSource = lTable;
-                cmbType.DisplayMember = "typName";
-                cmbType.ValueMember = "typID";
+                    cmbType.DataSource = lTable;
+                    cmbType.DisplayMember = "typName";
+                    cmbType.ValueMember = "typID";
 
-                this.cmbTypesFilled = true;
+                    this.cmbTypesFilled = true;
+                }
             }
             catch (Exception ex)
             {
