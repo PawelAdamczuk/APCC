@@ -107,6 +107,12 @@
       <DependentUpon>UsersManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginData.cs" />
+    <Compile Include="ProfilManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilManage.Designer.cs">
+      <DependentUpon>ProfilManage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
