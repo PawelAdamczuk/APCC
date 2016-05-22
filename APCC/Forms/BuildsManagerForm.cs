@@ -18,6 +18,20 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public BuildsManagerForm(string bldName)
+        {
+            InitializeComponent();
+            int rowIndex = -1;
+
+            DataGridViewRow row = dgvBuilds.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => r.Cells["Build name"].Value.ToString().Equals(bldName))
+                .First();
+
+            rowIndex = row.Index;
+            dgvBuilds.Rows[rowIndex].Selected = true;
+
+        }
         // Change accept state
         private void changeStatus(bool lAccept) {
 
@@ -210,8 +224,7 @@ namespace APCC.Forms
 
             this.refreshDataGrid();
 
-            // TODO
-            ((BindingSource)dgvBuilds.DataSource).Filter = "bldCreatorID = 8";
+        
        }
 
         private void button3_Click(object sender, EventArgs e)

@@ -23,7 +23,7 @@ namespace APCC.Forms
 
         public void LoadUsers()
         {
-            listBox1.Items.Clear();
+            dgvUsers.Rows.Clear();
             listBox2.Items.Clear();
             SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
 
@@ -39,7 +39,6 @@ namespace APCC.Forms
                     rName = (string)reader["rlsName"];
 
                     dgvUsers.Rows.Add(id, fName, sName, rName);
-                    listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
                 }
 
             }
@@ -53,6 +52,7 @@ namespace APCC.Forms
                 btnAdd.Visible = false;
             }
 
+            btnEdit.Visible = false;
             LoadUsers();
             dgvUsers.ClearSelection();
 
@@ -65,21 +65,16 @@ namespace APCC.Forms
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           // var selectedBuild = (ListBox as sender) 
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-         
-       }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var selectedUser = listBox1.SelectedItem;
-            
-            if(selectedUser != null)
+
+
+            if (dgvUsers.SelectedRows.Count == 1)
             {
-                int idUsr = Int32.Parse(selectedUser.ToString().Split(' ')[0]);
+                int idUsr = int.Parse(dgvUsers[0, dgvUsers.CurrentCell.RowIndex].Value.ToString());
 
                 if (idUsr != LoginData.GetUserID())
                 {
