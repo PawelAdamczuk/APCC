@@ -201,8 +201,14 @@ namespace APCC.Forms.EditForms
 
                 cmd.ExecuteNonQuery();
 
-                MessageBox.Show(msg.Value.ToString());
-                this.Close();
+                if ( msg.Value.ToString() != "OK " )
+                {
+                    MessageBox.Show(msg.Value.ToString());
+                }
+                else{
+                    MessageBox.Show("Data saved.");
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
