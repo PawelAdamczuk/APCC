@@ -24,7 +24,7 @@ namespace APCC.Forms
             this.Close();
         }
 
-        private void refreshDgvRoles()
+        public void refreshDgvRoles()
         {
             string lStmt;
 
@@ -73,19 +73,34 @@ namespace APCC.Forms
         // Add role
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
+            EditForms.RoleEditForm childForm = new EditForms.RoleEditForm();
+         
+            childForm.Owner = this;
+            childForm.ShowDialog();
         }
 
         // Edit role
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            if (dgvRoles.SelectedRows.Count <= 0)
+                return;
+
+            EditForms.RoleEditForm childForm = new EditForms.RoleEditForm();
+
+            childForm.txbID.Text = dgvRoles.SelectedRows[0].Cells["rlsID"].Value.ToString();
+            childForm.txbName.Text = dgvRoles.SelectedRows[0].Cells["rlsName"].Value.ToString();
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
 
         }
 
         // Delete role
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you want delete selected role ?", "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes) {
 
+            }
         }
     }
 }

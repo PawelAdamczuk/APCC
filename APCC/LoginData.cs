@@ -19,7 +19,7 @@ namespace APCC
         private static int UserID = 0;
         private static string RoleName = "";
 
-        private static bool[] userPermissions = new bool[10];
+        private static Dictionary< string, AccessControl > dictPermissions = new Dictionary< string, AccessControl >();
 
         // Role enum
         public enum Role : int
@@ -30,25 +30,26 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
-        // Permission enum
-        public enum Permission : int
+        // Access control
+        public enum AccessControl : int
         {
-            ADMIN_PANEL = 0,
-            SHOW_COMPONENTS = 1,
-            MANAGE_COMPONENTS = 2,
-            SHOW_BUILDS = 3,
-            SHOW_OWN_BUILDS = 4,
-            MANAGE_BUILDS = 5,
-            MANAGE_OWN_BUILDS = 6,
-            MANAGE_BUILD_STATE = 7,
-            MANAGE_OWN_BUILD_STATE = 8,
-            MANAGE_OWN_ACCOUNT = 9
+            YES = 0,
+            NO = 1,
+            ONLY_OWN = 2
         }
 
         // Check if user have specific permission
-        public static bool havePermission( Permission pPerm ) {
-            return userPermissions[(int)pPerm];
-        } 
+        public static bool havePermission(string pPerm, AccessControl pAccess )
+        {
+            if (!dictPermissions.ContainsKey(pPerm)) {
+                MessageBox.Show("havePermission(): Table does not cantain specified key " + pPerm );
+                return false;
+            }
+            else
+            {
+                return ( (dictPermissions[pPerm] == pAccess) ? true : false);
+            }
+        }
 
         // Login with user id
         public static void Login(int pID)
@@ -117,7 +118,8 @@ namespace APCC
                 using (SqlDataReader lDataReader = lCommand.ExecuteReader())
                 {
                     while (lDataReader.Read()) {
-                        userPermissions[(int)(lDataReader["rlpPerm"])] = true;
+
+                        dictPermissions[lDataReader["perName"].ToString()] = ((AccessControl)lDataReader["rlpAccess"]);
                     }
                 }
 
@@ -127,7 +129,6 @@ namespace APCC
                 MessageBox.Show("Cannot load permissions: " + ex.ToString());
             }
         }
-
 
         public static string GetUserName()
         {
@@ -143,8 +144,7 @@ namespace APCC
             RoleID = 0;
             UserID = 0;
 
-            for (int i = 0; i < userPermissions.Length; i++)
-                userPermissions[i] = false;
+            dictPermissions.Clear();
         }
 
         public static int GetUserID()
