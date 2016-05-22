@@ -167,6 +167,7 @@
             this.btnDetails.TabIndex = 9;
             this.btnDetails.Text = "Details";
             this.btnDetails.UseVisualStyleBackColor = true;
+            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
             // 
             // UsersManageForm
             // 

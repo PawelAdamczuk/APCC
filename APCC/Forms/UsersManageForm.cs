@@ -64,8 +64,7 @@ namespace APCC.Forms
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           // var selectedBuild = (ListBox as sender) 
+        { 
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -125,6 +124,33 @@ namespace APCC.Forms
                         }
                     }
 
+                }
+            }
+        }
+
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            var selectedBuild = listBox2.SelectedItem;
+
+            if (selectedBuild != null)
+            {
+                string buildName = selectedBuild.ToString();
+
+                Form tmpForm = Utilities.FindMdiFormByType(typeof(BuildsManagerForm), this);
+
+                if (tmpForm == null)
+                {
+                    BuildsManagerForm loginForm = new BuildsManagerForm();
+                    loginForm.MdiParent = this.MdiParent;
+                    loginForm.Show();
+                    loginForm.selectIndex(buildName);
+                }
+                else
+                {
+                    tmpForm.Activate();
+                    ((BuildsManagerForm)tmpForm).selectIndex(buildName);
+                    tmpForm.WindowState = FormWindowState.Normal;
+                    
                 }
             }
         }
