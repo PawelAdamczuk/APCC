@@ -23,7 +23,7 @@ namespace APCC.Forms
 
         public void LoadUsers()
         {
-            listBox1.Items.Clear();
+            dgvUsers.Rows.Clear();
             listBox2.Items.Clear();
             SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
 
@@ -38,7 +38,7 @@ namespace APCC.Forms
                     sName = (string)reader["usrSName"];
                     rName = (string)reader["rlsName"];
 
-                    listBox1.Items.Add(id + " " + fName + " " + sName + " " + rName + "\n");
+                    dgvUsers.Rows.Add(id, fName, sName, rName);
                 }
 
             }
@@ -52,7 +52,10 @@ namespace APCC.Forms
                 btnAdd.Visible = false;
             }
 
+            btnEdit.Visible = false;
             LoadUsers();
+            dgvUsers.ClearSelection();
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -61,45 +64,16 @@ namespace APCC.Forms
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+        { 
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedUser = (sender as ListBox).SelectedItem;
-
-            if(selectedUser != null)
-            {
-                int idUsr = Int32.Parse(selectedUser.ToString().Split(' ')[0]);
-
-                if(idUsr != lastId)
-                {
-                    listBox2.Items.Clear();
-                    using (SqlCommand giveMeBuilds = new SqlCommand("getUsrBuilds", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
-                    {
-                        giveMeBuilds.Parameters.Add("@uID", SqlDbType.Int);
-                        giveMeBuilds.Parameters["@uID"].Value = idUsr;
-                        using(SqlDataReader buildReader = giveMeBuilds.ExecuteReader())
-                        {
-                            while (buildReader.Read())
-                            {
-                                listBox2.Items.Add((int)buildReader["bldID"]);
-                            }
-                        }
-                    }
-                      
-                }
-            }
-       }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var selectedUser = listBox1.SelectedItem;
-            
-            if(selectedUser != null)
+
+
+            if (dgvUsers.SelectedRows.Count == 1)
             {
-                int idUsr = Int32.Parse(selectedUser.ToString().Split(' ')[0]);
+                int idUsr = int.Parse(dgvUsers[0, dgvUsers.CurrentCell.RowIndex].Value.ToString());
 
                 if (idUsr != LoginData.GetUserID())
                 {
@@ -124,6 +98,61 @@ namespace APCC.Forms
 
             addingNewUserForm.Owner = this;
             addingNewUserForm.ShowDialog();
+        }
+
+        private void dgvUsers_SelectionChanged(object sender, EventArgs e)
+        {
+
+            if (dgvUsers.SelectedRows.Count == 1)
+            {
+                int idUsr = int.Parse(dgvUsers[0, dgvUsers.CurrentCell.RowIndex].Value.ToString());
+
+                if (idUsr != lastId)
+                {
+                    lastId = idUsr;
+                    listBox2.Items.Clear();
+                    using (SqlCommand giveMeBuilds = new SqlCommand("getUsrBuilds", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
+                    {
+                        giveMeBuilds.Parameters.Add("@uID", SqlDbType.Int);
+                        giveMeBuilds.Parameters["@uID"].Value = idUsr;
+                        using (SqlDataReader buildReader = giveMeBuilds.ExecuteReader())
+                        {
+                            while (buildReader.Read())
+                            {
+                                listBox2.Items.Add(buildReader["bldName"].ToString());
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            var selectedBuild = listBox2.SelectedItem;
+
+            if (selectedBuild != null)
+            {
+                string buildName = selectedBuild.ToString();
+
+                Form tmpForm = Utilities.FindMdiFormByType(typeof(BuildsManagerForm), this);
+
+                if (tmpForm == null)
+                {
+                    BuildsManagerForm loginForm = new BuildsManagerForm();
+                    loginForm.MdiParent = this.MdiParent;
+                    loginForm.Show();
+                    loginForm.selectIndex(buildName);
+                }
+                else
+                {
+                    tmpForm.Activate();
+                    ((BuildsManagerForm)tmpForm).selectIndex(buildName);
+                    tmpForm.WindowState = FormWindowState.Normal;
+                    
+                }
+            }
         }
     }
 }

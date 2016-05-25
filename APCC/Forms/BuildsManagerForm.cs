@@ -18,6 +18,19 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public void selectIndex(string selectedBldName)
+        {
+            int rowIndex = -1;
+
+            DataGridViewRow row = dgvBuilds.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => r.Cells["bldName"].Value.ToString().Equals(selectedBldName))
+                .First();
+
+            rowIndex = row.Index;
+            dgvBuilds.Rows[rowIndex].Selected = true;
+        }
+
         // Change accept state
         private void changeStatus(bool lAccept) {
 
@@ -170,7 +183,6 @@ namespace APCC.Forms
             // Configure the details DataGridView so that its columns automatically
             // adjust their widths when the data changes.
             dgvComponents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
         }
 
         // Refresh data grids

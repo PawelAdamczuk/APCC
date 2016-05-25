@@ -48,7 +48,8 @@ namespace APCC.Forms
                 lCommand.Parameters.Add("@pTypeID", SqlDbType.Int);
                 lCommand.Parameters["@pTypeID"].Value = cmbType.SelectedValue;
 
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
 
                 DataTable lTable = new DataTable();
                 lTable.Load(lDataReader);
@@ -104,7 +105,7 @@ namespace APCC.Forms
                     }
                 }
 
-                lDataReader.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -136,11 +137,11 @@ namespace APCC.Forms
 
                     cmbType.DataSource = typesDataTable;
 
-                    cmbType.DisplayMember = "typName";
-                    cmbType.ValueMember = "typID";
+                cmbType.DisplayMember = "typName";
+                cmbType.ValueMember = "typID";
 
-                    this.cmbTypesFilled = true;
-                }
+                this.cmbTypesFilled = true;
+            }
             }
             catch (Exception ex)
             {
