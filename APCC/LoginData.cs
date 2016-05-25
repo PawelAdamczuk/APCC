@@ -114,12 +114,12 @@ namespace APCC
 
                 lCommand.Parameters.Add("@pRoleID", SqlDbType.Int);
                 lCommand.Parameters["@pRoleID"].Value = LoginData.RoleID;
-                
+                                
                 using (SqlDataReader lDataReader = lCommand.ExecuteReader())
                 {
                     while (lDataReader.Read()) {
-
-                        dictPermissions[lDataReader["perName"].ToString()] = ((AccessControl)lDataReader["rlpAccess"]);
+                        
+                        dictPermissions[lDataReader["perName"].ToString()] = ((AccessControl)lDataReader["rlpAccessInt"]);
                     }
                 }
 

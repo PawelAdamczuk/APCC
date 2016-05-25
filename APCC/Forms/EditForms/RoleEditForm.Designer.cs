@@ -36,7 +36,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txbID = new System.Windows.Forms.TextBox();
             this.dgvPermissions = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txbDetails = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermissions)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -66,7 +69,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(664, 343);
+            this.btnClose.Location = new System.Drawing.Point(664, 401);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(157, 45);
             this.btnClose.TabIndex = 3;
@@ -76,7 +79,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(664, 292);
+            this.btnSave.Location = new System.Drawing.Point(664, 350);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(157, 45);
             this.btnSave.TabIndex = 3;
@@ -102,25 +105,47 @@
             // 
             // dgvPermissions
             // 
-            this.dgvPermissions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPermissions.Location = new System.Drawing.Point(12, 34);
-            this.dgvPermissions.Name = "dgvPermissions";
-            this.dgvPermissions.RowTemplate.Height = 24;
-            this.dgvPermissions.Size = new System.Drawing.Size(643, 354);
-            this.dgvPermissions.TabIndex = 4;
             this.dgvPermissions.AllowUserToAddRows = false;
             this.dgvPermissions.AllowUserToDeleteRows = false;
-            this.dgvPermissions.AllowUserToOrderColumns = true;
             this.dgvPermissions.AllowUserToResizeRows = false;
+            this.dgvPermissions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPermissions.Location = new System.Drawing.Point(12, 34);
             this.dgvPermissions.MultiSelect = false;
+            this.dgvPermissions.Name = "dgvPermissions";
             this.dgvPermissions.RowHeadersVisible = false;
+            this.dgvPermissions.RowTemplate.Height = 24;
             this.dgvPermissions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPermissions.Size = new System.Drawing.Size(643, 317);
+            this.dgvPermissions.TabIndex = 4;
+            this.dgvPermissions.SelectionChanged += new System.EventHandler(this.dgvPermissions_SelectionChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txbDetails);
+            this.groupBox1.Location = new System.Drawing.Point(12, 357);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(643, 92);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Details";
+            // 
+            // txbDetails
+            // 
+            this.txbDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbDetails.Enabled = false;
+            this.txbDetails.Location = new System.Drawing.Point(3, 18);
+            this.txbDetails.Name = "txbDetails";
+            this.txbDetails.ReadOnly = true;
+            this.txbDetails.Size = new System.Drawing.Size(637, 71);
+            this.txbDetails.TabIndex = 0;
+            this.txbDetails.Text = "";
             // 
             // RoleEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(828, 400);
+            this.ClientSize = new System.Drawing.Size(828, 455);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvPermissions);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
@@ -135,6 +160,7 @@
             this.Text = "Edit role";
             this.Load += new System.EventHandler(this.RoleEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermissions)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +175,7 @@
         private System.Windows.Forms.DataGridView dgvPermissions;
         public System.Windows.Forms.TextBox txbName;
         public System.Windows.Forms.TextBox txbID;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox txbDetails;
     }
 }

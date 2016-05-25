@@ -98,9 +98,49 @@ namespace APCC.Forms
         // Delete role
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want delete selected role ?", "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            if (MessageBox.Show("Do you want delete selected role ?", "Notification", MessageBoxButtons.YesNo) 
+                == DialogResult.No ||
+                dgvRoles.SelectedRows.Count <= 0 ) {
 
+                return;
             }
+
+            SqlCommand lSCmd;
+            SqlParameter lRoleID;
+            SqlParameter lMsg;
+
+            try
+            {
+                // (@pRoleID, @oMsg)
+                lSCmd = new SqlCommand("deleteRole", SqlConn.Connection);
+                lSCmd.CommandType = CommandType.StoredProcedure;
+
+                // Define parameters
+                lRoleID = lSCmd.Parameters.Add("@pRoleID", SqlDbType.Int);
+                lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 256);
+                lMsg.Direction = ParameterDirection.Output;
+
+                // Fill parameters
+                lSCmd.Parameters["@pRoleID"].Value = Int32.Parse( dgvRoles.SelectedRows[0].Cells["rlsID"].Value.ToString() );
+                
+                // EXECUTE !! 
+                lSCmd.ExecuteNonQuery();
+
+                if (lMsg.Value.ToString() != "OK")
+                {
+                    MessageBox.Show(lMsg.Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Role deleted!");
+                    this.refreshDgvRoles();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }
