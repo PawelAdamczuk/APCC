@@ -15,6 +15,7 @@ namespace APCC.Forms
     {
 
         private int lastId;
+        private bool usersLoaded = false;
 
         public UsersManageForm()
         {
@@ -25,6 +26,8 @@ namespace APCC.Forms
         {
             dgvUsers.Rows.Clear();
             listBox2.Items.Clear();
+            usersLoaded = false;
+
             SqlCommand giveMeUsers = new SqlCommand("SELECT * FROM [dbo].[UsersManage]", SqlConn.Connection);
 
             int id;
@@ -42,6 +45,8 @@ namespace APCC.Forms
                 }
 
             }
+
+            usersLoaded = true;
         }
 
         private void UsersManageForm_Load(object sender, EventArgs e)
@@ -86,7 +91,7 @@ namespace APCC.Forms
                 }
                 else
                 {
-                    MessageBox.Show("You cannot delete yourself, moron!");
+                    MessageBox.Show("You cannot delete yourself!");
                 }
             }
         }
@@ -102,28 +107,27 @@ namespace APCC.Forms
 
         private void dgvUsers_SelectionChanged(object sender, EventArgs e)
         {
+            if (!this.usersLoaded)
+                return;
 
-            if (dgvUsers.SelectedRows.Count == 1)
+            int idUsr = int.Parse(dgvUsers[0, dgvUsers.CurrentCell.RowIndex].Value.ToString());
+
+            if (idUsr != lastId)
             {
-                int idUsr = int.Parse(dgvUsers[0, dgvUsers.CurrentCell.RowIndex].Value.ToString());
+                lastId = idUsr;
+                listBox2.Items.Clear();
 
-                if (idUsr != lastId)
+                using (SqlCommand giveMeBuilds = new SqlCommand("getUsrBuilds", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    lastId = idUsr;
-                    listBox2.Items.Clear();
-                    using (SqlCommand giveMeBuilds = new SqlCommand("getUsrBuilds", SqlConn.Connection) { CommandType = CommandType.StoredProcedure })
+                    giveMeBuilds.Parameters.Add("@uID", SqlDbType.Int);
+                    giveMeBuilds.Parameters["@uID"].Value = idUsr;
+                    using (SqlDataReader buildReader = giveMeBuilds.ExecuteReader())
                     {
-                        giveMeBuilds.Parameters.Add("@uID", SqlDbType.Int);
-                        giveMeBuilds.Parameters["@uID"].Value = idUsr;
-                        using (SqlDataReader buildReader = giveMeBuilds.ExecuteReader())
+                        while (buildReader.Read())
                         {
-                            while (buildReader.Read())
-                            {
-                                listBox2.Items.Add(buildReader["bldName"].ToString());
-                            }
+                            listBox2.Items.Add(buildReader["bldName"].ToString());
                         }
                     }
-
                 }
             }
         }

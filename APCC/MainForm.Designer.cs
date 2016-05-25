@@ -31,17 +31,17 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.buildsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.componentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShow_Builds = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShow_Components = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.componentTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.rolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manuTools = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem_login = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem_LogOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin_Users = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin_Types = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin_RolesSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuAdmin_Roles = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTools_Options = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemLogin = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemLogout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -55,9 +55,9 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuShow,
             this.menuAdmin,
-            this.manuTools,
-            this.toolStripMenuItem_login,
-            this.toolStripMenuItem_LogOut});
+            this.menuTools,
+            this.itemLogin,
+            this.itemLogout});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(11, 2, 0, 2);
@@ -68,96 +68,96 @@
             // menuShow
             // 
             this.menuShow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buildsToolStripMenuItem,
-            this.componentsToolStripMenuItem});
+            this.menuShow_Builds,
+            this.menuShow_Components});
             this.menuShow.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.menuShow.Name = "menuShow";
             this.menuShow.Size = new System.Drawing.Size(57, 24);
             this.menuShow.Text = "&Show";
             this.menuShow.Click += new System.EventHandler(this.fileMenu_Click);
             // 
-            // buildsToolStripMenuItem
+            // menuShow_Builds
             // 
-            this.buildsToolStripMenuItem.Name = "buildsToolStripMenuItem";
-            this.buildsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.buildsToolStripMenuItem.Text = "Builds";
-            this.buildsToolStripMenuItem.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
+            this.menuShow_Builds.Name = "menuShow_Builds";
+            this.menuShow_Builds.Size = new System.Drawing.Size(181, 26);
+            this.menuShow_Builds.Text = "Builds";
+            this.menuShow_Builds.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
             // 
-            // componentsToolStripMenuItem
+            // menuShow_Components
             // 
-            this.componentsToolStripMenuItem.Name = "componentsToolStripMenuItem";
-            this.componentsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.componentsToolStripMenuItem.Text = "Components";
-            this.componentsToolStripMenuItem.Click += new System.EventHandler(this.componentsToolStripMenuItem_Click);
+            this.menuShow_Components.Name = "menuShow_Components";
+            this.menuShow_Components.Size = new System.Drawing.Size(181, 26);
+            this.menuShow_Components.Text = "Components";
+            this.menuShow_Components.Click += new System.EventHandler(this.componentsToolStripMenuItem_Click);
             // 
             // menuAdmin
             // 
             this.menuAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersToolStripMenuItem1,
-            this.componentTypesToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.rolesToolStripMenuItem});
+            this.menuAdmin_Users,
+            this.menuAdmin_Types,
+            this.menuAdmin_RolesSeparator,
+            this.menuAdmin_Roles});
             this.menuAdmin.Name = "menuAdmin";
             this.menuAdmin.Size = new System.Drawing.Size(119, 24);
             this.menuAdmin.Text = "Administration";
             // 
-            // usersToolStripMenuItem1
+            // menuAdmin_Users
             // 
-            this.usersToolStripMenuItem1.Name = "usersToolStripMenuItem1";
-            this.usersToolStripMenuItem1.Size = new System.Drawing.Size(231, 26);
-            this.usersToolStripMenuItem1.Text = "Users";
-            this.usersToolStripMenuItem1.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
+            this.menuAdmin_Users.Name = "menuAdmin_Users";
+            this.menuAdmin_Users.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Users.Text = "Users";
+            this.menuAdmin_Users.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
-            // componentTypesToolStripMenuItem
+            // menuAdmin_Types
             // 
-            this.componentTypesToolStripMenuItem.Name = "componentTypesToolStripMenuItem";
-            this.componentTypesToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
-            this.componentTypesToolStripMenuItem.Text = "Component types";
-            this.componentTypesToolStripMenuItem.Click += new System.EventHandler(this.componentTypeToolStripMenuItem_Click);
+            this.menuAdmin_Types.Name = "menuAdmin_Types";
+            this.menuAdmin_Types.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Types.Text = "Component types";
+            this.menuAdmin_Types.Click += new System.EventHandler(this.componentTypeToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
+            // menuAdmin_RolesSeparator
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(228, 6);
+            this.menuAdmin_RolesSeparator.Name = "menuAdmin_RolesSeparator";
+            this.menuAdmin_RolesSeparator.Size = new System.Drawing.Size(228, 6);
             // 
-            // rolesToolStripMenuItem
+            // menuAdmin_Roles
             // 
-            this.rolesToolStripMenuItem.Name = "rolesToolStripMenuItem";
-            this.rolesToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
-            this.rolesToolStripMenuItem.Text = "Roles and permissions";
-            this.rolesToolStripMenuItem.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
+            this.menuAdmin_Roles.Name = "menuAdmin_Roles";
+            this.menuAdmin_Roles.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Roles.Text = "Roles and permissions";
+            this.menuAdmin_Roles.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
             // 
-            // manuTools
+            // menuTools
             // 
-            this.manuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.manuTools.Name = "manuTools";
-            this.manuTools.Size = new System.Drawing.Size(57, 24);
-            this.manuTools.Text = "&Tools";
+            this.menuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuTools_Options});
+            this.menuTools.Name = "menuTools";
+            this.menuTools.Size = new System.Drawing.Size(57, 24);
+            this.menuTools.Text = "&Tools";
             // 
-            // optionsToolStripMenuItem
+            // menuTools_Options
             // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.optionsToolStripMenuItem.Text = "&Options";
+            this.menuTools_Options.Name = "menuTools_Options";
+            this.menuTools_Options.Size = new System.Drawing.Size(181, 26);
+            this.menuTools_Options.Text = "&Options";
             // 
-            // toolStripMenuItem_login
+            // itemLogin
             // 
-            this.toolStripMenuItem_login.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.toolStripMenuItem_login.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStripMenuItem_login.Name = "toolStripMenuItem_login";
-            this.toolStripMenuItem_login.Size = new System.Drawing.Size(62, 24);
-            this.toolStripMenuItem_login.Text = "Log in";
-            this.toolStripMenuItem_login.Click += new System.EventHandler(this.toolStripMenuItem_login_Click);
+            this.itemLogin.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.itemLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.itemLogin.Name = "itemLogin";
+            this.itemLogin.Size = new System.Drawing.Size(62, 24);
+            this.itemLogin.Text = "Log in";
+            this.itemLogin.Click += new System.EventHandler(this.toolStripMenuItem_login_Click);
             // 
-            // toolStripMenuItem_LogOut
+            // itemLogout
             // 
-            this.toolStripMenuItem_LogOut.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.toolStripMenuItem_LogOut.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStripMenuItem_LogOut.Name = "toolStripMenuItem_LogOut";
-            this.toolStripMenuItem_LogOut.Size = new System.Drawing.Size(72, 24);
-            this.toolStripMenuItem_LogOut.Text = "Log out";
-            this.toolStripMenuItem_LogOut.Click += new System.EventHandler(this.toolStripMenuItem_LogOut_Click);
+            this.itemLogout.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.itemLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.itemLogout.Name = "itemLogout";
+            this.itemLogout.Size = new System.Drawing.Size(72, 24);
+            this.itemLogout.Text = "Log out";
+            this.itemLogout.Click += new System.EventHandler(this.toolStripMenuItem_LogOut_Click);
             // 
             // statusStrip
             // 
@@ -204,20 +204,20 @@
 
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem menuShow;
-        private System.Windows.Forms.ToolStripMenuItem manuTools;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuTools;
+        private System.Windows.Forms.ToolStripMenuItem menuTools_Options;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_login;
-        private System.Windows.Forms.ToolStripMenuItem buildsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem componentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemLogin;
+        private System.Windows.Forms.ToolStripMenuItem menuShow_Builds;
+        private System.Windows.Forms.ToolStripMenuItem menuShow_Components;
         public System.Windows.Forms.StatusStrip statusStrip;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_LogOut;
+        private System.Windows.Forms.ToolStripMenuItem itemLogout;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin;
-        private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem componentTypesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem rolesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuAdmin_Users;
+        private System.Windows.Forms.ToolStripMenuItem menuAdmin_Types;
+        private System.Windows.Forms.ToolStripSeparator menuAdmin_RolesSeparator;
+        private System.Windows.Forms.ToolStripMenuItem menuAdmin_Roles;
     }
 }
 

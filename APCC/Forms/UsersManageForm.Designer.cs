@@ -115,7 +115,15 @@
             this.dgvUsers.Location = new System.Drawing.Point(9, 23);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.Size = new System.Drawing.Size(322, 279);
-            this.dgvUsers.TabIndex = 7;
+            this.dgvUsers.TabIndex = 7;        
+            this.dgvUsers.AllowUserToAddRows = false;
+            this.dgvUsers.AllowUserToDeleteRows = false;
+            this.dgvUsers.AllowUserToOrderColumns = true;
+            this.dgvUsers.AllowUserToResizeRows = false;
+            this.dgvUsers.MultiSelect = false;
+            this.dgvUsers.ReadOnly = true;
+            this.dgvUsers.RowHeadersVisible = false;
+            this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.SelectionChanged += new System.EventHandler(this.dgvUsers_SelectionChanged);
             // 
             // Column1

@@ -49,7 +49,7 @@ namespace APCC.Forms
                     dgvTypes.Columns[0].HeaderText = "ID";
                     dgvTypes.Columns[1].HeaderText = "Name";
 
-                    dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                     dgvTypes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                     // Hide parameter's names
@@ -72,11 +72,27 @@ namespace APCC.Forms
             dgvTypes.AutoResizeColumns();
         }
 
+        // Permissions
+        private void setPermissions() {
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+
+            if (LoginData.havePermission("ADD_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnAdd.Enabled = true;
+            if (LoginData.havePermission("EDIT_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnEdit.Enabled = true;
+            if (LoginData.havePermission("DELETE_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnDelete.Enabled = true;
+        }
+
         // On Load
         private void TypesManagerForm_Load(object sender, EventArgs e)
         {
             this.loadDataGrid();
             dgvTypes.AutoResizeColumns();
+
+            setPermissions();
         }
 
         // **************

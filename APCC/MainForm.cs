@@ -13,80 +13,55 @@ namespace APCC
 {
     public partial class MainForm : Form
     {
-        private int childFormNumber = 0;
-        private PrivilegeMode privilegeMode = PrivilegeMode.CONFIGURATOR;
-
-        enum PrivilegeMode : int
+        public void setPermissions()
         {
-            NULL = 0,
-            CONFIGURATOR = 1,
-            TESTER = 2,
-            ADMINISTRATOR = 3
-        }
+            // Hide all items
+            bool lValue = false; // for debug
 
-        public void disableLogIn ()
-        {
-            menuStrip.Items["toolStripMenuItem_login"].Visible = false;
-        }
-
-        public void setPrivilegeMode()
-        {
-            int _n = LoginData.GetUserRoleID();
-            if (_n < 0 || _n > 3)
-                return;
-
-            this.privilegeMode = (PrivilegeMode)_n;
-
-            switch (this.privilegeMode)
+            foreach (ToolStripMenuItem Item in menuStrip.Items)
             {
-                case PrivilegeMode.NULL:
-                    // Unlogged user
-                    foreach (ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.Visible = false;
-                    }
+                Item.Visible = lValue;
 
-                    // Disable logout button
-                    toolStripMenuItem_LogOut.Visible = false;
-
-                    // Enable login button
-                    toolStripMenuItem_login.Visible = true;
-                    toolStripMenuItem_login.Enabled = true;
-
-                    break;
-                case PrivilegeMode.CONFIGURATOR:
-                    foreach (ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.Visible = true;
-                            }
-
-                    menuAdmin.Visible = false;
-
-                    break;
-                case PrivilegeMode.TESTER:
-                    foreach (ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.Visible = true;
-                            }
-
-                    menuAdmin.Visible = false;
-
-                    break;
-                case PrivilegeMode.ADMINISTRATOR:
-                    foreach (ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.Visible = true;
-                    }
-
-                    break;
-                default:
-                    break;
+                foreach (ToolStripItem dropItem in Item.DropDownItems) {
+                    dropItem.Visible = lValue;
+                }
             }
 
-            // Enable logout button
-            if ( this.privilegeMode != PrivilegeMode.NULL ){
-                this.toolStripMenuItem_LogOut.Visible = true;
-                this.toolStripMenuItem_LogOut.Enabled = true;
+            // Login button
+            if (LoginData.Logged)
+            {
+                this.itemLogin.Visible = false;
+                this.itemLogout.Visible = true;
+            }
+            else {
+                this.itemLogin.Visible = true;
+                this.itemLogout.Visible = false;
+            }
+
+            //
+            // Set permissions
+            //
+            if (LoginData.havePermission("SHOW_ADMIN_PANEL", LoginData.AccessControl.YES))
+                this.menuAdmin.Visible = true;
+            if (LoginData.havePermission("SHOW_SHOW_PANEL", LoginData.AccessControl.YES))
+                this.menuShow.Visible = true;
+            if (LoginData.havePermission("SHOW_TOOLS_PANEL", LoginData.AccessControl.YES))
+                this.menuTools.Visible = true;
+
+            // menuShow
+            if (LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.YES))
+                this.menuShow_Builds.Visible = true;
+            if (LoginData.havePermission("SHOW_COMPONENTS", LoginData.AccessControl.YES))
+                this.menuShow_Components.Visible = true;
+
+            //menuAdmin
+            if (LoginData.havePermission("SHOW_USERS", LoginData.AccessControl.YES))
+                this.menuAdmin_Users.Visible = true;
+            if (LoginData.havePermission("SHOW_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                this.menuAdmin_Types.Visible = true;
+            if (LoginData.havePermission("SHOW_ROLES", LoginData.AccessControl.YES)){
+                this.menuAdmin_Roles.Visible = true;
+                this.menuAdmin_RolesSeparator.Visible = true;
             }
 
         }
@@ -95,25 +70,20 @@ namespace APCC
         public MainForm()
         {
             InitializeComponent();
+        }
 
-            this.setPrivilegeMode();
-
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.setPermissions();
             this.openLoginWindow();
         }
+
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
-        }
-
+        
         // Open login window
         private void openLoginWindow() {
             Form tmpForm = Utilities.FindMdiFormByType(typeof(LoginForm), this);
@@ -143,16 +113,15 @@ namespace APCC
             if (MessageBox.Show("Are you sure to log out?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 LoginData.LogOut();
-                this.setPrivilegeMode();
+                this.setPermissions();
+                
+                // Close all mdi windows 
+                foreach (Form childForm in MdiChildren)
+                {
+                    childForm.Close();
+                }
 
-
-            // Close all mdi windows 
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
-
-            this.statusStrip.Items[0].Text = "Logged out";
+                this.statusStrip.Items[0].Text = "Logged out";
                 this.openLoginWindow();
             }
         }
@@ -183,8 +152,7 @@ namespace APCC
 
         // Types manager
         private void componentTypeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
+        {   
             Form tmpForm = Utilities.FindMdiFormByType(typeof(TypesManagerForm), this);
 
             if (tmpForm == null)
@@ -203,11 +171,19 @@ namespace APCC
         // Builds1
         private void buildsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BuildsManagerForm showBuildsForm = new BuildsManagerForm();
-            showBuildsForm.MdiParent = this;
-            showBuildsForm.Show();
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(BuildsManagerForm), this);
 
- 
+            if (tmpForm == null)
+            {
+                BuildsManagerForm loginForm = new BuildsManagerForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
         }
 
         // Builds manager
@@ -244,11 +220,6 @@ namespace APCC
                 tmpForm.Activate();
                 tmpForm.WindowState = FormWindowState.Normal;
             }
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         // Manage roles

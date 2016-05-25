@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace APCC
 {
     public sealed class LoginData
     {
-        private static bool isAdmin = false;
+        private static bool isLogged = false;
 
         private static string FName = "";
         private static string SName = "";
@@ -20,6 +21,10 @@ namespace APCC
         private static string RoleName = "";
 
         private static Dictionary< string, AccessControl > dictPermissions = new Dictionary< string, AccessControl >();
+
+        static LoginData() {
+            getPermissions();
+        }
 
         // Role enum
         public enum Role : int
@@ -42,7 +47,7 @@ namespace APCC
         public static bool havePermission(string pPerm, AccessControl pAccess )
         {
             if (!dictPermissions.ContainsKey(pPerm)) {
-                MessageBox.Show("havePermission(): Table does not cantain specified key " + pPerm );
+                Debug.Print("havePermission(): Table does not cantain specified key " + pPerm );
                 return false;
             }
             else
@@ -87,11 +92,7 @@ namespace APCC
 
                 }
 
-                // 3 is for admin 
-                if (RoleID == 3)
-                    isAdmin = true;
-                else
-                    isAdmin = false;
+                isLogged = true;
             }
             catch (Exception ex)
             {
@@ -137,14 +138,14 @@ namespace APCC
 
         // Logout
         public static void LogOut(){
-            isAdmin = false;
+            isLogged = false;
 
             FName = "";
             SName = "";
             RoleID = 0;
             UserID = 0;
 
-            dictPermissions.Clear();
+            getPermissions();
         }
 
         public static int GetUserID()
@@ -164,11 +165,11 @@ namespace APCC
         }
 
         // Check if current user is admin
-        public static bool Admin
+        public static bool Logged
         {
             get
             {
-                return isAdmin;
+                return isLogged;
             }
         }
 

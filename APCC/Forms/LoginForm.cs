@@ -56,8 +56,7 @@ namespace APCC.Forms
                         string tmpString2 = "Logged in as " + LoginData.GetUserName() + " (" + LoginData.GetUserRoleName() + ")";
                         parent.statusStrip.Items[0].Text = tmpString2;
 
-                        parent.setPrivilegeMode();
-                        parent.disableLogIn();
+                        parent.setPermissions();
 
                         this.Close();
                     }

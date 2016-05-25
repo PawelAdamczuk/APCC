@@ -36,9 +36,6 @@ namespace APCC.Forms
                                 rlsName 
                             FROM 
                                 ROLES
-                            WHERE 
-                                rlsID != 3 AND
-                                rlsID != 0
                          ";
 
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
