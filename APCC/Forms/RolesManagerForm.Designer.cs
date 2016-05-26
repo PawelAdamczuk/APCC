@@ -38,20 +38,20 @@
             // 
             // dgvRoles
             // 
-            this.dgvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRoles.Location = new System.Drawing.Point(12, 12);
-            this.dgvRoles.Name = "dgvRoles";
-            this.dgvRoles.RowTemplate.Height = 24;
-            this.dgvRoles.Size = new System.Drawing.Size(306, 342);
-            this.dgvRoles.TabIndex = 0;
             this.dgvRoles.AllowUserToAddRows = false;
             this.dgvRoles.AllowUserToDeleteRows = false;
             this.dgvRoles.AllowUserToOrderColumns = true;
             this.dgvRoles.AllowUserToResizeRows = false;
+            this.dgvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRoles.Location = new System.Drawing.Point(12, 12);
             this.dgvRoles.MultiSelect = false;
+            this.dgvRoles.Name = "dgvRoles";
             this.dgvRoles.ReadOnly = true;
             this.dgvRoles.RowHeadersVisible = false;
+            this.dgvRoles.RowTemplate.Height = 24;
             this.dgvRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRoles.Size = new System.Drawing.Size(306, 342);
+            this.dgvRoles.TabIndex = 0;
             // 
             // btnAdd
             // 
@@ -65,6 +65,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(324, 305);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(137, 49);
@@ -93,10 +94,12 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // RolesEditForm
+            // RolesManagerForm
             // 
+            this.AcceptButton = this.btnEdit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(469, 366);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -104,7 +107,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dgvRoles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "RolesEditForm";
+            this.Name = "RolesManagerForm";
             this.Text = "Roles edit";
             this.Load += new System.EventHandler(this.RolesEditForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRoles)).EndInit();

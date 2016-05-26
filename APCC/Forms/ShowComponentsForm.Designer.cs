@@ -31,7 +31,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.dgvComponentsList = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnDetails = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -75,15 +75,16 @@
             this.dgvComponentsList.Size = new System.Drawing.Size(901, 536);
             this.dgvComponentsList.TabIndex = 3;
             // 
-            // button1
+            // btnClose
             // 
-            this.button1.Location = new System.Drawing.Point(7, 496);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(213, 44);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Close";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(7, 496);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(213, 44);
+            this.btnClose.TabIndex = 6;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnDetails
             // 
@@ -127,14 +128,16 @@
             // 
             // ShowComponentsForm
             // 
+            this.AcceptButton = this.btnEdit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1130, 545);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDetails);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.dgvComponentsList);
@@ -153,7 +156,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.DataGridView dgvComponentsList;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnDetails;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;

@@ -13,10 +13,25 @@ namespace APCC.Forms
 {
     public partial class BuildsManagerForm : Form
     {
+        //
+        // INIT
+        //
+
         public BuildsManagerForm()
         {
             InitializeComponent();
         }
+
+        // On load
+        private void BuildsManagerForm_Load(object sender, EventArgs e)
+        {
+            this.refreshDataGrid();
+            this.refreshInterface();
+        }
+
+        //
+        // FORM
+        //
 
         public void selectIndex(string selectedBldName)
         {
@@ -31,7 +46,7 @@ namespace APCC.Forms
             dgvBuilds.Rows[rowIndex].Selected = true;
         }
 
-        // Load data to 
+        // Load data to DataGrids and set Master-Detail
         private void loadData() {
             try {
                 // Create DataSet
@@ -105,7 +120,7 @@ namespace APCC.Forms
 
         }
 
-        // Load data grids
+        // Load DataGrids
         private void loadDataGrid()
         {
             // Bind the DataGridView controls to the BindingSource
@@ -171,7 +186,7 @@ namespace APCC.Forms
             dgvComponents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
-        // Refresh data grids
+        // Refresh DataGrids
         public void refreshDataGrid() {
             this.loadDataGrid();
         }
@@ -255,12 +270,6 @@ namespace APCC.Forms
             this.setPermissions();
         }
 
-        private void BuildsManagerForm_Load(object sender, EventArgs e)
-        {
-            this.refreshDataGrid();
-            this.refreshInterface();
-        }
-
         // On row change
         private void dgvBuilds_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
@@ -272,7 +281,7 @@ namespace APCC.Forms
         }
 
         //
-        // Buttons
+        // BUTTONS
         //
 
         // Accept build

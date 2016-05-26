@@ -36,7 +36,7 @@
             this.menuAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin_Users = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin_Types = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuAdmin_RolesSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuAdmin_Separator = new System.Windows.Forms.ToolStripSeparator();
             this.menuAdmin_Roles = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools_Options = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +45,9 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuShow_Statistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShow_Separator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuAdmin_Statistics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -69,7 +72,9 @@
             // 
             this.menuShow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuShow_Builds,
-            this.menuShow_Components});
+            this.menuShow_Components,
+            this.menuShow_Separator,
+            this.menuShow_Statistics});
             this.menuShow.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.menuShow.Name = "menuShow";
             this.menuShow.Size = new System.Drawing.Size(57, 24);
@@ -94,9 +99,10 @@
             // 
             this.menuAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuAdmin_Users,
+            this.menuAdmin_Roles,
             this.menuAdmin_Types,
-            this.menuAdmin_RolesSeparator,
-            this.menuAdmin_Roles});
+            this.menuAdmin_Separator,
+            this.menuAdmin_Statistics});
             this.menuAdmin.Name = "menuAdmin";
             this.menuAdmin.Size = new System.Drawing.Size(119, 24);
             this.menuAdmin.Text = "Administration";
@@ -115,10 +121,10 @@
             this.menuAdmin_Types.Text = "Component types";
             this.menuAdmin_Types.Click += new System.EventHandler(this.componentTypeToolStripMenuItem_Click);
             // 
-            // menuAdmin_RolesSeparator
+            // menuAdmin_Separator
             // 
-            this.menuAdmin_RolesSeparator.Name = "menuAdmin_RolesSeparator";
-            this.menuAdmin_RolesSeparator.Size = new System.Drawing.Size(228, 6);
+            this.menuAdmin_Separator.Name = "menuAdmin_Separator";
+            this.menuAdmin_Separator.Size = new System.Drawing.Size(228, 6);
             // 
             // menuAdmin_Roles
             // 
@@ -177,6 +183,23 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // menuShow_Statistics
+            // 
+            this.menuShow_Statistics.Name = "menuShow_Statistics";
+            this.menuShow_Statistics.Size = new System.Drawing.Size(181, 26);
+            this.menuShow_Statistics.Text = "Statistics";
+            // 
+            // menuShow_Separator
+            // 
+            this.menuShow_Separator.Name = "menuShow_Separator";
+            this.menuShow_Separator.Size = new System.Drawing.Size(178, 6);
+            // 
+            // menuAdmin_Statistics
+            // 
+            this.menuAdmin_Statistics.Name = "menuAdmin_Statistics";
+            this.menuAdmin_Statistics.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Statistics.Text = "Global statistics";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -216,8 +239,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuAdmin;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Users;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Types;
-        private System.Windows.Forms.ToolStripSeparator menuAdmin_RolesSeparator;
+        private System.Windows.Forms.ToolStripSeparator menuAdmin_Separator;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Roles;
+        private System.Windows.Forms.ToolStripSeparator menuShow_Separator;
+        private System.Windows.Forms.ToolStripMenuItem menuShow_Statistics;
+        private System.Windows.Forms.ToolStripMenuItem menuAdmin_Statistics;
     }
 }
 

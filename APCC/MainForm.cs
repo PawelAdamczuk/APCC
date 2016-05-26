@@ -53,15 +53,24 @@ namespace APCC
                 this.menuShow_Builds.Visible = true;
             if (LoginData.havePermission("SHOW_COMPONENTS", LoginData.AccessControl.YES))
                 this.menuShow_Components.Visible = true;
+            if (LoginData.havePermission("SHOW_STATISTICS", LoginData.AccessControl.ONLY_OWN) ||
+                LoginData.havePermission("SHOW_STATISTICS", LoginData.AccessControl.YES) )
+            {
+                this.menuShow_Statistics.Visible = true;
+                this.menuShow_Separator.Visible = true;
+            }
+
 
             //menuAdmin
             if (LoginData.havePermission("SHOW_USERS", LoginData.AccessControl.YES))
                 this.menuAdmin_Users.Visible = true;
             if (LoginData.havePermission("SHOW_COMPONENTS_TYPES", LoginData.AccessControl.YES))
                 this.menuAdmin_Types.Visible = true;
-            if (LoginData.havePermission("SHOW_ROLES", LoginData.AccessControl.YES)){
+            if (LoginData.havePermission("SHOW_ROLES", LoginData.AccessControl.YES))
                 this.menuAdmin_Roles.Visible = true;
-                this.menuAdmin_RolesSeparator.Visible = true;
+            if (LoginData.havePermission("SHOW_STATISTICS", LoginData.AccessControl.YES)){
+                this.menuAdmin_Statistics.Visible = true;
+                this.menuAdmin_Separator.Visible = true;
             }
 
         }

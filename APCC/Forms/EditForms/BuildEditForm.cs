@@ -180,7 +180,7 @@ namespace APCC.Forms.EditForms
             }
         }
 
-        // Load dgvComponents
+        // Refresh dgvComponents
         private void refreshDgvComponents()
         {
             bool lNewBuild = false;
@@ -333,12 +333,13 @@ namespace APCC.Forms.EditForms
         // Refresh dgvComponentsList on type change 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if( this.cmbTypesFilled == true )
+            if (this.cmbTypesFilled == true)
+            {
                 this.refreshDgvComponentsList();
-
+            }
         }
 
-        // Change description on row change
+        // Change description on row change in dgvComponents
         private void dgvComponents_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             // For any other operation except, StateChanged, do nothing
@@ -352,6 +353,75 @@ namespace APCC.Forms.EditForms
             }
 
        }
+
+        // Hide info when there is no rows in dgvComponents
+        private void dgvComponents_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if (dgvComponents.Rows.Count <= 0 ){
+                rtxDescription.Text = "";
+            }
+        }
+
+        // Change state info after checked changed
+        private void cbxAccept_CheckedChanged(object sender, EventArgs e)
+        {
+            DialogResult lResult;
+            isStateComitted = false;
+
+            string tmpString;
+
+            if (cbxAccept.Checked) {
+                tmpString = "Do you want accept this build as " + LoginData.GetUserName() + "?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(true);
+                }
+                else {
+                    cbxAccept.Checked = false;
+                }
+            }
+            else {
+                tmpString = "Do you want change status of build and remove current tester?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(false);
+                }
+                else {
+                    cbxAccept.Checked = true;
+                }
+            }
+        }
+
+        // On close
+        private void BuildEditForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ((BuildsManagerForm)this.Owner).refreshDataGrid();
+        }
+
+        //
+        // BUTTONS
+        //
+
+        // Save button
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                 this.CreatorID == LoginData.GetUserID())
+               )
+            {
+                this.saveBuild();
+            }
+            else {
+                this.acceptBuild();
+            }
+
+            this.setPermissions();
+        }
 
         // Accept build
         private void acceptBuild()
@@ -397,41 +467,6 @@ namespace APCC.Forms.EditForms
             }
         }
 
-        // Add one more selected component
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount++;
-
-            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-        }
-
-        // Delete one selected component
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount--;
-
-            if (tmpCount > 0)
-            {
-                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-            }
-            else
-            {
-                dgvComponents.Rows.RemoveAt(dgvComponents.SelectedRows[0].Index);
-            }
-        }
-
         // Save build
         private void saveBuild()
         {
@@ -465,7 +500,7 @@ namespace APCC.Forms.EditForms
 
                 lID.Direction = ParameterDirection.InputOutput;
                 lMsg.Direction = ParameterDirection.Output;
-                
+
                 //
                 // Fill parameters
                 //
@@ -474,12 +509,12 @@ namespace APCC.Forms.EditForms
                     lSCmd.Parameters["@pBuildID"].Value = DBNull.Value;
                 else
                     lSCmd.Parameters["@pBuildID"].Value = int.Parse(txbID.Text);
-                
+
                 lSCmd.Parameters["@pBuildName"].Value = txbName.Text;
 
                 lSCmd.Parameters["@pCreatorID"].Value = this.CreatorID;
 
-                if( this.isTester )
+                if (this.isTester)
                     lSCmd.Parameters["@pTesterID"].Value = this.TesterID;
                 else
                     lSCmd.Parameters["@pTesterID"].Value = DBNull.Value;
@@ -492,7 +527,8 @@ namespace APCC.Forms.EditForms
                 comTable.Columns.Add("comCount");
 
                 int i = 0;
-                foreach( DataGridViewRow lRow in dgvComponents.Rows ){
+                foreach (DataGridViewRow lRow in dgvComponents.Rows)
+                {
                     comTable.Rows.Add(i++, lRow.Cells["comID"].Value, lRow.Cells["comCount"].Value);
                 }
 
@@ -503,7 +539,7 @@ namespace APCC.Forms.EditForms
 
                 if (lMsg.Value.ToString() != "OK")
                 {
-                    MessageBox.Show( "Database error: " + lMsg.Value.ToString());
+                    MessageBox.Show("Database error: " + lMsg.Value.ToString());
                 }
                 else
                 {
@@ -520,23 +556,79 @@ namespace APCC.Forms.EditForms
 
         }
 
-        // Close button
-        private void btnClose_Click(object sender, EventArgs e)
+        // COMPONENTS LIST EDITION 
+
+        // Add selcted component to ComponentsList
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // No selested item
+            if (dgvComponentsList.SelectedRows.Count == 0)
+            {
+                labLog.Text = "No item selected.";
+                return;
+            }
+
+            // Selected item already in build
+            foreach (DataGridViewRow lRow in dgvComponents.Rows)
+            {
+                if ((int)(lRow.Cells["comID"].Value) == (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value))
+                {
+
+                    lRow.Cells["comCount"].Value =
+                        Int32.Parse(lRow.Cells["comCount"].Value.ToString()) + 1;
+
+                    labLog.Text =
+                        "Increase number of " +
+                        dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() +
+                        " (Count:" + lRow.Cells["comCount"].Value.ToString() + ")";
+                    return;
+                }
+            }
+
+            // New item
+            // row_dgvComponents( comID, typName, comName, comCount )
+            int lComID = (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value);
+            string lTypName = dgvComponentsList.SelectedRows[0].Cells["typName"].Value.ToString();
+            string lComName = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
+
+            ((DataTable)(dgvComponents.DataSource)).Rows.Add(lComID, lTypName, lComName, 1);
+
+            labLog.Text = "Added " + dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + " to build.";
+
         }
 
-        // On close
-        private void BuildEditForm_FormClosed(object sender, FormClosedEventArgs e)
+        // (Plus) Add one more selected component
+        private void button1_Click(object sender, EventArgs e)
         {
-            ((BuildsManagerForm)this.Owner).refreshDataGrid();
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount++;
+
+            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
         }
 
-        // Hide info when there is no rows in dgvComponents
-        private void dgvComponents_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        // (Minus) Delete one selected component
+        private void btnMinus_Click(object sender, EventArgs e)
         {
-            if (dgvComponents.Rows.Count <= 0 ){
-                rtxDescription.Text = "";
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount--;
+
+            if (tmpCount > 0)
+            {
+                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+            }
+            else
+            {
+                dgvComponents.Rows.RemoveAt(dgvComponents.SelectedRows[0].Index);
             }
         }
 
@@ -544,7 +636,7 @@ namespace APCC.Forms.EditForms
         private void btnClearAll_Click(object sender, EventArgs e)
         {
             string tmpString = "Are you sure to delete all components from list ?";
-            if (MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(tmpString, "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 while (dgvComponents.Rows.Count > 0)
                 {
@@ -553,10 +645,11 @@ namespace APCC.Forms.EditForms
             }
         }
 
-        // Delete selected component
+        // Delete group of selected component
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvComponents.SelectedRows.Count != 1){ 
+            if (dgvComponents.SelectedRows.Count != 1)
+            {
                 return;
             }
 
@@ -580,93 +673,10 @@ namespace APCC.Forms.EditForms
 
         }
 
-        // Add slected component to list
-        private void btnAdd_Click(object sender, EventArgs e)
+        // Close button
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            // No selested item
-            if (dgvComponentsList.SelectedRows.Count == 0)
-            {
-                labLog.Text = "No item selected.";
-                return;
-            }
-
-            // Selected item already in build
-            foreach (DataGridViewRow lRow in dgvComponents.Rows)
-            {
-                if ( (int)(lRow.Cells["comID"].Value) == (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value) ) {
-
-                    lRow.Cells["comCount"].Value = 
-                        Int32.Parse(lRow.Cells["comCount"].Value.ToString() )  + 1;
-                    
-                    labLog.Text = 
-                        "Increase number of " + 
-                        dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + 
-                        " (Count:" + lRow.Cells["comCount"].Value.ToString() + ")";
-                    return;
-                }
-            }
-
-            // New item
-            // row_dgvComponents( comID, typName, comName, comCount )
-            int     lComID   = (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value);
-            string  lTypName = dgvComponentsList.SelectedRows[0].Cells["typName"].Value.ToString();
-            string  lComName = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
-
-            ((DataTable)(dgvComponents.DataSource)).Rows.Add( lComID, lTypName, lComName, 1);
-
-            labLog.Text = "Added " + dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + " to build.";
-
-        }
-
-        // Change state info after checked changed
-        private void cbxAccept_CheckedChanged(object sender, EventArgs e)
-        {
-            DialogResult lResult;
-            isStateComitted = false;
-
-            string tmpString;
-
-            if (cbxAccept.Checked) {
-                tmpString = "Do you want accept this build as " + LoginData.GetUserName() + "?";
-                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
-
-                if (lResult == DialogResult.Yes)
-                {
-                    this.changeStatus(true);
-                }
-                else {
-                    cbxAccept.Checked = false;
-                }
-            }
-            else {
-                tmpString = "Do you want change status of build and remove current tester?";
-                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
-
-                if (lResult == DialogResult.Yes)
-                {
-                    this.changeStatus(false);
-                }
-                else {
-                    cbxAccept.Checked = true;
-                }
-            }
-        }
-
-        // Save button
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
-                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
-                 this.CreatorID == LoginData.GetUserID())
-               )
-            {
-                this.saveBuild();
-            }
-            else {
-                this.acceptBuild();
-            }
-
-            this.setPermissions();
+            this.Close();
         }
 
     }
