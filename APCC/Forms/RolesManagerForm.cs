@@ -60,11 +60,25 @@ namespace APCC.Forms
             }
         }
 
+        private void setPermissions() {
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+
+            if (LoginData.havePermission("ADD_ROLES", LoginData.AccessControl.YES))
+                btnAdd.Enabled = true;
+            if (LoginData.havePermission("DELETE_ROLES", LoginData.AccessControl.YES))
+                btnDelete.Enabled = true;
+            if (LoginData.havePermission("EDIT_ROLES", LoginData.AccessControl.YES))
+                btnEdit.Enabled = true;
+        }
+
         // On load
         private void RolesEditForm_Load(object sender, EventArgs e)
         {
-
             this.refreshDgvRoles();
+
+            setPermissions();
         }
 
         // Add role

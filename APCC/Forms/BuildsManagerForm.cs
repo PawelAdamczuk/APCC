@@ -31,26 +31,6 @@ namespace APCC.Forms
             dgvBuilds.Rows[rowIndex].Selected = true;
         }
 
-        // Change accept state
-        private void changeStatus(bool lAccept) {
-
-            if (lAccept)
-            {
-                labState.Text = "Accepted";
-                labState.ForeColor = Color.Lime;
-
-                btnAccept.Enabled = false;
-            }
-            else
-            {
-                labState.Text = "Not accepted";
-                labState.ForeColor = Color.Red;
-
-                if( LoginData.GetUserRoleID() != (int)LoginData.Role.CONFIGURATOR )
-                    btnAccept.Enabled = true;
-            }
-        }
-
         // Load data to 
         private void loadData() {
             try {
@@ -65,8 +45,7 @@ namespace APCC.Forms
                 SqlCommand cmdMaster;
                 SqlCommand cmdDetails;
 
-                if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER ||
-                    LoginData.GetUserRoleID() == (int)LoginData.Role.ADMINISTRATOR)
+                if (LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.YES))
                 {
                     cmdBuildsString = "SELECT * FROM vBuilds";
                     cmdComponentsString = "SELECT * FROM vBuildsComponents";
@@ -74,17 +53,24 @@ namespace APCC.Forms
                     cmdMaster = new SqlCommand(cmdBuildsString, SqlConn.Connection);
                     cmdDetails = new SqlCommand(cmdComponentsString, SqlConn.Connection);
                 }
-                else {
+                else
+                {
+                    //("SHOW_BUILDS", LoginData.AccessControl.ONLY_OWN)
+
                     cmdBuildsString = "SELECT * FROM vBuilds WHERE bldCreatorID = @pID";
                     cmdComponentsString = "SELECT * FROM vBuildsComponents WHERE bldUserID = @pID";
 
                     cmdMaster = new SqlCommand(cmdBuildsString, SqlConn.Connection);
-                    cmdMaster.Parameters.Add("@pID", SqlDbType.Int);
-                    cmdMaster.Parameters["@pID"].Value = LoginData.GetUserID();
+                    {
+                        cmdMaster.Parameters.Add("@pID", SqlDbType.Int);
+                        cmdMaster.Parameters["@pID"].Value = LoginData.GetUserID();
+                    }
 
                     cmdDetails = new SqlCommand(cmdComponentsString, SqlConn.Connection);
-                    cmdDetails.Parameters.Add("@pID", SqlDbType.Int);
-                    cmdDetails.Parameters["@pID"].Value = LoginData.GetUserID();
+                    {
+                        cmdDetails.Parameters.Add("@pID", SqlDbType.Int);
+                        cmdDetails.Parameters["@pID"].Value = LoginData.GetUserID();
+                    }
                 }
 
                 // Fill master - dgvBuilds
@@ -188,128 +174,70 @@ namespace APCC.Forms
         // Refresh data grids
         public void refreshDataGrid() {
             this.loadDataGrid();
-
-            if (dgvBuilds.Rows.Count <= 0)
-            {
-                // Info
-                labState.Text = "Unknown";
-                labState.ForeColor = Color.Black;
-
-                txbCreator.Text = "";
-
-                txbTester.Text = "";
-
-                // Buttons
-                btnAccept.Enabled = false;
-                btnEdit.Enabled = false;
-                btnDelete.Enabled = false; 
-            }
         }
 
-        private void BuildsManagerForm_Load(object sender, EventArgs e)
+        // Change accept state
+        private void changeStatus(bool lAccept)
         {
-            // Privilage
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR)
+
+            if (lAccept)
             {
+                labState.Text = "Accepted";
+                labState.ForeColor = Color.Lime;
+
                 btnAccept.Enabled = false;
             }
-
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER)
+            else
             {
-                btnDelete.Enabled = false;
-                btnAddNew.Enabled = false;
+                labState.Text = "Not accepted";
+                labState.ForeColor = Color.Red;
+
+                if (LoginData.havePermission("ACCEPT_BUILDS", LoginData.AccessControl.YES))
+                {
+                    btnAccept.Enabled = true;
+                }
             }
-
-            this.refreshDataGrid();
-       }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
-        // Add new build
-        private void button1_Click(object sender, EventArgs e)
-        {
-            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
+        private void setPermissions() {
+            btnAddNew.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
 
-            childForm.CreatorID = LoginData.GetUserID();
-            childForm.txbCreatorName.Text = LoginData.GetUserName();
-            childForm.changeStatus(false);
-
-            childForm.Owner = this;
-            childForm.ShowDialog();
-        }
-
-        // Edit build
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
-
-            // Fill data in BuildEditForm
-            childForm.txbID.Text = 
-                dgvBuilds.SelectedRows[0].Cells["bldID"].Value.ToString();
-
-            childForm.txbCreatorName.Text =
-                dgvBuilds.SelectedRows[0].Cells["bldCreatorName"].Value.ToString();
-
-            childForm.txbTesterName.Text =
-                dgvBuilds.SelectedRows[0].Cells["bldTesterName"].Value.ToString();
-
-            childForm.txbName.Text =
-                dgvBuilds.SelectedRows[0].Cells["bldName"].Value.ToString();
-
-            try {
-                bool tmpBool =
-                    Boolean.Parse(dgvBuilds.SelectedRows[0].Cells["bldAccepted"].Value.ToString());
-
-                childForm.changeStatus(tmpBool);
-            }
-            catch ( Exception ex ) {
-                MessageBox.Show(ex.ToString());
-            }
-
-            int tmpTesterID;
-            if (Int32.TryParse(dgvBuilds.SelectedRows[0].Cells["bldTesterID"].Value.ToString(), out tmpTesterID))
-            {
-                childForm.TesterID = tmpTesterID;
-                childForm.isTester = true;
-            }
-            else {
-                childForm.isTester = false; 
-            }
-
-            childForm.CreatorID = (int)(dgvBuilds.SelectedRows[0].Cells["bldCreatorID"].Value);
+            if (LoginData.havePermission("ADD_BUILDS", LoginData.AccessControl.YES))
+                btnAddNew.Enabled = true;
             
-            // Show window
-            childForm.Owner = this;
-            childForm.ShowDialog();
+            if (dgvBuilds.SelectedRows.Count == 1)
+            {
+                btnEdit.Enabled = true;
+
+                if (LoginData.havePermission("DELETE_BUILDS", LoginData.AccessControl.YES))
+                    btnDelete.Enabled = true;
+                if (LoginData.havePermission("DELETE_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                    (int)dgvBuilds.SelectedRows[0].Cells["bldCreatorID"].Value == LoginData.GetUserID())
+                    btnDelete.Enabled = true;
+            }
         }
 
         // Show info about build
-        private void showInfo() {
-            // Show decription of component
-            if (dgvBuilds.SelectedRows.Count > 0)
+        private void refreshInterface() {
+
+            // Show decription of selected component
+            if (dgvBuilds.SelectedRows.Count == 1)
             {
                 // Accepted / Not accepted
                 try
                 {
-                    bool tmpBool =
-                        Boolean.Parse(dgvBuilds.SelectedRows[0].Cells["bldAccepted"].Value.ToString());
+                    bool tmpBool = Boolean.Parse(dgvBuilds.SelectedRows[0].Cells["bldAccepted"].Value.ToString());
 
                     this.changeStatus(tmpBool);
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex){
                     MessageBox.Show("Cannot parse bool value (bldAccepted): " + ex.ToString());
                 }
                 
                 txbCreator.Text = dgvBuilds.SelectedRows[0].Cells["bldCreatorName"].Value.ToString();
-
                 txbTester.Text = dgvBuilds.SelectedRows[0].Cells["bldTesterName"].Value.ToString();
-
-                btnEdit.Enabled = true;
-                btnDelete.Enabled = true;
             }
             else {
                 labState.Text = "Unknown";
@@ -323,18 +251,29 @@ namespace APCC.Forms
                 btnDelete.Enabled = false;
             }
 
+            // Set permissions
+            this.setPermissions();
         }
 
-        // Show info about build on row change
+        private void BuildsManagerForm_Load(object sender, EventArgs e)
+        {
+            this.refreshDataGrid();
+            this.refreshInterface();
+        }
+
+        // On row change
         private void dgvBuilds_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             // For any other operation except, StateChanged, do nothing
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-
-            this.showInfo();
-
+            if (e.StateChanged == DataGridViewElementStates.Selected)
+            {
+                this.refreshInterface();
+            }
         }
+
+        //
+        // Buttons
+        //
 
         // Accept build
         private void btnAccept_Click(object sender, EventArgs e)
@@ -354,7 +293,6 @@ namespace APCC.Forms
                 lSCmd.CommandType = CommandType.StoredProcedure;
 
                 lSCmd.Parameters.Add("@pBuildID", SqlDbType.Int);
-
                 lSCmd.Parameters.Add("@pTesterID", SqlDbType.Int);
 
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
@@ -362,7 +300,6 @@ namespace APCC.Forms
 
                 // Param values
                 lSCmd.Parameters["@pBuildID"].Value = this.dgvBuilds.SelectedRows[0].Cells["bldID"].Value;
-
                 lSCmd.Parameters["@pTesterID"].Value = LoginData.GetUserID();
 
                 lSCmd.ExecuteNonQuery();
@@ -376,13 +313,53 @@ namespace APCC.Forms
                     dgvBuilds.SelectedRows[0].Cells["bldAccepted"].Value = true;
                     dgvBuilds.SelectedRows[0].Cells["bldTesterName"].Value = LoginData.GetUserName();
 
-                    this.showInfo();
+                    this.refreshInterface();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        // Edit build
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
+
+            // Fill data in BuildEditForm
+            childForm.txbID.Text = dgvBuilds.SelectedRows[0].Cells["bldID"].Value.ToString();
+            childForm.txbCreatorName.Text = dgvBuilds.SelectedRows[0].Cells["bldCreatorName"].Value.ToString();
+            childForm.txbTesterName.Text = dgvBuilds.SelectedRows[0].Cells["bldTesterName"].Value.ToString();
+            childForm.txbName.Text = dgvBuilds.SelectedRows[0].Cells["bldName"].Value.ToString();
+
+            try
+            {
+                bool tmpBool = Boolean.Parse(dgvBuilds.SelectedRows[0].Cells["bldAccepted"].Value.ToString());
+
+                childForm.changeStatus(tmpBool);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            int tmpTesterID;
+            if (Int32.TryParse(dgvBuilds.SelectedRows[0].Cells["bldTesterID"].Value.ToString(), out tmpTesterID))
+            {
+                childForm.TesterID = tmpTesterID;
+                childForm.isTester = true;
+            }
+            else
+            {
+                childForm.isTester = false;
+            }
+
+            childForm.CreatorID = (int)(dgvBuilds.SelectedRows[0].Cells["bldCreatorID"].Value);
+
+            // Show window
+            childForm.Owner = this;
+            childForm.ShowDialog();
         }
 
         // Delete Build
@@ -435,7 +412,8 @@ namespace APCC.Forms
                         }
                     }
                     else {
-                        this.showInfo();
+                        // Refresh with empty DataGrid
+                        this.refreshInterface();
                     }
 
                 }
@@ -444,6 +422,25 @@ namespace APCC.Forms
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        // Add new build
+        private void button1_Click(object sender, EventArgs e)
+        {
+            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
+
+            childForm.CreatorID = LoginData.GetUserID();
+            childForm.txbCreatorName.Text = LoginData.GetUserName();
+            childForm.changeStatus(false);
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
+        }
+
+        // Close
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

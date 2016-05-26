@@ -64,7 +64,7 @@ namespace APCC.Forms.EditForms
                 cmbColumn.Name = "cmbAccess";
                 cmbColumn.HeaderText = "Access";
                 dgvPermissions.Columns.Add(cmbColumn);
-
+                
                 for (int i = 0; i < dgvPermissions.Rows.Count; i++)
                 {
                     DataGridViewComboBoxCell cmbCell =
@@ -129,9 +129,18 @@ namespace APCC.Forms.EditForms
             return lCmbCell;
         }
 
+        private void setPermissions() {
+            btnSave.Visible = false;
+
+            if( LoginData.havePermission("EDIT_ROLES", LoginData.AccessControl.YES) )
+                btnSave.Visible = true;
+        }
+
         private void RoleEditForm_Load(object sender, EventArgs e)
         {
             txbID.Enabled = false;
+
+            setPermissions();
 
             this.refreshDgvPermissions();
         }

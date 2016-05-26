@@ -20,33 +20,74 @@ namespace APCC.Forms.EditForms
 
         public int CreatorID;
         public int TesterID;
+
         public bool isTester;
+        private bool isStateComitted;
 
         public BuildEditForm()
         {
             cmbTypesFilled = false;
+            isStateComitted = true;
             InitializeComponent();
+        }
+
+        private void setPermissions() {
+            txbName.Enabled = false;
+            cbxAccept.Enabled = false;
+
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnClearAll.Enabled = false;
+            btnPlus.Enabled = false;
+            btnMinus.Enabled = false;
+
+            btnSave.Visible = false;
+
+            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                 this.CreatorID == LoginData.GetUserID() )
+               ) {
+                txbName.Enabled = true;
+
+                btnAdd.Enabled = true;
+                btnDelete.Enabled = true;
+                btnClearAll.Enabled = true;
+                btnPlus.Enabled = true;
+                btnMinus.Enabled = true;
+
+                btnSave.Visible = true;
+            }
+
+            if ( LoginData.havePermission("ACCEPT_BUILDS", LoginData.AccessControl.YES) ) 
+            {
+                btnSave.Visible = true;
+
+                if (isStateComitted == false || isTester == false)
+                {
+                        cbxAccept.Enabled = true;
+                }
+            }
+
+            if( LoginData.havePermission("UNACCEPT_BUILDS", LoginData.AccessControl.YES) ||
+                ( LoginData.havePermission("UNACCEPT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                this.TesterID == LoginData.GetUserID() )  
+              )
+            {
+                btnSave.Visible = true;
+
+                if( isTester == true)
+                { 
+                    cbxAccept.Enabled = true;
+                }
+            }
+
         }
 
         // On load
         private void BuildEditForm_Load(object sender, EventArgs e)
         {
-            // Privilage
-            if ( LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR ) {
-                cbxAccept.Enabled = false;
-            }
-
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER)
-            {
-                btnAdd.Enabled = false;
-                txbName.Enabled = false;
-
-                btnPlus.Enabled = false;
-                btnMinus.Enabled = false;
-
-                btnDelete.Enabled = false;
-                btnClearAll.Enabled = false;
-            }
+            // Permissions
+            this.setPermissions();
 
             //
             // Summary tab
@@ -83,6 +124,8 @@ namespace APCC.Forms.EditForms
                 this.TesterID = 0;
                 this.txbTesterName.Text = "";
             }
+
+            this.setPermissions();
         }
 
         // Add one more selected component
@@ -325,7 +368,6 @@ namespace APCC.Forms.EditForms
        }
 
         // Accept build
-        /*
         private void acceptBuild()
         {
             SqlCommand lSCmd;
@@ -357,7 +399,10 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
+                    MessageBox.Show("Build accepted!");
+
                     this.changeStatus(true);
+                    isStateComitted = true;
                 }
             }
             catch (Exception ex)
@@ -365,7 +410,6 @@ namespace APCC.Forms.EditForms
                 MessageBox.Show(ex.Message);
             }
         }
-        */
 
         // Save build
         private void saveBuild()
@@ -443,7 +487,9 @@ namespace APCC.Forms.EditForms
                 else
                 {
                     MessageBox.Show("Build saved!");
+
                     txbID.Text = lID.Value.ToString();
+                    isStateComitted = true;
                 }
             }
             catch (Exception ex)
@@ -476,21 +522,23 @@ namespace APCC.Forms.EditForms
         // Delete all components from list
         private void btnClearAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure to delete all components from list ?", 
-                                "Notification",
-                                MessageBoxButtons.YesNo)
-                                == DialogResult.Yes)
+            string tmpString = "Are you sure to delete all components from list ?";
+            if (MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-
-                while( dgvComponents.Rows.Count > 0 )
+                while (dgvComponents.Rows.Count > 0)
+                {
                     dgvComponents.Rows.RemoveAt(0);
+                }
             }
-
         }
 
         // Delete selected component
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (dgvComponents.SelectedRows.Count != 1){ 
+                return;
+            }
+
             int tmpIndex = dgvComponents.SelectedRows[0].Index;
 
             dgvComponents.Rows.RemoveAt(tmpIndex);
@@ -553,13 +601,13 @@ namespace APCC.Forms.EditForms
         private void cbxAccept_CheckedChanged(object sender, EventArgs e)
         {
             DialogResult lResult;
+            isStateComitted = false;
+
+            string tmpString;
 
             if (cbxAccept.Checked) {
-                lResult = MessageBox.Show(
-                            "Do you want accept this build as " + LoginData.GetUserName() + "?",
-                            "Notification",
-                            MessageBoxButtons.YesNo
-                          );
+                tmpString = "Do you want accept this build as " + LoginData.GetUserName() + "?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
 
                 if (lResult == DialogResult.Yes)
                 {
@@ -570,11 +618,8 @@ namespace APCC.Forms.EditForms
                 }
             }
             else {
-                lResult = MessageBox.Show(
-                            "Do you want change status of build and remove current tester?",
-                            "Notification",
-                            MessageBoxButtons.YesNo
-                          );
+                tmpString = "Do you want change status of build and remove current tester?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
 
                 if (lResult == DialogResult.Yes)
                 {
@@ -589,7 +634,18 @@ namespace APCC.Forms.EditForms
         // Save button
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.saveBuild();
+            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                 this.CreatorID == LoginData.GetUserID())
+               )
+            {
+                this.saveBuild();
+            }
+            else {
+                this.acceptBuild();
+            }
+
+            this.setPermissions();
         }
 
     }

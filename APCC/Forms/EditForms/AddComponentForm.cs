@@ -14,19 +14,21 @@ namespace APCC.Forms.EditForms
 {
     public partial class AddComponentForm : Form
     {
-        ArrayList labels;
-        ArrayList textBoxes;
-        DataTable tab = new DataTable();
+        public ArrayList labels;
+        public ArrayList textBoxes;
+        DataTable tabTypes = new DataTable();
 
 
         public AddComponentForm()
         {
             InitializeComponent();
+
+            this.collectLabels();
+            this.loadTypes();
         }
 
-        private void AddComponentForm_Load(object sender, EventArgs e)
-        {
-            this.collectLabels();
+        // Load types to combobox
+        private void loadTypes() {
             string queryStr = @"
                             select
                                 typID,
@@ -41,29 +43,35 @@ namespace APCC.Forms.EditForms
             SqlCommand com = new SqlCommand(queryStr, SqlConn.Connection);
             using (SqlDataReader dr = com.ExecuteReader())
             {
-                tab.Load(dr);
-                comboBox_types.DataSource = tab;
-                comboBox_types.DisplayMember = "typName";
-                comboBox_types.ValueMember = "typID";
-            }
+                tabTypes.Load(dr);
 
+                cmbTypes.DataSource = tabTypes;
+                cmbTypes.DisplayMember = "typName";
+                cmbTypes.ValueMember = "typID";
+            }
 
         }
 
-        //filling the labels with parameter names
+        private void AddComponentForm_Load(object sender, EventArgs e)
+        {
+            txbID.Enabled = false;
+            
+        }
+
+        // Filling the labels with parameter names
         private void comboBox_types_SelectedIndexChanged(object sender, EventArgs e)
         {
             Label typedLabel;
             for (int i = 0; i < 10; i++)
             {
                 typedLabel = (Label)this.labels[i];
-                typedLabel.Text = tab.Rows[this.comboBox_types.SelectedIndex]["int" + (i+1).ToString()].ToString();
+                typedLabel.Text = tabTypes.Rows[this.cmbTypes.SelectedIndex]["int" + (i+1).ToString()].ToString();
             }
 
             for (int i = 0; i < 10; i++)
             {
                 typedLabel = (Label)this.labels[i+10];
-                typedLabel.Text = tab.Rows[this.comboBox_types.SelectedIndex]["string" + (i + 1 + 10).ToString()].ToString();
+                typedLabel.Text = tabTypes.Rows[this.cmbTypes.SelectedIndex]["string" + (i + 1 + 10).ToString()].ToString();
             }
             //label1.Text = tab.Rows[this.comboBox_types.SelectedIndex]["int1"].ToString();
 
@@ -137,43 +145,42 @@ namespace APCC.Forms.EditForms
 
         private void button_add_Click(object sender, EventArgs e)
         {
-            string cmdString;
-
             SqlCommand cmd;
 
             SqlParameter compID;
-            SqlParameter typeID;
-            SqlParameter componentName;
             SqlParameter stringArgsArray;
             SqlParameter intArgsArray;
             SqlParameter msg;
 
             try
             {
-                cmdString = "saveComponent";
-                cmd = new SqlCommand(cmdString, SqlConn.Connection);
+                cmd = new SqlCommand("saveComponent", SqlConn.Connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 compID = cmd.Parameters.Add("@pID", SqlDbType.Int);
-                compID.Direction = ParameterDirection.Output;
+                compID.Direction = ParameterDirection.InputOutput;
 
-                typeID = cmd.Parameters.Add("@pTypeID", SqlDbType.Int);
-                typeID.Direction = ParameterDirection.Input;
+                int tmpParseID;
+                if (Int32.TryParse(txbID.Text, out tmpParseID))
+                {
+                    cmd.Parameters["@pID"].Value = tmpParseID;
+                }
+                else {
+                    cmd.Parameters["@pID"].Value = DBNull.Value;
+                }
 
-                componentName = cmd.Parameters.Add("@pName", SqlDbType.VarChar, 50);
-                componentName.Direction = ParameterDirection.Input;
+                cmd.Parameters.Add("@pTypeID", SqlDbType.Int);
+                cmd.Parameters.Add("@pName", SqlDbType.VarChar, 50);
+
+                cmd.Parameters["@pTypeID"].Value = cmbTypes.SelectedValue;
+                cmd.Parameters["@pName"].Value = this.txbName.Text;
 
                 stringArgsArray = cmd.Parameters.Add("@pStringArray", SqlDbType.Structured);
                 intArgsArray = cmd.Parameters.Add("@pIntArray", SqlDbType.Structured);
 
                 msg = cmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
                 msg.Direction = ParameterDirection.Output;
-
-                //cmd.Parameters["pTypeID"].Value = int.Parse(comboBox_types.SelectedValue.ToString());
-                cmd.Parameters["@pTypeID"].Value = comboBox_types.SelectedValue;
-
-                cmd.Parameters["@pName"].Value = this.textBox_componentName.Text;
-
+                
                 DataTable intTable = new DataTable();
                 intTable.Columns.Add("id");
                 intTable.Columns.Add("IntParam");
@@ -182,8 +189,13 @@ namespace APCC.Forms.EditForms
                 {
                     typedTextBox = (TextBox)this.textBoxes[i];
                     int temp = 0;
-                    int.TryParse(typedTextBox.Text, out temp);
-                    intTable.Rows.Add(i + 1, temp);
+                    if (int.TryParse(typedTextBox.Text, out temp) && typedTextBox.Text != "")
+                    {
+                        intTable.Rows.Add(i + 1, temp);
+                    }
+                    else {
+                        intTable.Rows.Add(i + 1, DBNull.Value);
+                    }
                 }
 
                 cmd.Parameters["@pIntArray"].Value = intTable;
@@ -194,20 +206,26 @@ namespace APCC.Forms.EditForms
                 for (int i = 0; i < 10; i++)
                 {
                     typedTextBox = (TextBox)this.textBoxes[i + 10];
-                    stringTable.Rows.Add(i + 1, typedTextBox.Text);
+                    if (typedTextBox.Text != "")
+                    {
+                        stringTable.Rows.Add(i + 1, typedTextBox.Text);
+                    }
+                    else {
+                        stringTable.Rows.Add(i + 1, DBNull.Value);
+                    }
                 }
 
                 cmd.Parameters["@pStringArray"].Value = stringTable;
 
                 cmd.ExecuteNonQuery();
 
-                if ( msg.Value.ToString() != "OK " )
+                if ( msg.Value.ToString() != "OK" )
                 {
                     MessageBox.Show(msg.Value.ToString());
                 }
                 else{
                     MessageBox.Show("Data saved.");
-                    this.Close();
+                    ((ShowComponentsForm)this.Owner).refreshDgvComponentsList();
                 }
             }
             catch (Exception ex)
@@ -216,6 +234,12 @@ namespace APCC.Forms.EditForms
             }
 
 
+        }
+
+        // Close
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

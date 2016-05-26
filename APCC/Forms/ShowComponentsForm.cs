@@ -24,16 +24,30 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        private void setPermissions() {
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnEdit.Enabled = false;
+
+            if ( LoginData.havePermission("ADD_COMPONENTS", LoginData.AccessControl.YES) )
+                btnAdd.Enabled = true;
+            if (LoginData.havePermission("EDIT_COMPONENTS", LoginData.AccessControl.YES))
+                btnEdit.Enabled = true;
+            if (LoginData.havePermission("DELETE_COMPONENTS", LoginData.AccessControl.YES))
+                btnDelete.Enabled = true;
+        }
+
         // On load
         private void ShowComponentsForm_Load(object sender, EventArgs e)
         {
             this.loadCmbTypes();
             this.refreshDgvComponentsList();
 
+            this.setPermissions();
         }
 
         // Refresh dgvComponentsList 
-        private void refreshDgvComponentsList()
+        public void refreshDgvComponentsList()
         {
             string lStmt;
 
@@ -166,7 +180,7 @@ namespace APCC.Forms
         // Show details
         private void btnDetails_Click(object sender, EventArgs e)
         {
-            if (dgvComponentsList.SelectedRows.Count > 0) {
+            if (dgvComponentsList.SelectedRows.Count == 1) {
 
                 int lComponentID = (int)dgvComponentsList.SelectedRows[0].Cells["comID"].Value;
 
@@ -186,5 +200,79 @@ namespace APCC.Forms
             childForm.ShowDialog();
         }
 
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (dgvComponentsList.SelectedRows.Count != 1) { 
+                return;
+            }
+
+            EditForms.AddComponentForm childForm = new EditForms.AddComponentForm();
+
+            // Fill data
+            childForm.txbID.Text = dgvComponentsList.SelectedRows[0].Cells["comID"].Value.ToString();
+            childForm.txbName.Text = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
+
+            childForm.cmbTypes.SelectedValue = dgvComponentsList.SelectedRows[0].Cells["comTypeID"].Value;
+            childForm.cmbTypes.Enabled = false;
+
+            for (int i = 0; i < 10; i++)
+            {
+                ((TextBox)childForm.textBoxes[i]).Text 
+                    = dgvComponentsList.SelectedRows[0].Cells["comParamInt" + (i + 1).ToString()].Value.ToString();
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                ((TextBox)childForm.textBoxes[i+10]).Text
+                    = dgvComponentsList.SelectedRows[0].Cells["comParamString" + (i + 1).ToString()].Value.ToString();
+            }
+
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to delete selected component?", "Notification", MessageBoxButtons.YesNo) 
+                == DialogResult.No) {
+                return;
+            }
+
+            SqlCommand lSCmd;
+            SqlParameter lMsg;
+
+            try
+            {
+                // (@pID, @oMsg)
+                lSCmd = new SqlCommand("deleteComponent", SqlConn.Connection);
+                lSCmd.CommandType = CommandType.StoredProcedure;
+
+                lSCmd.Parameters.Add("@pID", SqlDbType.Int);
+
+                lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
+                lMsg.Direction = ParameterDirection.Output;
+
+                // Values
+                lSCmd.Parameters["@pID"].Value = this.dgvComponentsList.SelectedRows[0].Cells["comID"].Value;
+
+                lSCmd.ExecuteNonQuery();
+
+                if (lMsg.Value.ToString() != "OK")
+                {
+                    MessageBox.Show(lMsg.Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Component deleted!");
+                    this.refreshDgvComponentsList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
     }
 }
