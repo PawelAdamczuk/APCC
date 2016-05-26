@@ -13,9 +13,35 @@ namespace APCC.Forms.EditForms
 {
     public partial class RoleEditForm : Form
     {
+        //
+        // INIT
+        //
+
         public RoleEditForm()
         {
             InitializeComponent();
+        }
+
+        // On load
+        private void RoleEditForm_Load(object sender, EventArgs e)
+        {
+            txbID.Enabled = false;
+
+            setPermissions();
+
+            this.refreshDgvPermissions();
+        }
+
+        //
+        // FORM
+        //
+
+        private void setPermissions()
+        {
+            btnSave.Visible = false;
+
+            if (LoginData.havePermission("EDIT_ROLES", LoginData.AccessControl.YES))
+                btnSave.Visible = true;
         }
 
         private void refreshDgvPermissions() {
@@ -24,11 +50,12 @@ namespace APCC.Forms.EditForms
             try
             {
                 lStmt = @"SELECT * FROM getPermissionEditByRoleID(@pRoleID)";
-
                 SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
 
+                // Define
                 lCommand.Parameters.Add("@pRoleID", SqlDbType.Int);
 
+                // Values
                 int lParse;
                 if (Int32.TryParse(txbID.Text.ToString(), out lParse))
                 {
@@ -38,10 +65,12 @@ namespace APCC.Forms.EditForms
                     lCommand.Parameters["@pRoleID"].Value = DBNull.Value;
                 }
 
-                SqlDataReader lDataReader = lCommand.ExecuteReader();
-
+                // Execute !
                 DataTable lTable = new DataTable();
-                lTable.Load(lDataReader);
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader()) {
+                    
+                    lTable.Load(lDataReader);
+                }
 
                 dgvPermissions.DataSource = lTable;
 
@@ -57,9 +86,8 @@ namespace APCC.Forms.EditForms
                 dgvPermissions.Columns["perDefault"].HeaderText = "Default";
 
                 // 
-                // Fill ACL ComboBoxes
+                // Fill AccessControl ComboBoxes
                 //
-
                 DataGridViewComboBoxColumn cmbColumn = new DataGridViewComboBoxColumn();
                 cmbColumn.Name = "cmbAccess";
                 cmbColumn.HeaderText = "Access";
@@ -67,11 +95,13 @@ namespace APCC.Forms.EditForms
                 
                 for (int i = 0; i < dgvPermissions.Rows.Count; i++)
                 {
-                    DataGridViewComboBoxCell cmbCell =
-                        createComboBoxCell(dgvPermissions.Rows[i].Cells["perACL"].Value.ToString());
+                    // Create ComboBox with AC
+                    string tmpStringAC = dgvPermissions.Rows[i].Cells["perACL"].Value.ToString();
+                    DataGridViewComboBoxCell cmbCell = createComboBoxCell( tmpStringAC );
 
                     dgvPermissions.Rows[i].Cells["cmbAccess"] = cmbCell;
 
+                    // Set current values in ComboBox
                     string correctValues = dgvPermissions.Rows[i].Cells["perACL"].Value.ToString();
                     correctValues += "D";
                     string currentValue = dgvPermissions.Rows[i].Cells["rlpAccess"].Value.ToString();
@@ -103,6 +133,9 @@ namespace APCC.Forms.EditForms
             }
         }
 
+        // Create combobox with AccesControls
+        // Params:
+        // @pACL - string with AccesControl chars
         private DataGridViewComboBoxCell createComboBoxCell(string pACL) {
 
             DataGridViewComboBoxCell lCmbCell = new DataGridViewComboBoxCell();
@@ -129,26 +162,18 @@ namespace APCC.Forms.EditForms
             return lCmbCell;
         }
 
-        private void setPermissions() {
-            btnSave.Visible = false;
-
-            if( LoginData.havePermission("EDIT_ROLES", LoginData.AccessControl.YES) )
-                btnSave.Visible = true;
-        }
-
-        private void RoleEditForm_Load(object sender, EventArgs e)
+        // Show detailed description on row changed
+        private void dgvPermissions_SelectionChanged(object sender, EventArgs e)
         {
-            txbID.Enabled = false;
-
-            setPermissions();
-
-            this.refreshDgvPermissions();
+            if (dgvPermissions.SelectedRows.Count == 1)
+            {
+                txbDetails.Text = dgvPermissions.SelectedRows[0].Cells["perDesc"].Value.ToString();
+            }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        //
+        // BUTTONS
+        //
 
         // Save
         private void btnSave_Click(object sender, EventArgs e)
@@ -165,29 +190,22 @@ namespace APCC.Forms.EditForms
                 lSCmd = new SqlCommand("saveRole", SqlConn.Connection);
                 lSCmd.CommandType = CommandType.StoredProcedure;
 
-                // Define parameters
+                // Define 
                 lRoleID = lSCmd.Parameters.Add("@pRoleID", SqlDbType.Int);
-                lRoleID.Direction = ParameterDirection.InputOutput;
-
                 lSCmd.Parameters.Add("@pName", SqlDbType.VarChar, 256);
-
                 lPermArray = lSCmd.Parameters.Add("@pPermArray", SqlDbType.Structured);
-
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 256);
+
+                lRoleID.Direction = ParameterDirection.InputOutput;
                 lMsg.Direction = ParameterDirection.Output;
 
-                // Fill parameters
-                // lID
-                if (txbID.Text == "")
-                {
+                // Values
+                if (txbID.Text == ""){
                     lSCmd.Parameters["@pRoleID"].Value = DBNull.Value;
-                }
-                else
-                {
+                }else{
                     lSCmd.Parameters["@pRoleID"].Value = int.Parse(txbID.Text);
                 }
-
-                // lName
+                
                 lSCmd.Parameters["@pName"].Value = txbName.Text;
 
                 // lParams
@@ -202,10 +220,9 @@ namespace APCC.Forms.EditForms
 
                     tablePerm.Rows.Add(i, lPermID, lPermAcc );
                 }
-                
                 lSCmd.Parameters["@pPermArray"].Value = tablePerm;
                 
-                // EXECUTE !! 
+                // Execute ! 
                 lSCmd.ExecuteNonQuery();
 
                 if (lMsg.Value.ToString() != "OK")
@@ -227,11 +244,10 @@ namespace APCC.Forms.EditForms
             
         }
 
-        private void dgvPermissions_SelectionChanged(object sender, EventArgs e)
+        // Close
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            if (dgvPermissions.SelectedRows.Count > 0) {
-                txbDetails.Text = dgvPermissions.SelectedRows[0].Cells["perDesc"].Value.ToString();
-            }
+            this.Close();
         }
     }
 }

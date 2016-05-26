@@ -14,7 +14,7 @@ namespace APCC.Forms.EditForms
     public partial class BuildEditForm : Form
     {
         //
-        // Var
+        // VAR
         //
         private bool cmbTypesFilled;
         public bool isTester;
@@ -33,6 +33,10 @@ namespace APCC.Forms.EditForms
             ADD = 1
         }
 
+        //
+        // INIT
+        //
+
         public BuildEditForm( EditMode pMode )
         {
             editMode = pMode;
@@ -42,6 +46,28 @@ namespace APCC.Forms.EditForms
 
             InitializeComponent();
         }
+
+        // On load
+        private void BuildEditForm_Load(object sender, EventArgs e)
+        {
+            // Permissions
+            this.setPermissions();
+
+            //
+            // Summary tab
+            //
+            this.refreshDgvComponents();
+
+            //
+            // Components tab
+            //
+            this.loadCmbTypes();
+            this.refreshDgvComponentsList();
+        }
+
+        //
+        // FORM
+        //
 
         private void setPermissions() {
             txbName.Enabled = false;
@@ -95,24 +121,6 @@ namespace APCC.Forms.EditForms
 
         }
 
-        // On load
-        private void BuildEditForm_Load(object sender, EventArgs e)
-        {
-            // Permissions
-            this.setPermissions();
-
-            //
-            // Summary tab
-            //
-            this.refreshDgvComponents();
-
-            //
-            // Components tab
-            //
-            this.loadCmbTypes();
-            this.refreshDgvComponentsList();
-        }
-
         // Change accept state
         public void changeStatus(bool lAccept)
         {
@@ -138,40 +146,6 @@ namespace APCC.Forms.EditForms
             }
 
             this.setPermissions();
-        }
-
-        // Add one more selected component
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount++;
-
-            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-        }
-
-        // Delete one selected component
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount--;
-
-            if (tmpCount > 0)
-            {
-                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-            }
-            else {
-                dgvComponents.Rows.RemoveAt( dgvComponents.SelectedRows[0].Index );
-            }
         }
 
         // Fill combobox with components types
@@ -420,6 +394,41 @@ namespace APCC.Forms.EditForms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        // Add one more selected component
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount++;
+
+            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+        }
+
+        // Delete one selected component
+        private void btnMinus_Click(object sender, EventArgs e)
+        {
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount--;
+
+            if (tmpCount > 0)
+            {
+                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+            }
+            else
+            {
+                dgvComponents.Rows.RemoveAt(dgvComponents.SelectedRows[0].Index);
             }
         }
 

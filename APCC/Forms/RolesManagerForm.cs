@@ -13,16 +13,25 @@ namespace APCC.Forms
 {
     public partial class RolesManagerForm : Form
     {
+        //
+        // INIT 
+        //
+
         public RolesManagerForm()
         {
             InitializeComponent();
         }
 
-
-        private void btnClose_Click(object sender, EventArgs e)
+        // On load
+        private void RolesEditForm_Load(object sender, EventArgs e)
         {
-            this.Close();
+            this.refreshDgvRoles();
+            this.setPermissions();
         }
+
+        //
+        // FORM
+        //
 
         public void refreshDgvRoles()
         {
@@ -73,13 +82,9 @@ namespace APCC.Forms
                 btnEdit.Enabled = true;
         }
 
-        // On load
-        private void RolesEditForm_Load(object sender, EventArgs e)
-        {
-            this.refreshDgvRoles();
-
-            setPermissions();
-        }
+        //
+        // BUTTONS
+        //
 
         // Add role
         private void btnAdd_Click(object sender, EventArgs e)
@@ -153,5 +158,12 @@ namespace APCC.Forms
             }
 
         }
+
+        // Close
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
