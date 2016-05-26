@@ -11,8 +11,10 @@ namespace APCC
 {
     public sealed class SqlConn
     {
+        // Singleton for storing SqlConnection
         private static SqlConnection mSC;
 
+        // Init
         static SqlConn()
         {
             SqlConnectionStringBuilder lConnStr = new SqlConnectionStringBuilder();
@@ -27,10 +29,7 @@ namespace APCC
 
         public static SqlConnection Connection
         {
-            get
-            {
-                return mSC;
-            }
+            get{ return mSC; }
         }
 
     }

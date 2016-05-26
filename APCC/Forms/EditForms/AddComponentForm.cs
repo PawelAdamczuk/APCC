@@ -14,10 +14,17 @@ namespace APCC.Forms.EditForms
 {
     public partial class AddComponentForm : Form
     {
+        //
+        // VAR
+        //
+
         public ArrayList labels;
         public ArrayList textBoxes;
         DataTable tabTypes = new DataTable();
 
+        //
+        // INIT
+        //
 
         public AddComponentForm()
         {
@@ -26,6 +33,16 @@ namespace APCC.Forms.EditForms
             this.collectLabels();
             this.loadTypes();
         }
+
+        // On load
+        private void AddComponentForm_Load(object sender, EventArgs e)
+        {
+            txbID.Enabled = false;
+        }
+
+        //
+        // FORM
+        //
 
         // Load types to combobox
         private void loadTypes() {
@@ -49,13 +66,6 @@ namespace APCC.Forms.EditForms
                 cmbTypes.DisplayMember = "typName";
                 cmbTypes.ValueMember = "typID";
             }
-
-        }
-
-        private void AddComponentForm_Load(object sender, EventArgs e)
-        {
-            txbID.Enabled = false;
-            
         }
 
         // Filling the labels with parameter names
@@ -86,8 +96,6 @@ namespace APCC.Forms.EditForms
                 else
                     typedTextBox.Visible = true;
             }
-
-
         }
 
         private void collectLabels()
@@ -143,6 +151,11 @@ namespace APCC.Forms.EditForms
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
+        //
+        // BUTTONS
+        //
+
+        // Add
         private void button_add_Click(object sender, EventArgs e)
         {
             SqlCommand cmd;
@@ -157,9 +170,18 @@ namespace APCC.Forms.EditForms
                 cmd = new SqlCommand("saveComponent", SqlConn.Connection);
                 cmd.CommandType = CommandType.StoredProcedure;
 
+                // Declare
                 compID = cmd.Parameters.Add("@pID", SqlDbType.Int);
-                compID.Direction = ParameterDirection.InputOutput;
+                cmd.Parameters.Add("@pTypeID", SqlDbType.Int);
+                cmd.Parameters.Add("@pName", SqlDbType.VarChar, 50);
+                stringArgsArray = cmd.Parameters.Add("@pStringArray", SqlDbType.Structured);
+                intArgsArray = cmd.Parameters.Add("@pIntArray", SqlDbType.Structured);
+                msg = cmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
 
+                compID.Direction = ParameterDirection.InputOutput;
+                msg.Direction = ParameterDirection.Output;
+
+                // Values
                 int tmpParseID;
                 if (Int32.TryParse(txbID.Text, out tmpParseID))
                 {
@@ -169,17 +191,8 @@ namespace APCC.Forms.EditForms
                     cmd.Parameters["@pID"].Value = DBNull.Value;
                 }
 
-                cmd.Parameters.Add("@pTypeID", SqlDbType.Int);
-                cmd.Parameters.Add("@pName", SqlDbType.VarChar, 50);
-
                 cmd.Parameters["@pTypeID"].Value = cmbTypes.SelectedValue;
                 cmd.Parameters["@pName"].Value = this.txbName.Text;
-
-                stringArgsArray = cmd.Parameters.Add("@pStringArray", SqlDbType.Structured);
-                intArgsArray = cmd.Parameters.Add("@pIntArray", SqlDbType.Structured);
-
-                msg = cmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
-                msg.Direction = ParameterDirection.Output;
                 
                 DataTable intTable = new DataTable();
                 intTable.Columns.Add("id");
@@ -197,7 +210,6 @@ namespace APCC.Forms.EditForms
                         intTable.Rows.Add(i + 1, DBNull.Value);
                     }
                 }
-
                 cmd.Parameters["@pIntArray"].Value = intTable;
 
                 DataTable stringTable = new DataTable();
@@ -214,9 +226,9 @@ namespace APCC.Forms.EditForms
                         stringTable.Rows.Add(i + 1, DBNull.Value);
                     }
                 }
-
                 cmd.Parameters["@pStringArray"].Value = stringTable;
 
+                // Execute !
                 cmd.ExecuteNonQuery();
 
                 if ( msg.Value.ToString() != "OK" )

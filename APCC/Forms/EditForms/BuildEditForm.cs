@@ -17,15 +17,17 @@ namespace APCC.Forms.EditForms
         // Var
         //
         private bool cmbTypesFilled;
+        public bool isTester;
 
         public int CreatorID;
         public int TesterID;
-
-        public bool isTester;
-        private bool isStateComitted;
+        
+        // For permission distinction, tells 
+        // if showed information about build
+        // state is currently in data base.
+        private bool isStateComitted; 
 
         private EditMode editMode;
-
         public enum EditMode {
             EDIT = 0,
             ADD = 1
