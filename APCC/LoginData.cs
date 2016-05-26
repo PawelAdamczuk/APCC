@@ -12,6 +12,9 @@ namespace APCC
 {
     public sealed class LoginData
     {
+        //
+        // VAR
+        //
         private static bool isLogged = false;
 
         private static string FName = "";
@@ -35,25 +38,12 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
-        // Access control
+        // Access control enum
         public enum AccessControl : int
         {
             YES = 0,
             NO = 1,
             ONLY_OWN = 2
-        }
-
-        // Check if user have specific permission
-        public static bool havePermission(string pPerm, AccessControl pAccess )
-        {
-            if (!dictPermissions.ContainsKey(pPerm)) {
-                Debug.Print("havePermission(): Table does not cantain specified key " + pPerm );
-                return false;
-            }
-            else
-            {
-                return ( (dictPermissions[pPerm] == pAccess) ? true : false);
-            }
         }
 
         // Login with user id
@@ -98,11 +88,11 @@ namespace APCC
             {
                 MessageBox.Show(ex.ToString());
             }
-
-            // Get permissions for current role
+            
             getPermissions();
         }
 
+        // Load permissions for current Role from DataBase
         private static void getPermissions()
         { 
             string lStmt;
@@ -131,13 +121,23 @@ namespace APCC
             }
         }
 
-        public static string GetUserName()
+        // Check if user have specific permission
+        public static bool havePermission(string pPerm, AccessControl pAccess)
         {
-            return FName + " " + SName;
+            if (!dictPermissions.ContainsKey(pPerm))
+            {
+                Debug.Print("havePermission(): Table does not cantain specified key " + pPerm);
+                return false;
+            }
+            else
+            {
+                return ((dictPermissions[pPerm] == pAccess) ? true : false);
+            }
         }
 
-        // Logout
-        public static void LogOut(){
+        // Logout current user
+        public static void LogOut()
+        {
             isLogged = false;
 
             FName = "";
@@ -146,6 +146,11 @@ namespace APCC
             UserID = 0;
 
             getPermissions();
+        }
+
+        public static string GetUserName()
+        {
+            return FName + " " + SName;
         }
 
         public static int GetUserID()
@@ -158,13 +163,11 @@ namespace APCC
             return RoleID;
         }
 
-        // Return name of user role
         public static string GetUserRoleName()
         {
             return RoleName;
         }
 
-        // Check if current user is admin
         public static bool Logged
         {
             get

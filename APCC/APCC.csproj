@@ -94,12 +94,6 @@
     <Compile Include="Forms\BuildsManagerForm.Designer.cs">
       <DependentUpon>BuildsManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\showBuildsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\showBuildsForm.Designer.cs">
-      <DependentUpon>showBuildsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ShowComponentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,9 +161,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\showBuildsForm.resx">
-      <DependentUpon>showBuildsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ShowComponentsForm.resx">
       <DependentUpon>ShowComponentsForm.cs</DependentUpon>
