@@ -20,7 +20,7 @@ namespace APCC.Forms
 
         public void selectIndex(string selectedBldName)
         {
-            int rowIndex = -1;
+            int rowIndex = 0;
 
             DataGridViewRow row = dgvBuilds.Rows
                 .Cast<DataGridViewRow>()
@@ -325,7 +325,7 @@ namespace APCC.Forms
         // Edit build
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
+            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm( EditForms.BuildEditForm.EditMode.EDIT );
 
             // Fill data in BuildEditForm
             childForm.txbID.Text = dgvBuilds.SelectedRows[0].Cells["bldID"].Value.ToString();
@@ -427,7 +427,7 @@ namespace APCC.Forms
         // Add new build
         private void button1_Click(object sender, EventArgs e)
         {
-            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm();
+            EditForms.BuildEditForm childForm = new EditForms.BuildEditForm( EditForms.BuildEditForm.EditMode.ADD );
 
             childForm.CreatorID = LoginData.GetUserID();
             childForm.txbCreatorName.Text = LoginData.GetUserName();

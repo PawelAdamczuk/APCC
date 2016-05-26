@@ -24,10 +24,20 @@ namespace APCC.Forms.EditForms
         public bool isTester;
         private bool isStateComitted;
 
-        public BuildEditForm()
+        private EditMode editMode;
+
+        public enum EditMode {
+            EDIT = 0,
+            ADD = 1
+        }
+
+        public BuildEditForm( EditMode pMode )
         {
+            editMode = pMode;
+
             cmbTypesFilled = false;
             isStateComitted = true;
+
             InitializeComponent();
         }
 
@@ -44,9 +54,9 @@ namespace APCC.Forms.EditForms
             btnSave.Visible = false;
 
             if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
-                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
-                 this.CreatorID == LoginData.GetUserID() )
-               ) {
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) && this.CreatorID == LoginData.GetUserID() ) ||
+                editMode == EditMode.ADD)
+            {
                 txbName.Enabled = true;
 
                 btnAdd.Enabled = true;
@@ -375,21 +385,21 @@ namespace APCC.Forms.EditForms
 
             try
             {
-                // (@pBuildID, @pTesterID, @oMsg)
-                lSCmd = new SqlCommand("acceptBuild", SqlConn.Connection);
+                // (@pBuildID, @pTesterID, @pState, @oMsg)
+                lSCmd = new SqlCommand("changeBuildState", SqlConn.Connection);
                 lSCmd.CommandType = CommandType.StoredProcedure;
 
                 lSCmd.Parameters.Add("@pBuildID", SqlDbType.Int);
-
                 lSCmd.Parameters.Add("@pTesterID", SqlDbType.Int);
+                lSCmd.Parameters.Add("@pState", SqlDbType.Bit);
 
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
                 lMsg.Direction = ParameterDirection.Output;
 
                 // Param values
                 lSCmd.Parameters["@pBuildID"].Value = Int32.Parse(this.txbID.Text);
-
                 lSCmd.Parameters["@pTesterID"].Value = LoginData.GetUserID();
+                lSCmd.Parameters["@pState"].Value = cbxAccept.Checked;
 
                 lSCmd.ExecuteNonQuery();
 
@@ -399,9 +409,9 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    MessageBox.Show("Build accepted!");
+                    MessageBox.Show("Build state changed!");
 
-                    this.changeStatus(true);
+                    this.changeStatus(cbxAccept.Checked);
                     isStateComitted = true;
                 }
             }
