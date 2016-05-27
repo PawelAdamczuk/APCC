@@ -92,6 +92,11 @@ namespace APCC
                 this.menuAdmin_Separator.Visible = true;
             }
 
+            //menuTools
+            if (LoginData.havePermission("SHOW_TOOLS_PANEL", LoginData.AccessControl.YES)){
+                this.menuTools.Visible = true;
+                this.menuTools_Options.Visible = true;
+            }
         }
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
@@ -279,6 +284,23 @@ namespace APCC
             if (tmpForm == null)
             {
                 Forms.GlobalStatisticsForm loginForm = new Forms.GlobalStatisticsForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void menuTools_Options_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.Options), this);
+
+            if (tmpForm == null)
+            {
+                Forms.Options loginForm = new Forms.Options();
                 loginForm.MdiParent = this;
                 loginForm.Show();
             }

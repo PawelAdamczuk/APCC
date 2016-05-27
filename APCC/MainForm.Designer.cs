@@ -48,8 +48,10 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.picOtter = new System.Windows.Forms.PictureBox();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picOtter)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -165,6 +167,7 @@
             this.menuTools_Options.Name = "menuTools_Options";
             this.menuTools_Options.Size = new System.Drawing.Size(136, 26);
             this.menuTools_Options.Text = "&Options";
+            this.menuTools_Options.Click += new System.EventHandler(this.menuTools_Options_Click);
             // 
             // itemLogin
             // 
@@ -202,13 +205,28 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // picOtter
+            // 
+            this.picOtter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.picOtter.BackColor = System.Drawing.Color.Transparent;
+            this.picOtter.BackgroundImage = global::APCC.Properties.Resources.wydra1;
+            this.picOtter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picOtter.Location = new System.Drawing.Point(0, 541);
+            this.picOtter.Name = "picOtter";
+            this.picOtter.Size = new System.Drawing.Size(150, 139);
+            this.picOtter.TabIndex = 6;
+            this.picOtter.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1236, 708);
+            this.Controls.Add(this.picOtter);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(5);
@@ -220,6 +238,7 @@
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picOtter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,6 +265,7 @@
         private System.Windows.Forms.ToolStripSeparator menuShow_Separator;
         private System.Windows.Forms.ToolStripMenuItem menuShow_Statistics;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Statistics;
+        public System.Windows.Forms.PictureBox picOtter;
     }
 }
 
