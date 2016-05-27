@@ -13,6 +13,25 @@ namespace APCC
 {
     public partial class MainForm : Form
     {
+        //
+        // INIT
+        //
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        // On load
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.setPermissions();
+            this.openLoginWindow();
+        }
+
+        //
+        // FORM
+        //
+
         public void setPermissions()
         {
             // Hide all items
@@ -74,19 +93,6 @@ namespace APCC
             }
 
         }
-
-        // Constructor 
-        public MainForm()
-        {
-            InitializeComponent();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            this.setPermissions();
-            this.openLoginWindow();
-        }
-
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -239,6 +245,40 @@ namespace APCC
             if (tmpForm == null)
             {
                 Forms.RolesManagerForm loginForm = new Forms.RolesManagerForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void menuShow_Statistics_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.UserStatisticsForm), this);
+
+            if (tmpForm == null)
+            {
+                Forms.UserStatisticsForm loginForm = new Forms.UserStatisticsForm();
+                loginForm.MdiParent = this;
+                loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void menuAdmin_Statistics_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.GlobalStatisticsForm), this);
+
+            if (tmpForm == null)
+            {
+                Forms.GlobalStatisticsForm loginForm = new Forms.GlobalStatisticsForm();
                 loginForm.MdiParent = this;
                 loginForm.Show();
             }

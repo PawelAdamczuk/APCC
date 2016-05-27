@@ -70,6 +70,12 @@
     <Compile Include="Forms\EditForms\RoleEditForm.Designer.cs">
       <DependentUpon>RoleEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GlobalStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GlobalStatisticsForm.Designer.cs">
+      <DependentUpon>GlobalStatisticsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RolesManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,12 @@
     <Compile Include="Forms\UsersManageForm.Designer.cs">
       <DependentUpon>UsersManageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UserStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserStatisticsForm.Designer.cs">
+      <DependentUpon>UserStatisticsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginData.cs" />
     <Compile Include="ProfilManage.cs">
       <SubType>Form</SubType>
@@ -150,6 +162,9 @@
     <EmbeddedResource Include="Forms\EditForms\RoleEditForm.resx">
       <DependentUpon>RoleEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GlobalStatisticsForm.resx">
+      <DependentUpon>GlobalStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RolesManagerForm.resx">
       <DependentUpon>RolesManagerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -170,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UsersManageForm.resx">
       <DependentUpon>UsersManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserStatisticsForm.resx">
+      <DependentUpon>UserStatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

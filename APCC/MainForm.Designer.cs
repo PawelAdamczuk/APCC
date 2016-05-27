@@ -33,11 +33,14 @@
             this.menuShow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuShow_Builds = new System.Windows.Forms.ToolStripMenuItem();
             this.menuShow_Components = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuShow_Separator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuShow_Statistics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin_Users = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin_Roles = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin_Types = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAdmin_Separator = new System.Windows.Forms.ToolStripSeparator();
-            this.menuAdmin_Roles = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAdmin_Statistics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools_Options = new System.Windows.Forms.ToolStripMenuItem();
             this.itemLogin = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,9 +48,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.menuShow_Statistics = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuShow_Separator = new System.Windows.Forms.ToolStripSeparator();
-            this.menuAdmin_Statistics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -84,16 +84,28 @@
             // menuShow_Builds
             // 
             this.menuShow_Builds.Name = "menuShow_Builds";
-            this.menuShow_Builds.Size = new System.Drawing.Size(181, 26);
+            this.menuShow_Builds.Size = new System.Drawing.Size(168, 26);
             this.menuShow_Builds.Text = "Builds";
             this.menuShow_Builds.Click += new System.EventHandler(this.buildsToolStripMenuItem_Click);
             // 
             // menuShow_Components
             // 
             this.menuShow_Components.Name = "menuShow_Components";
-            this.menuShow_Components.Size = new System.Drawing.Size(181, 26);
+            this.menuShow_Components.Size = new System.Drawing.Size(168, 26);
             this.menuShow_Components.Text = "Components";
             this.menuShow_Components.Click += new System.EventHandler(this.componentsToolStripMenuItem_Click);
+            // 
+            // menuShow_Separator
+            // 
+            this.menuShow_Separator.Name = "menuShow_Separator";
+            this.menuShow_Separator.Size = new System.Drawing.Size(165, 6);
+            // 
+            // menuShow_Statistics
+            // 
+            this.menuShow_Statistics.Name = "menuShow_Statistics";
+            this.menuShow_Statistics.Size = new System.Drawing.Size(168, 26);
+            this.menuShow_Statistics.Text = "Statistics";
+            this.menuShow_Statistics.Click += new System.EventHandler(this.menuShow_Statistics_Click);
             // 
             // menuAdmin
             // 
@@ -114,6 +126,13 @@
             this.menuAdmin_Users.Text = "Users";
             this.menuAdmin_Users.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
+            // menuAdmin_Roles
+            // 
+            this.menuAdmin_Roles.Name = "menuAdmin_Roles";
+            this.menuAdmin_Roles.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Roles.Text = "Roles and permissions";
+            this.menuAdmin_Roles.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
+            // 
             // menuAdmin_Types
             // 
             this.menuAdmin_Types.Name = "menuAdmin_Types";
@@ -126,12 +145,12 @@
             this.menuAdmin_Separator.Name = "menuAdmin_Separator";
             this.menuAdmin_Separator.Size = new System.Drawing.Size(228, 6);
             // 
-            // menuAdmin_Roles
+            // menuAdmin_Statistics
             // 
-            this.menuAdmin_Roles.Name = "menuAdmin_Roles";
-            this.menuAdmin_Roles.Size = new System.Drawing.Size(231, 26);
-            this.menuAdmin_Roles.Text = "Roles and permissions";
-            this.menuAdmin_Roles.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
+            this.menuAdmin_Statistics.Name = "menuAdmin_Statistics";
+            this.menuAdmin_Statistics.Size = new System.Drawing.Size(231, 26);
+            this.menuAdmin_Statistics.Text = "Global statistics";
+            this.menuAdmin_Statistics.Click += new System.EventHandler(this.menuAdmin_Statistics_Click);
             // 
             // menuTools
             // 
@@ -144,7 +163,7 @@
             // menuTools_Options
             // 
             this.menuTools_Options.Name = "menuTools_Options";
-            this.menuTools_Options.Size = new System.Drawing.Size(181, 26);
+            this.menuTools_Options.Size = new System.Drawing.Size(136, 26);
             this.menuTools_Options.Text = "&Options";
             // 
             // itemLogin
@@ -182,23 +201,6 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
-            // 
-            // menuShow_Statistics
-            // 
-            this.menuShow_Statistics.Name = "menuShow_Statistics";
-            this.menuShow_Statistics.Size = new System.Drawing.Size(181, 26);
-            this.menuShow_Statistics.Text = "Statistics";
-            // 
-            // menuShow_Separator
-            // 
-            this.menuShow_Separator.Name = "menuShow_Separator";
-            this.menuShow_Separator.Size = new System.Drawing.Size(178, 6);
-            // 
-            // menuAdmin_Statistics
-            // 
-            this.menuAdmin_Statistics.Name = "menuAdmin_Statistics";
-            this.menuAdmin_Statistics.Size = new System.Drawing.Size(231, 26);
-            this.menuAdmin_Statistics.Text = "Global statistics";
             // 
             // MainForm
             // 
