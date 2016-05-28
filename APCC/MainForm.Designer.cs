@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuShow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuShow_Builds = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +50,7 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.picOtter = new System.Windows.Forms.PictureBox();
+            this.tipOtter = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOtter)).BeginInit();
@@ -209,13 +211,15 @@
             // 
             this.picOtter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.picOtter.BackColor = System.Drawing.Color.Transparent;
-            this.picOtter.BackgroundImage = global::APCC.Properties.Resources.wydra1;
+            this.picOtter.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picOtter.BackgroundImage")));
             this.picOtter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picOtter.Location = new System.Drawing.Point(0, 541);
             this.picOtter.Name = "picOtter";
             this.picOtter.Size = new System.Drawing.Size(150, 139);
             this.picOtter.TabIndex = 6;
             this.picOtter.TabStop = false;
+            this.picOtter.Visible = false;
+            this.picOtter.Click += new System.EventHandler(this.picOtter_Click);
             // 
             // MainForm
             // 
@@ -266,6 +270,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuShow_Statistics;
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Statistics;
         public System.Windows.Forms.PictureBox picOtter;
+        private System.Windows.Forms.ToolTip tipOtter;
     }
 }
 
