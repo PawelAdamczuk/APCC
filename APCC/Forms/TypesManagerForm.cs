@@ -169,7 +169,7 @@ namespace APCC.Forms
                 return;
             }
 
-            string msgString = "Are you sure to delete this type and all data connected with it ?";
+            string msgString = "Are you sure you want to delete this type and all associated data?";
             if (MessageBox.Show( msgString, "Warning", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 return;
@@ -203,7 +203,7 @@ namespace APCC.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Type deleted!");
+                    MessageBox.Show("Type deleted");
                     this.refreshGrid();
                 }
             }

@@ -151,7 +151,7 @@ namespace APCC
         // Logout
         private void toolStripMenuItem_LogOut_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure to log out?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to log out?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 LoginData.LogOut();
                 this.setPermissions();

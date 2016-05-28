@@ -42,7 +42,7 @@ namespace APCC.Forms
         {
             if(fName == "" || lName == "" || login == "" || password == "" || position == "")
             {
-                MessageBox.Show("You entered incorrect data");
+                MessageBox.Show("Data incorrect!");
                 return false;
             }
 
@@ -52,7 +52,7 @@ namespace APCC.Forms
                 {
                     if (r.HasRows == true)
                     {
-                        MessageBox.Show("The user name has been taken");
+                        MessageBox.Show("This user name is not available");
                         return false;
                     }
                 }
@@ -83,7 +83,7 @@ namespace APCC.Forms
                     addUser.Parameters.AddWithValue("@pRoleId", numberOfRole(position));
 
                     addUser.ExecuteNonQuery();
-                    MessageBox.Show("You have added a new user");
+                    MessageBox.Show("User added");
                     textBox1.Clear();
                     textBox2.Clear();
                     textBox3.Clear();

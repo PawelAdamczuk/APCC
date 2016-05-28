@@ -115,7 +115,7 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    MessageBox.Show("Data saved!");
+                    MessageBox.Show("Data saved");
                     txbID.Text = lID.Value.ToString();
 
                     ((TypesManagerForm)this.Owner).refreshGrid();

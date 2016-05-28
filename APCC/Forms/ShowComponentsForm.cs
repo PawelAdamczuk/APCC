@@ -232,7 +232,7 @@ namespace APCC.Forms
                 return;
             }
 
-            string msgString = "Are you sure to delete selected component?";
+            string msgString = "Are you sure you want to delete selected component?";
             if (MessageBox.Show( msgString, "Notification", MessageBoxButtons.YesNo) == DialogResult.No) {
                 return;
             }
@@ -264,7 +264,7 @@ namespace APCC.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Component deleted!");
+                    MessageBox.Show("Component deleted");
                     this.refreshDgvComponentsList();
                 }
             }
