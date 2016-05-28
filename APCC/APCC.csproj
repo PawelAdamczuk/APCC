@@ -137,6 +137,7 @@
     <Compile Include="Forms\ProfilManage.Designer.cs">
       <DependentUpon>ProfilManage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Otter.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>

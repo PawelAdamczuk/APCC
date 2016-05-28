@@ -16,35 +16,6 @@ namespace APCC
         //
         // VAR
         //
-        private static int otterClick = 0;
-        private static string[] otterSay = {
-            "Cześć, jestem wyderką",
-            "Witam serdecznie",
-            "Słodka wyderka zawsze spoko",
-            "Ten program jest najlepszy",
-            "Dasz mi coś do jedzonka ?",
-            "Przestań klikać, niszczysz futerko",
-            "Nie rozumiesz ?",
-            "Java jest do kitu",
-            "Tylko C#",
-            "Albo C++ ze wskaźnikami",
-            "Czcij wyderkę i jej szlachetne futro",
-            "Zapraszam do kliknięcia w powyższe przyciski",
-            "Robienie buildów takie fajne",
-            "Czy ty też miewasz flashbacki z Wietnamu ?",
-            "Nie podam Ci łapki, jesteś z AGH",
-            "Nie lubie myszy",
-            "Możesz wziąć stąd tą mysz ?",
-            "Najpierw masa, potem futro",
-            "Być albo nie być wydrą, oto jest pytanie",
-            "Lubie czosnek",
-            "Bardzo lubie czosnek",
-            "Wiesz czemu inne wydry ode mnie uciekają ?",
-            "Ja też nie",
-            "Dobra, zajmij się sobą",
-            "Moja żona wydra była Miss Otter w '67",
-            "To były czasy..."
-        };
 
         //
         // INIT
@@ -57,8 +28,7 @@ namespace APCC
         // Otter module
         private void picOtter_Click(object sender, EventArgs e)
         {
-            otterClick++;
-            tipOtter.SetToolTip( this.picOtter, otterSay[otterClick % otterSay.Length] );
+            tipOtter.SetToolTip( this.picOtter, Otter.Click( this.ActiveMdiChild ) );
         }
 
         // On load
