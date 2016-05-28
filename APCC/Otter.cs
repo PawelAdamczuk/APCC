@@ -13,7 +13,7 @@ namespace APCC
         // Hints for Forms
         //
 
-        // User statistics
+        // Default 
         static string[] hintDefault = new string[]{
             "Cześć, jestem wyderką",
             "Witam serdecznie",
@@ -65,38 +65,48 @@ namespace APCC
         static private string[] activeHints = hintDefault;
 
         static public string Click( Form pActiveForm ) {
-
-            if( activeForm == null){
-                activeForm = pActiveForm;
-            }
-
-            if ( activeForm != null && pActiveForm.GetType() != activeForm.GetType()) {
-
-                // Set hint depending on active window
+            if (pActiveForm != null)
+            {
                 Type lType = pActiveForm.GetType();
                 bool lTypeFound = false;
 
-                if ( lType == typeof(Forms.GlobalStatisticsForm) ) {
+                if (lType == typeof(Forms.GlobalStatisticsForm)) {
                     activeHints = hintGlobalStats;
                     lTypeFound = true;
                 }
-                if (lType == typeof(Forms.UserStatisticsForm)){
+
+                if (lType == typeof(Forms.UserStatisticsForm))
+                {
                     activeHints = hintUserStats;
                     lTypeFound = true;
                 }
 
-                // Active form not known
-                if ( !lTypeFound ) {
-                    activeHints = hintDefault;
-                }
+                if (!lTypeFound)
+                {
+                    if (activeForm == null){
+                        hintNumber++;
+                    } else {
+                        activeHints = hintDefault;
+                        hintNumber = 0;
+                    }
+                } else {
 
-                activeForm = pActiveForm;
-                hintNumber = 0;
+                    if (activeForm != null && activeForm.GetType() == pActiveForm.GetType())
+                    {
+                        hintNumber++;
+                    }
+                    else {
+                        hintNumber = 0;
+                        activeForm = pActiveForm;
+                    }
+                }
             }
             else {
-                hintNumber = (++hintNumber) % activeHints.Length;
+                activeHints = hintDefault;
+                hintNumber = 0;
             }
 
+            hintNumber = hintNumber % activeHints.Length;
             return activeHints[hintNumber];
         }
     }

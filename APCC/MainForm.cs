@@ -81,7 +81,8 @@ namespace APCC
                 this.menuTools.Visible = true;
 
             // menuShow
-            if (LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.YES))
+            if (LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.YES) ||
+                LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.ONLY_OWN))
                 this.menuShow_Builds.Visible = true;
             if (LoginData.havePermission("SHOW_COMPONENTS", LoginData.AccessControl.YES))
                 this.menuShow_Components.Visible = true;
@@ -333,7 +334,7 @@ namespace APCC
 
         private void profilToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.Options), this);
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(ProfilManage), this);
             
             if(tmpForm == null)
             {
