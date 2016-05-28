@@ -102,8 +102,16 @@ namespace APCC
                 }
             }
             else {
-                activeHints = hintDefault;
-                hintNumber = 0;
+                if (activeForm == null)
+                {
+                    hintNumber++;
+                }
+                else {
+                    activeHints = hintDefault;
+                    hintNumber = 0;
+                }
+
+                activeForm = null;
             }
 
             hintNumber = hintNumber % activeHints.Length;
