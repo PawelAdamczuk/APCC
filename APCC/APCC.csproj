@@ -131,10 +131,10 @@
       <DependentUpon>UserStatisticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginData.cs" />
-    <Compile Include="ProfilManage.cs">
+    <Compile Include="Forms\ProfilManage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProfilManage.Designer.cs">
+    <Compile Include="Forms\ProfilManage.Designer.cs">
       <DependentUpon>ProfilManage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
@@ -201,7 +201,7 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProfilManage.resx">
+    <EmbeddedResource Include="Forms\ProfilManage.resx">
       <DependentUpon>ProfilManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -228,7 +228,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wydra1.png" />
+    <Folder Include="Forms\Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

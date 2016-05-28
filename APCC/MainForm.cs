@@ -97,6 +97,8 @@ namespace APCC
                 this.menuTools.Visible = true;
                 this.menuTools_Options.Visible = true;
             }
+
+ 
         }
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
@@ -303,6 +305,23 @@ namespace APCC
                 Forms.Options loginForm = new Forms.Options();
                 loginForm.MdiParent = this;
                 loginForm.Show();
+            }
+            else
+            {
+                tmpForm.Activate();
+                tmpForm.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void profilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form tmpForm = Utilities.FindMdiFormByType(typeof(Forms.Options), this);
+            
+            if(tmpForm == null)
+            {
+                ProfilManage profilManageForm = new ProfilManage();
+                profilManageForm.MdiParent = this;
+                profilManageForm.Show();
             }
             else
             {

@@ -14,7 +14,6 @@ namespace APCC.Forms
 {
     public partial class addingNewUserForm : Form
     {
-       
         public addingNewUserForm()
         {
             InitializeComponent();
@@ -27,13 +26,16 @@ namespace APCC.Forms
 
         private int numberOfRole(string role)
         {
-            int r = 0;
+            int inx = 0;
 
-            if (role.CompareTo("Configurator") == 0) r = 1;
-            else if (role.CompareTo("Tester") == 0) r = 2;
-            else if (role.CompareTo("Administrator") == 0) r = 3;
-
-            return r;
+            SqlCommand getIDRole = new SqlCommand("SELECT rlsID FROM ROLES WHERE rlsName = '" + role + "'", SqlConn.Connection);
+            using(SqlDataReader r = getIDRole.ExecuteReader())
+            {
+                r.Read();
+                inx = int.Parse(r["rlsID"].ToString());
+            }
+            
+            return inx;
         }
 
         private bool checkCorrectDate(string fName, string lName, string login, string password, string position)
@@ -127,7 +129,18 @@ namespace APCC.Forms
         // On load
         private void addingNewUserForm_Load(object sender, EventArgs e)
         {
+            SqlCommand getRoles = new SqlCommand("SELECT rlsName FROM ROLES", SqlConn.Connection);
 
+            using (SqlDataReader r = getRoles.ExecuteReader())
+            {
+                r.Read();
+
+                while (r.Read())
+                {
+                    listBox1.Items.Add(r["rlsName"].ToString());
+                }
+            }
+            
         }
     }
 }
