@@ -34,22 +34,28 @@ namespace APCC
         private void button1_Click(object sender, EventArgs e)
         {
 
-            SqlCommand getPaswd = new SqlCommand("SELECT usrPasswd FROM [dbo].[Users] WHERE usrID = " + LoginData.GetUserID(), SqlConn.Connection);
-            
-                using (SqlDataReader r = getPaswd.ExecuteReader())
-                {
-                    if (textBox1.Text != "" && r["usrPasswd"].ToString() != Utilities.StringHash(textBox1.Text))
-                    {
-                        SqlCommand setNewPaswd = new SqlCommand("UPDATE [dbo].[USERS] SET usrPasswd = " + Utilities.StringHash(textBox1.Text), SqlConn.Connection);
-                        setNewPaswd.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Enter new password if you want to change it");
-                    }
+            if(textBox1.Text != "")
+            {
+                SqlCommand checkPaswd = new SqlCommand("SELECT [dbo].[checkPassword] (@idUsr, @newPasswd) as [result]", SqlConn.Connection);
+                checkPaswd.Parameters.AddWithValue("@idUsr", LoginData.GetUserID());
+                checkPaswd.Parameters.AddWithValue("@newPasswd", Utilities.StringHash(textBox1.Text));
 
+                bool exist = (bool)(checkPaswd.ExecuteScalar());
+
+                if (exist == true) MessageBox.Show("Enter a diffrent password");
+                else
+                {
+                    SqlCommand updatePassword = new SqlCommand("UPDATE USERS SET usrPasswd = '" + Utilities.StringHash(textBox1.Text)+"' WHERE usrID = " + LoginData.GetUserID(), SqlConn.Connection);
+                    updatePassword.ExecuteNonQuery();
+                    MessageBox.Show("You have changed your password");
                 }
-                       
+            }
+            else
+            {
+                MessageBox.Show("Enter a new password");
+            }
+
+
         }
     }
 }

@@ -122,19 +122,23 @@ namespace APCC
             ArrayList strParamNames = new ArrayList();
 
             for (int i=3; i<13; ++i)
-            {
-                if (fields[i] == "")
+            {  
+                string paramname = getParamName(int.Parse(fields[2]), 0, i - 2);
+
+                if (paramname.Equals(""))
                     break;
 
-                intParamNames.Add(getParamName(int.Parse(fields[2]), 0, i - 2));
+                intParamNames.Add(paramname);
             }
 
             for (int i = 13; i < 23; ++i)
             {
-                if (fields[i] == "")
+                string paramname = getParamName(int.Parse(fields[2]), 1, i - 12);
+
+                if (paramname.Equals(""))
                     break;
 
-                strParamNames.Add(getParamName(int.Parse(fields[2]), 1, i - 12));
+                strParamNames.Add(paramname);
             }
 
             result.Append(fields[1] + "\n\n");
@@ -143,14 +147,18 @@ namespace APCC
             int j = 3;
             foreach(string s in intParamNames)
             {
-                result.Append(s + ": "  + fields[j++] + "\n");
+                string value = fields[j].Equals("") ? "-" : fields[j];
+                result.Append(s + ": "  + value + "\n");
+                ++j;
             }
 
             j = 13;
 
             foreach (string s in strParamNames)
             {
-                result.Append(s + ": " + fields[j++] + "\n");
+                string value = fields[j].Equals("") ? "-" : fields[j];
+                result.Append(s + ": " + value + "\n");
+                ++j;
             }
 
             return result.ToString();
