@@ -74,7 +74,11 @@ namespace APCC.Forms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
+            string msgString = "Are you sure you want delete selected person ?";
+            DialogResult lResult = MessageBox.Show(msgString,"Notification", MessageBoxButtons.YesNo);
+            if (lResult == DialogResult.No) {
+                return;
+            }
 
             if (dgvUsers.SelectedRows.Count == 1)
             {
