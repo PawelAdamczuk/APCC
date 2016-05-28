@@ -402,7 +402,7 @@ namespace APCC.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Build deleted !");
+                    MessageBox.Show("Build deleted");
                     int tmpIndex = dgvBuilds.SelectedRows[0].Index;
 
                     dgvBuilds.Rows.RemoveAt( tmpIndex );

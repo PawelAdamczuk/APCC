@@ -114,7 +114,7 @@ namespace APCC.Forms
         // Delete role
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want delete selected role ?", "Notification", MessageBoxButtons.YesNo) 
+            if (MessageBox.Show("Do you want delete selected role?", "Notification", MessageBoxButtons.YesNo) 
                 == DialogResult.No ||
                 dgvRoles.SelectedRows.Count <= 0 ) {
 
@@ -148,7 +148,7 @@ namespace APCC.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Role deleted!");
+                    MessageBox.Show("Role deleted");
                     this.refreshDgvRoles();
                 }
             }

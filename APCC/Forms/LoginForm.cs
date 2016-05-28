@@ -63,7 +63,7 @@ namespace APCC.Forms
                     {
                         LoginData.Login(int.Parse(tmpString));
 
-                        MessageBox.Show("Logged as " + LoginData.GetUserName());
+                        MessageBox.Show("Logged in as " + LoginData.GetUserName());
 
                         string tmpString2 = "Logged in as " + LoginData.GetUserName() + " (" + LoginData.GetUserRoleName() + ")";
                         parent.statusStrip.Items[0].Text = tmpString2;

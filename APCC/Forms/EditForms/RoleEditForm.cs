@@ -231,7 +231,7 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    MessageBox.Show("Data saved!");
+                    MessageBox.Show("Data saved");
                     txbID.Text = lRoleID.Value.ToString();
 
                     ((RolesManagerForm)this.Owner).refreshDgvRoles();

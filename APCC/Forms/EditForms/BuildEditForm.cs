@@ -193,7 +193,7 @@ namespace APCC.Forms.EditForms
             int lBuildID = 0;
             if ( ( lNewBuild == false ) && ( Int32.TryParse(txbID.Text, out lBuildID) == false ) )
             {
-                MessageBox.Show("Error: Cannot convert build ID to number.");
+                MessageBox.Show("Error: build ID is not a number!");
                 return;
             }
 
@@ -383,7 +383,7 @@ namespace APCC.Forms.EditForms
                 }
             }
             else {
-                tmpString = "Do you want change status of build and remove current tester?";
+                tmpString = "Do you want change build status and remove current tester association?";
                 lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
 
                 if (lResult == DialogResult.Yes)
@@ -455,7 +455,7 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    MessageBox.Show("Build state changed!");
+                    MessageBox.Show("Build state changed");
 
                     this.changeStatus(cbxAccept.Checked);
                     isStateComitted = true;
@@ -543,7 +543,7 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    MessageBox.Show("Build saved!");
+                    MessageBox.Show("Build saved");
 
                     txbID.Text = lID.Value.ToString();
                     isStateComitted = true;
@@ -635,7 +635,7 @@ namespace APCC.Forms.EditForms
         // Delete all components from list
         private void btnClearAll_Click(object sender, EventArgs e)
         {
-            string tmpString = "Are you sure to delete all components from list ?";
+            string tmpString = "Are you sure you want to delete all components from list?";
             if (MessageBox.Show(tmpString, "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 while (dgvComponents.Rows.Count > 0)
