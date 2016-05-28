@@ -44,7 +44,7 @@
             this.menuAdmin_Statistics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTools_Options = new System.Windows.Forms.ToolStripMenuItem();
-            this.profilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTool_Profil = new System.Windows.Forms.ToolStripMenuItem();
             this.itemLogin = new System.Windows.Forms.ToolStripMenuItem();
             this.itemLogout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -161,7 +161,7 @@
             // 
             this.menuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuTools_Options,
-            this.profilToolStripMenuItem});
+            this.menuTool_Profil});
             this.menuTools.Name = "menuTools";
             this.menuTools.Size = new System.Drawing.Size(47, 20);
             this.menuTools.Text = "&Tools";
@@ -173,12 +173,12 @@
             this.menuTools_Options.Text = "&Options";
             this.menuTools_Options.Click += new System.EventHandler(this.menuTools_Options_Click);
             // 
-            // profilToolStripMenuItem
+            // menuTool_Profil
             // 
-            this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.profilToolStripMenuItem.Text = "Profil";
-            this.profilToolStripMenuItem.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
+            this.menuTool_Profil.Name = "menuTool_Profil";
+            this.menuTool_Profil.Size = new System.Drawing.Size(152, 22);
+            this.menuTool_Profil.Text = "Profil";
+            this.menuTool_Profil.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
             // 
             // itemLogin
             // 
@@ -281,7 +281,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuAdmin_Statistics;
         public System.Windows.Forms.PictureBox picOtter;
         private System.Windows.Forms.ToolTip tipOtter;
-        private System.Windows.Forms.ToolStripMenuItem profilToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuTool_Profil;
     }
 }
 
