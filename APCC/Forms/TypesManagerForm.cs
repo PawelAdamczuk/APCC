@@ -13,10 +13,27 @@ namespace APCC.Forms
 {
     public partial class TypesManagerForm : Form
     {
+        //
+        // INIT
+        //
+
         public TypesManagerForm()
         {
             InitializeComponent();
         }
+
+        // On Load
+        private void TypesManagerForm_Load(object sender, EventArgs e)
+        {
+            this.loadDataGrid();
+            dgvTypes.AutoResizeColumns();
+
+            setPermissions();
+        }
+
+        //
+        // FORM
+        //
 
         // Load dataGridView for ComponentTypes
         private void loadDataGrid()
@@ -49,7 +66,7 @@ namespace APCC.Forms
                     dgvTypes.Columns[0].HeaderText = "ID";
                     dgvTypes.Columns[1].HeaderText = "Name";
 
-                    dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvTypes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                     dgvTypes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                     // Hide parameter's names
@@ -72,21 +89,34 @@ namespace APCC.Forms
             dgvTypes.AutoResizeColumns();
         }
 
-        // On Load
-        private void TypesManagerForm_Load(object sender, EventArgs e)
-        {
-            this.loadDataGrid();
-            dgvTypes.AutoResizeColumns();
+        // Permissions
+        private void setPermissions() {
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+
+            if (LoginData.havePermission("ADD_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnAdd.Enabled = true;
+            if (LoginData.havePermission("EDIT_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnEdit.Enabled = true;
+            if (LoginData.havePermission("DELETE_COMPONENTS_TYPES", LoginData.AccessControl.YES))
+                btnDelete.Enabled = true;
         }
 
-        // **************
-        // *** BUTTONS
-        // **************
+        //
+        // BUTTONS
+        // 
 
-        // Exit button
-        private void btnExit_Click(object sender, EventArgs e)
+        // Add button
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.Close();
+            EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
+
+            // Fill data
+            childForm.txbID.Enabled = false;
+
+            childForm.Owner = this;
+            childForm.ShowDialog();
         }
 
         // Edit button
@@ -94,7 +124,7 @@ namespace APCC.Forms
         {
             EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
 
-            // Fill type data
+            // Fill data
             childForm.txbID.Text = this.dgvTypes.SelectedRows[0].Cells["typID"].Value.ToString();
             childForm.txbID.Enabled = false;
 
@@ -131,48 +161,40 @@ namespace APCC.Forms
             childForm.ShowDialog();
         }
 
-        // Add button
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            EditForms.TypesEditForm childForm = new EditForms.TypesEditForm();
-
-            childForm.txbID.Enabled = false;
-            
-            childForm.Owner = this;
-            childForm.ShowDialog();
-        }
-
         // Delete button
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if ( dgvTypes.SelectedRows.Count == 0 )
+            if (dgvTypes.SelectedRows.Count == 0)
+            {
                 return;
+            }
 
-            if ( MessageBox.Show("Are you sure to delete this type and all data connected with it ?", "Warning", MessageBoxButtons.YesNo) == DialogResult.No)
+            string msgString = "Are you sure to delete this type and all data connected with it ?";
+            if (MessageBox.Show( msgString, "Warning", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
                 return;
-
-            string lStmt;
+            }
 
             SqlCommand lSCmd;
-
             SqlParameter lID;
             SqlParameter lMsg;
 
             try
             {
-                // (@pID, @oMsg)
-                lStmt = "deleteComponentType";
-                lSCmd = new SqlCommand(lStmt, SqlConn.Connection);
+                // deleteComponentType(@pID, @oMsg)
+                lSCmd = new SqlCommand("deleteComponentType", SqlConn.Connection);
                 lSCmd.CommandType = CommandType.StoredProcedure;
 
+                // Define
                 lID = lSCmd.Parameters.Add("@pID", SqlDbType.Int);
-
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
+
                 lMsg.Direction = ParameterDirection.Output;
 
-                // lID
+                // Values
                 lSCmd.Parameters["@pID"].Value = this.dgvTypes.SelectedRows[0].Cells["typID"].Value;
 
+                // Execute !
                 lSCmd.ExecuteNonQuery();
 
                 if (lMsg.Value.ToString() != "OK")
@@ -192,6 +214,11 @@ namespace APCC.Forms
 
         }
 
+        // Exit button
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
     }

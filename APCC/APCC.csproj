@@ -64,6 +64,30 @@
     <Compile Include="Forms\EditForms\BuildEditForm.Designer.cs">
       <DependentUpon>BuildEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditForms\RoleEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditForms\RoleEditForm.Designer.cs">
+      <DependentUpon>RoleEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GlobalStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GlobalStatisticsForm.Designer.cs">
+      <DependentUpon>GlobalStatisticsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RolesManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RolesManagerForm.Designer.cs">
+      <DependentUpon>RolesManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditForms\TypesEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,12 +106,6 @@
     <Compile Include="Forms\BuildsManagerForm.Designer.cs">
       <DependentUpon>BuildsManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\showBuildsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\showBuildsForm.Designer.cs">
-      <DependentUpon>showBuildsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ShowComponentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +123,12 @@
     </Compile>
     <Compile Include="Forms\UsersManageForm.Designer.cs">
       <DependentUpon>UsersManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserStatisticsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserStatisticsForm.Designer.cs">
+      <DependentUpon>UserStatisticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginData.cs" />
     <Compile Include="ProfilManage.cs">
@@ -141,6 +165,18 @@
     <EmbeddedResource Include="Forms\EditForms\BuildEditForm.resx">
       <DependentUpon>BuildEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditForms\RoleEditForm.resx">
+      <DependentUpon>RoleEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GlobalStatisticsForm.resx">
+      <DependentUpon>GlobalStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RolesManagerForm.resx">
+      <DependentUpon>RolesManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditForms\TypesEditForm.resx">
       <DependentUpon>TypesEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,9 +186,6 @@
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\showBuildsForm.resx">
-      <DependentUpon>showBuildsForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ShowComponentsForm.resx">
       <DependentUpon>ShowComponentsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UsersManageForm.resx">
       <DependentUpon>UsersManageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserStatisticsForm.resx">
+      <DependentUpon>UserStatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -176,6 +212,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -189,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wydra1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,18 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace APCC
 {
     public sealed class LoginData
     {
-        private static bool isAdmin = false;
+        //
+        // VAR
+        //
+        private static bool isLogged = false;
 
         private static string FName = "";
         private static string SName = "";
         private static int RoleID = 0;
         private static int UserID = 0;
         private static string RoleName = "";
+
+        private static Dictionary< string, AccessControl > dictPermissions = new Dictionary< string, AccessControl >();
+
+        static LoginData() {
+            getPermissions();
+        }
 
         // Role enum
         public enum Role : int
@@ -28,7 +38,15 @@ namespace APCC
             ADMINISTRATOR = 3
         }
 
-        // Login with role
+        // Access control enum
+        public enum AccessControl : int
+        {
+            YES = 0,
+            NO = 1,
+            ONLY_OWN = 2
+        }
+
+        // Login with user id
         public static void Login(int pID)
         {
             string lStmt;
@@ -64,32 +82,75 @@ namespace APCC
 
                 }
 
-                // 3 is for admin 
-                if (RoleID == 3)
-                    isAdmin = true;
-                else
-                    isAdmin = false;
+                isLogged = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-
+            
+            getPermissions();
         }
 
-        public static string GetUserName()
+        // Load permissions for current Role from DataBase
+        private static void getPermissions()
+        { 
+            string lStmt;
+
+            try
+            {
+                lStmt = "SELECT * FROM getPermissionByRoleID(@pRoleID)";
+
+                SqlCommand lCommand = new SqlCommand(lStmt, SqlConn.Connection);
+
+                lCommand.Parameters.Add("@pRoleID", SqlDbType.Int);
+                lCommand.Parameters["@pRoleID"].Value = LoginData.RoleID;
+                                
+                using (SqlDataReader lDataReader = lCommand.ExecuteReader())
+                {
+                    while (lDataReader.Read()) {
+                        
+                        dictPermissions[lDataReader["perName"].ToString()] = ((AccessControl)lDataReader["rlpAccessInt"]);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cannot load permissions: " + ex.ToString());
+            }
+        }
+
+        // Check if user have specific permission
+        public static bool havePermission(string pPerm, AccessControl pAccess)
         {
-            return FName + " " + SName;
+            if (!dictPermissions.ContainsKey(pPerm))
+            {
+                Debug.Print("havePermission(): Table does not cantain specified key " + pPerm);
+                return false;
+            }
+            else
+            {
+                return ((dictPermissions[pPerm] == pAccess) ? true : false);
+            }
         }
 
-        // Logout
-        public static void LogOut(){
-            isAdmin = false;
+        // Logout current user
+        public static void LogOut()
+        {
+            isLogged = false;
 
             FName = "";
             SName = "";
             RoleID = 0;
             UserID = 0;
+
+            getPermissions();
+        }
+
+        public static string GetUserName()
+        {
+            return FName + " " + SName;
         }
 
         public static int GetUserID()
@@ -102,18 +163,16 @@ namespace APCC
             return RoleID;
         }
 
-        // Return name of user role
         public static string GetUserRoleName()
         {
             return RoleName;
         }
 
-        // Check if current user is admin
-        public static bool Admin
+        public static bool Logged
         {
             get
             {
-                return isAdmin;
+                return isLogged;
             }
         }
 

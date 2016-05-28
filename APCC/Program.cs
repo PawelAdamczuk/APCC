@@ -19,6 +19,8 @@ namespace APCC
             bool lRetry = true;
             bool lConnected = false;
 
+            // Retry connecting  to database until
+            // connected or abort.
             while (lRetry && !(lConnected))
             {
                 try
@@ -29,10 +31,9 @@ namespace APCC
                 catch (Exception ex)
                 {
                     DialogResult tmpResult;
+                    string msgString = "Cannot connect to database. (Error: " + ex.Message + ") Reconnect ?";
 
-                    tmpResult = MessageBox.Show("Cannot connect to database. Reconnect ?", 
-                                                "Error", 
-                                                MessageBoxButtons.YesNo);
+                    tmpResult = MessageBox.Show( msgString, "Error", MessageBoxButtons.YesNo);
 
                     if (tmpResult == DialogResult.No) {
                         lRetry = false;
@@ -40,11 +41,12 @@ namespace APCC
                 }
             }
 
-            // Run aplication
+            // Run application
             if (lConnected)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
                 Application.Run(new MainForm());
             }
         }

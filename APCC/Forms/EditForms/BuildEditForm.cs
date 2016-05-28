@@ -14,39 +14,44 @@ namespace APCC.Forms.EditForms
     public partial class BuildEditForm : Form
     {
         //
-        // Var
+        // VAR
         //
         private bool cmbTypesFilled;
+        public bool isTester;
 
         public int CreatorID;
         public int TesterID;
-        public bool isTester;
+        
+        // For permission distinction, tells 
+        // if showed information about build
+        // state is currently in data base.
+        private bool isStateComitted; 
 
-        public BuildEditForm()
+        private EditMode editMode;
+        public enum EditMode {
+            EDIT = 0,
+            ADD = 1
+        }
+
+        //
+        // INIT
+        //
+
+        public BuildEditForm( EditMode pMode )
         {
+            editMode = pMode;
+
             cmbTypesFilled = false;
+            isStateComitted = true;
+
             InitializeComponent();
         }
 
         // On load
         private void BuildEditForm_Load(object sender, EventArgs e)
         {
-            // Privilage
-            if ( LoginData.GetUserRoleID() == (int)LoginData.Role.CONFIGURATOR ) {
-                cbxAccept.Enabled = false;
-            }
-
-            if (LoginData.GetUserRoleID() == (int)LoginData.Role.TESTER)
-            {
-                btnAdd.Enabled = false;
-                txbName.Enabled = false;
-
-                btnPlus.Enabled = false;
-                btnMinus.Enabled = false;
-
-                btnDelete.Enabled = false;
-                btnClearAll.Enabled = false;
-            }
+            // Permissions
+            this.setPermissions();
 
             //
             // Summary tab
@@ -58,6 +63,62 @@ namespace APCC.Forms.EditForms
             //
             this.loadCmbTypes();
             this.refreshDgvComponentsList();
+        }
+
+        //
+        // FORM
+        //
+
+        private void setPermissions() {
+            txbName.Enabled = false;
+            cbxAccept.Enabled = false;
+
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnClearAll.Enabled = false;
+            btnPlus.Enabled = false;
+            btnMinus.Enabled = false;
+
+            btnSave.Visible = false;
+
+            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) && this.CreatorID == LoginData.GetUserID() ) ||
+                editMode == EditMode.ADD)
+            {
+                txbName.Enabled = true;
+
+                btnAdd.Enabled = true;
+                btnDelete.Enabled = true;
+                btnClearAll.Enabled = true;
+                btnPlus.Enabled = true;
+                btnMinus.Enabled = true;
+
+                btnSave.Visible = true;
+            }
+
+            if ( LoginData.havePermission("ACCEPT_BUILDS", LoginData.AccessControl.YES) ) 
+            {
+                btnSave.Visible = true;
+
+                if (isStateComitted == false || isTester == false)
+                {
+                        cbxAccept.Enabled = true;
+                }
+            }
+
+            if( LoginData.havePermission("UNACCEPT_BUILDS", LoginData.AccessControl.YES) ||
+                ( LoginData.havePermission("UNACCEPT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                this.TesterID == LoginData.GetUserID() )  
+              )
+            {
+                btnSave.Visible = true;
+
+                if( isTester == true)
+                { 
+                    cbxAccept.Enabled = true;
+                }
+            }
+
         }
 
         // Change accept state
@@ -83,40 +144,8 @@ namespace APCC.Forms.EditForms
                 this.TesterID = 0;
                 this.txbTesterName.Text = "";
             }
-        }
 
-        // Add one more selected component
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount++;
-
-            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-        }
-
-        // Delete one selected component
-        private void btnMinus_Click(object sender, EventArgs e)
-        {
-            // No selection
-            if (dgvComponents.SelectedRows.Count <= 0)
-                return;
-
-            int tmpCount =
-                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
-            tmpCount--;
-
-            if (tmpCount > 0)
-            {
-                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
-            }
-            else {
-                dgvComponents.Rows.RemoveAt( dgvComponents.SelectedRows[0].Index );
-            }
+            this.setPermissions();
         }
 
         // Fill combobox with components types
@@ -151,7 +180,7 @@ namespace APCC.Forms.EditForms
             }
         }
 
-        // Load dgvComponents
+        // Refresh dgvComponents
         private void refreshDgvComponents()
         {
             bool lNewBuild = false;
@@ -304,12 +333,13 @@ namespace APCC.Forms.EditForms
         // Refresh dgvComponentsList on type change 
         private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if( this.cmbTypesFilled == true )
+            if (this.cmbTypesFilled == true)
+            {
                 this.refreshDgvComponentsList();
-
+            }
         }
 
-        // Change description on row change
+        // Change description on row change in dgvComponents
         private void dgvComponents_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             // For any other operation except, StateChanged, do nothing
@@ -324,8 +354,76 @@ namespace APCC.Forms.EditForms
 
        }
 
+        // Hide info when there is no rows in dgvComponents
+        private void dgvComponents_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if (dgvComponents.Rows.Count <= 0 ){
+                rtxDescription.Text = "";
+            }
+        }
+
+        // Change state info after checked changed
+        private void cbxAccept_CheckedChanged(object sender, EventArgs e)
+        {
+            DialogResult lResult;
+            isStateComitted = false;
+
+            string tmpString;
+
+            if (cbxAccept.Checked) {
+                tmpString = "Do you want accept this build as " + LoginData.GetUserName() + "?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(true);
+                }
+                else {
+                    cbxAccept.Checked = false;
+                }
+            }
+            else {
+                tmpString = "Do you want change status of build and remove current tester?";
+                lResult = MessageBox.Show( tmpString, "Notification", MessageBoxButtons.YesNo );
+
+                if (lResult == DialogResult.Yes)
+                {
+                    this.changeStatus(false);
+                }
+                else {
+                    cbxAccept.Checked = true;
+                }
+            }
+        }
+
+        // On close
+        private void BuildEditForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ((BuildsManagerForm)this.Owner).refreshDataGrid();
+        }
+
+        //
+        // BUTTONS
+        //
+
+        // Save button
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.YES) ||
+                (LoginData.havePermission("EDIT_BUILDS", LoginData.AccessControl.ONLY_OWN) &&
+                 this.CreatorID == LoginData.GetUserID())
+               )
+            {
+                this.saveBuild();
+            }
+            else {
+                this.acceptBuild();
+            }
+
+            this.setPermissions();
+        }
+
         // Accept build
-        /*
         private void acceptBuild()
         {
             SqlCommand lSCmd;
@@ -333,21 +431,21 @@ namespace APCC.Forms.EditForms
 
             try
             {
-                // (@pBuildID, @pTesterID, @oMsg)
-                lSCmd = new SqlCommand("acceptBuild", SqlConn.Connection);
+                // (@pBuildID, @pTesterID, @pState, @oMsg)
+                lSCmd = new SqlCommand("changeBuildState", SqlConn.Connection);
                 lSCmd.CommandType = CommandType.StoredProcedure;
 
                 lSCmd.Parameters.Add("@pBuildID", SqlDbType.Int);
-
                 lSCmd.Parameters.Add("@pTesterID", SqlDbType.Int);
+                lSCmd.Parameters.Add("@pState", SqlDbType.Bit);
 
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 100);
                 lMsg.Direction = ParameterDirection.Output;
 
                 // Param values
                 lSCmd.Parameters["@pBuildID"].Value = Int32.Parse(this.txbID.Text);
-
                 lSCmd.Parameters["@pTesterID"].Value = LoginData.GetUserID();
+                lSCmd.Parameters["@pState"].Value = cbxAccept.Checked;
 
                 lSCmd.ExecuteNonQuery();
 
@@ -357,7 +455,10 @@ namespace APCC.Forms.EditForms
                 }
                 else
                 {
-                    this.changeStatus(true);
+                    MessageBox.Show("Build state changed!");
+
+                    this.changeStatus(cbxAccept.Checked);
+                    isStateComitted = true;
                 }
             }
             catch (Exception ex)
@@ -365,7 +466,6 @@ namespace APCC.Forms.EditForms
                 MessageBox.Show(ex.Message);
             }
         }
-        */
 
         // Save build
         private void saveBuild()
@@ -400,7 +500,7 @@ namespace APCC.Forms.EditForms
 
                 lID.Direction = ParameterDirection.InputOutput;
                 lMsg.Direction = ParameterDirection.Output;
-                
+
                 //
                 // Fill parameters
                 //
@@ -409,12 +509,12 @@ namespace APCC.Forms.EditForms
                     lSCmd.Parameters["@pBuildID"].Value = DBNull.Value;
                 else
                     lSCmd.Parameters["@pBuildID"].Value = int.Parse(txbID.Text);
-                
+
                 lSCmd.Parameters["@pBuildName"].Value = txbName.Text;
 
                 lSCmd.Parameters["@pCreatorID"].Value = this.CreatorID;
 
-                if( this.isTester )
+                if (this.isTester)
                     lSCmd.Parameters["@pTesterID"].Value = this.TesterID;
                 else
                     lSCmd.Parameters["@pTesterID"].Value = DBNull.Value;
@@ -427,7 +527,8 @@ namespace APCC.Forms.EditForms
                 comTable.Columns.Add("comCount");
 
                 int i = 0;
-                foreach( DataGridViewRow lRow in dgvComponents.Rows ){
+                foreach (DataGridViewRow lRow in dgvComponents.Rows)
+                {
                     comTable.Rows.Add(i++, lRow.Cells["comID"].Value, lRow.Cells["comCount"].Value);
                 }
 
@@ -438,12 +539,14 @@ namespace APCC.Forms.EditForms
 
                 if (lMsg.Value.ToString() != "OK")
                 {
-                    MessageBox.Show( "Database error: " + lMsg.Value.ToString());
+                    MessageBox.Show("Database error: " + lMsg.Value.ToString());
                 }
                 else
                 {
                     MessageBox.Show("Build saved!");
+
                     txbID.Text = lID.Value.ToString();
+                    isStateComitted = true;
                 }
             }
             catch (Exception ex)
@@ -453,44 +556,103 @@ namespace APCC.Forms.EditForms
 
         }
 
-        // Close button
-        private void btnClose_Click(object sender, EventArgs e)
+        // COMPONENTS LIST EDITION 
+
+        // Add selcted component to ComponentsList
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // No selested item
+            if (dgvComponentsList.SelectedRows.Count == 0)
+            {
+                labLog.Text = "No item selected.";
+                return;
+            }
+
+            // Selected item already in build
+            foreach (DataGridViewRow lRow in dgvComponents.Rows)
+            {
+                if ((int)(lRow.Cells["comID"].Value) == (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value))
+                {
+
+                    lRow.Cells["comCount"].Value =
+                        Int32.Parse(lRow.Cells["comCount"].Value.ToString()) + 1;
+
+                    labLog.Text =
+                        "Increase number of " +
+                        dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() +
+                        " (Count:" + lRow.Cells["comCount"].Value.ToString() + ")";
+                    return;
+                }
+            }
+
+            // New item
+            // row_dgvComponents( comID, typName, comName, comCount )
+            int lComID = (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value);
+            string lTypName = dgvComponentsList.SelectedRows[0].Cells["typName"].Value.ToString();
+            string lComName = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
+
+            ((DataTable)(dgvComponents.DataSource)).Rows.Add(lComID, lTypName, lComName, 1);
+
+            labLog.Text = "Added " + dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + " to build.";
+
         }
 
-        // On close
-        private void BuildEditForm_FormClosed(object sender, FormClosedEventArgs e)
+        // (Plus) Add one more selected component
+        private void button1_Click(object sender, EventArgs e)
         {
-            ((BuildsManagerForm)this.Owner).refreshDataGrid();
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount++;
+
+            dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
         }
 
-        // Hide info when there is no rows in dgvComponents
-        private void dgvComponents_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        // (Minus) Delete one selected component
+        private void btnMinus_Click(object sender, EventArgs e)
         {
-            if (dgvComponents.Rows.Count <= 0 ){
-                rtxDescription.Text = "";
+            // No selection
+            if (dgvComponents.SelectedRows.Count <= 0)
+                return;
+
+            int tmpCount =
+                Int32.Parse(dgvComponents.SelectedRows[0].Cells["comCount"].Value.ToString());
+            tmpCount--;
+
+            if (tmpCount > 0)
+            {
+                dgvComponents.SelectedRows[0].Cells["comCount"].Value = tmpCount;
+            }
+            else
+            {
+                dgvComponents.Rows.RemoveAt(dgvComponents.SelectedRows[0].Index);
             }
         }
 
         // Delete all components from list
         private void btnClearAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure to delete all components from list ?", 
-                                "Notification",
-                                MessageBoxButtons.YesNo)
-                                == DialogResult.Yes)
+            string tmpString = "Are you sure to delete all components from list ?";
+            if (MessageBox.Show(tmpString, "Notification", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-
-                while( dgvComponents.Rows.Count > 0 )
+                while (dgvComponents.Rows.Count > 0)
+                {
                     dgvComponents.Rows.RemoveAt(0);
+                }
             }
-
         }
 
-        // Delete selected component
+        // Delete group of selected component
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (dgvComponents.SelectedRows.Count != 1)
+            {
+                return;
+            }
+
             int tmpIndex = dgvComponents.SelectedRows[0].Index;
 
             dgvComponents.Rows.RemoveAt(tmpIndex);
@@ -511,85 +673,10 @@ namespace APCC.Forms.EditForms
 
         }
 
-        // Add slected component to list
-        private void btnAdd_Click(object sender, EventArgs e)
+        // Close button
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            // No selested item
-            if (dgvComponentsList.SelectedRows.Count == 0)
-            {
-                labLog.Text = "No item selected.";
-                return;
-            }
-
-            // Selected item already in build
-            foreach (DataGridViewRow lRow in dgvComponents.Rows)
-            {
-                if ( (int)(lRow.Cells["comID"].Value) == (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value) ) {
-
-                    lRow.Cells["comCount"].Value = 
-                        Int32.Parse(lRow.Cells["comCount"].Value.ToString() )  + 1;
-                    
-                    labLog.Text = 
-                        "Increase number of " + 
-                        dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + 
-                        " (Count:" + lRow.Cells["comCount"].Value.ToString() + ")";
-                    return;
-                }
-            }
-
-            // New item
-            // row_dgvComponents( comID, typName, comName, comCount )
-            int     lComID   = (int)(dgvComponentsList.SelectedRows[0].Cells["comID"].Value);
-            string  lTypName = dgvComponentsList.SelectedRows[0].Cells["typName"].Value.ToString();
-            string  lComName = dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString();
-
-            ((DataTable)(dgvComponents.DataSource)).Rows.Add( lComID, lTypName, lComName, 1);
-
-            labLog.Text = "Added " + dgvComponentsList.SelectedRows[0].Cells["comName"].Value.ToString() + " to build.";
-
-        }
-
-        // Change state info after checked changed
-        private void cbxAccept_CheckedChanged(object sender, EventArgs e)
-        {
-            DialogResult lResult;
-
-            if (cbxAccept.Checked) {
-                lResult = MessageBox.Show(
-                            "Do you want accept this build as " + LoginData.GetUserName() + "?",
-                            "Notification",
-                            MessageBoxButtons.YesNo
-                          );
-
-                if (lResult == DialogResult.Yes)
-                {
-                    this.changeStatus(true);
-                }
-                else {
-                    cbxAccept.Checked = false;
-                }
-            }
-            else {
-                lResult = MessageBox.Show(
-                            "Do you want change status of build and remove current tester?",
-                            "Notification",
-                            MessageBoxButtons.YesNo
-                          );
-
-                if (lResult == DialogResult.Yes)
-                {
-                    this.changeStatus(false);
-                }
-                else {
-                    cbxAccept.Checked = true;
-                }
-            }
-        }
-
-        // Save button
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            this.saveBuild();
+            this.Close();
         }
 
     }

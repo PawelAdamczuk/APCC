@@ -31,10 +31,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.dgvComponentsList = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnDetails = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComponentsList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Location = new System.Drawing.Point(7, 35);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(210, 24);
+            this.cmbType.Size = new System.Drawing.Size(213, 24);
             this.cmbType.TabIndex = 4;
             this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
             // 
@@ -64,31 +65,32 @@
             this.dgvComponentsList.AllowUserToOrderColumns = true;
             this.dgvComponentsList.AllowUserToResizeRows = false;
             this.dgvComponentsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvComponentsList.Location = new System.Drawing.Point(223, 4);
+            this.dgvComponentsList.Location = new System.Drawing.Point(226, 4);
             this.dgvComponentsList.MultiSelect = false;
             this.dgvComponentsList.Name = "dgvComponentsList";
             this.dgvComponentsList.ReadOnly = true;
             this.dgvComponentsList.RowHeadersVisible = false;
             this.dgvComponentsList.RowTemplate.Height = 24;
             this.dgvComponentsList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvComponentsList.Size = new System.Drawing.Size(904, 536);
+            this.dgvComponentsList.Size = new System.Drawing.Size(901, 536);
             this.dgvComponentsList.TabIndex = 3;
             // 
-            // button1
+            // btnClose
             // 
-            this.button1.Location = new System.Drawing.Point(7, 496);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(210, 44);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Close";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(7, 496);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(213, 44);
+            this.btnClose.TabIndex = 6;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnDetails
             // 
-            this.btnDetails.Location = new System.Drawing.Point(7, 81);
+            this.btnDetails.Location = new System.Drawing.Point(119, 385);
             this.btnDetails.Name = "btnDetails";
-            this.btnDetails.Size = new System.Drawing.Size(210, 44);
+            this.btnDetails.Size = new System.Drawing.Size(101, 61);
             this.btnDetails.TabIndex = 6;
             this.btnDetails.Text = "Details";
             this.btnDetails.UseVisualStyleBackColor = true;
@@ -96,9 +98,9 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(7, 193);
+            this.btnAdd.Location = new System.Drawing.Point(12, 385);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(210, 44);
+            this.btnAdd.Size = new System.Drawing.Size(101, 44);
             this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Add new";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -106,23 +108,36 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(7, 143);
+            this.btnEdit.Location = new System.Drawing.Point(12, 435);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(210, 44);
+            this.btnEdit.Size = new System.Drawing.Size(101, 44);
             this.btnEdit.TabIndex = 6;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.button2_Click);
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(119, 452);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(101, 27);
+            this.btnDelete.TabIndex = 7;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // ShowComponentsForm
             // 
+            this.AcceptButton = this.btnEdit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1130, 545);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDetails);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbType);
             this.Controls.Add(this.dgvComponentsList);
@@ -141,9 +156,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.DataGridView dgvComponentsList;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnDetails;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

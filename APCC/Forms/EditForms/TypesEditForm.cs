@@ -13,10 +13,23 @@ namespace APCC.Forms.EditForms
 {
     public partial class TypesEditForm : Form
     {
+        //
+        // INIT
+        // 
+
         public TypesEditForm()
         {
             InitializeComponent();
         }
+
+        private void TypesEditForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //
+        // BUTTONS
+        //
 
         // Save
         private void btnAccept_Click(object sender, EventArgs e)
@@ -33,38 +46,30 @@ namespace APCC.Forms.EditForms
 
             try
             {
-                // (@pID, @pName, @pIntList, @pStringList, @oMsg)
+                // saveComponentType(@pID, @pName, @pIntList, @pStringList, @oMsg)
                 lStmt = "saveComponentType";
                 lSCmd = new SqlCommand(lStmt, SqlConn.Connection);
                 lSCmd.CommandType = CommandType.StoredProcedure;
-
-                // Define parameters
+                
+                // Define
                 lID = lSCmd.Parameters.Add("@pID", SqlDbType.Int);
-                lID.Direction = ParameterDirection.InputOutput;
-
                 lName = lSCmd.Parameters.Add("@pName", SqlDbType.VarChar, 50);
-
                 lIntArray = lSCmd.Parameters.Add("@pIntArray", SqlDbType.Structured);
                 lStringArray = lSCmd.Parameters.Add("@pStringArray", SqlDbType.Structured);
-
                 lMsg = lSCmd.Parameters.Add("@oMsg", SqlDbType.VarChar, 50);
+
+                lID.Direction = ParameterDirection.InputOutput;
                 lMsg.Direction = ParameterDirection.Output;                    
 
-                // Fill parameters
-                // lID
-                if (txbID.Text == "")
-                {
+                // Values
+                if (txbID.Text == ""){
                     lSCmd.Parameters["@pID"].Value = DBNull.Value;
-                }
-                else
-                {
+                }else{
                     lSCmd.Parameters["@pID"].Value = int.Parse(txbID.Text);
                 }
                 
-                // lName
                 lSCmd.Parameters["@pName"].Value = txbName.Text;
 
-                // lParams
                 DataTable intTable = new DataTable();
                 intTable.Columns.Add("id");
                 intTable.Columns.Add("ParamName");
@@ -101,7 +106,7 @@ namespace APCC.Forms.EditForms
 
                 lSCmd.Parameters["@pStringArray"].Value = stringTable;
 
-                // EXECUTE !! 
+                // Execute ! 
                 lSCmd.ExecuteNonQuery();
 
                 if (lMsg.Value.ToString() != "OK")
@@ -123,6 +128,7 @@ namespace APCC.Forms.EditForms
 
         }
 
+        // Close
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();

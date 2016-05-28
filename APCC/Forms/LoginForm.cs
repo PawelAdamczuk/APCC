@@ -14,7 +14,14 @@ namespace APCC.Forms
 {
     public partial class LoginForm : Form
     {
+        //
+        // VAR
+        //
         private MainForm parent;
+
+        //
+        // INIT
+        //
 
         public LoginForm(MainForm _parent)
         {
@@ -22,12 +29,17 @@ namespace APCC.Forms
             parent = _parent;
         }
 
+        // On load
         private void LoginForm_Load(object sender, EventArgs e)
         {
 
         }
 
+        //
+        // FORM
+        //
 
+        // Login
         private void button1_Click(object sender, EventArgs e)
         {
             string password = txbPswd.Text;
@@ -56,8 +68,7 @@ namespace APCC.Forms
                         string tmpString2 = "Logged in as " + LoginData.GetUserName() + " (" + LoginData.GetUserRoleName() + ")";
                         parent.statusStrip.Items[0].Text = tmpString2;
 
-                        parent.setPrivilegeMode();
-                        parent.disableLogIn();
+                        parent.setPermissions();
 
                         this.Close();
                     }
@@ -69,9 +80,5 @@ namespace APCC.Forms
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

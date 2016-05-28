@@ -31,6 +31,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbxAccept = new System.Windows.Forms.CheckBox();
             this.txbTesterName = new System.Windows.Forms.TextBox();
             this.txbID = new System.Windows.Forms.TextBox();
             this.txbName = new System.Windows.Forms.TextBox();
@@ -56,7 +57,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
             this.dgvComponentsList = new System.Windows.Forms.DataGridView();
-            this.cbxAccept = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -114,6 +114,16 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
+            // 
+            // cbxAccept
+            // 
+            this.cbxAccept.AutoSize = true;
+            this.cbxAccept.Location = new System.Drawing.Point(368, 172);
+            this.cbxAccept.Name = "cbxAccept";
+            this.cbxAccept.Size = new System.Drawing.Size(18, 17);
+            this.cbxAccept.TabIndex = 2;
+            this.cbxAccept.UseVisualStyleBackColor = true;
+            this.cbxAccept.Click += new System.EventHandler(this.cbxAccept_CheckedChanged);
             // 
             // txbTesterName
             // 
@@ -203,6 +213,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(988, 187);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(140, 27);
@@ -370,20 +381,11 @@
             this.dgvComponentsList.Size = new System.Drawing.Size(904, 536);
             this.dgvComponentsList.TabIndex = 0;
             // 
-            // cbxAccept
-            // 
-            this.cbxAccept.AutoSize = true;
-            this.cbxAccept.Location = new System.Drawing.Point(368, 172);
-            this.cbxAccept.Name = "cbxAccept";
-            this.cbxAccept.Size = new System.Drawing.Size(18, 17);
-            this.cbxAccept.TabIndex = 2;
-            this.cbxAccept.UseVisualStyleBackColor = true;
-            this.cbxAccept.Click += new System.EventHandler(this.cbxAccept_CheckedChanged);
-            // 
             // BuildEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1144, 603);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

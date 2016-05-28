@@ -41,12 +41,13 @@
             this.dgvTypes.AllowUserToAddRows = false;
             this.dgvTypes.AllowUserToDeleteRows = false;
             this.dgvTypes.AllowUserToResizeColumns = false;
+            this.dgvTypes.AllowUserToResizeRows = false;
             this.dgvTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTypes.ColumnHeadersVisible = false;
             this.dgvTypes.Location = new System.Drawing.Point(12, 12);
             this.dgvTypes.MultiSelect = false;
             this.dgvTypes.Name = "dgvTypes";
             this.dgvTypes.ReadOnly = true;
+            this.dgvTypes.RowHeadersVisible = false;
             this.dgvTypes.RowTemplate.Height = 24;
             this.dgvTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTypes.ShowEditingIcon = false;
@@ -95,8 +96,10 @@
             // 
             // TypesManagerForm
             // 
+            this.AcceptButton = this.btnEdit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(439, 439);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);

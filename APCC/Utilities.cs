@@ -13,9 +13,12 @@ namespace APCC
 {
     public static class Utilities
     {
-        // Is there specific Form opened as MDI in MdiWindowForm
-        // @childType - type of searching child
-        // @parentForm - Form to search in
+        // Return specific Form opened as MDI in MdiWindowForm
+        // Parameters:
+        //   @childType  - type of searching child
+        //   @parentForm - Form to search in
+        // Return:
+        //   Form of given type in @parentForm
         public static Form FindMdiFormByType( Type childType, Form parentForm )
         {
             for (int i = 0; i < parentForm.MdiChildren.Count(); i++)
@@ -25,7 +28,6 @@ namespace APCC
                     return parentForm.MdiChildren.ElementAt(i);
                 }
             }
-
             return null;
         }
 
@@ -77,23 +79,6 @@ namespace APCC
             {
                 throw exception;
             }
-        }
-
-        public static void appendToFile(string text)
-        {
-            var sw = File.AppendText("log.txt");
-            sw.Write(text + "\n");
-            sw.Close();
-        }
-
-        public static void appendToFile(SqlCommand comm)
-        {
-            string text = comm.CommandText;
-            foreach (SqlParameter p in comm.Parameters)
-            {
-                text = text.Replace(p.ParameterName, p.Value.ToString());
-            }
-            appendToFile(text);
         }
 
         public static string getParamName(int compTypeId, int paramType, int paramNo)
