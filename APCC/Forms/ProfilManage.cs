@@ -47,8 +47,7 @@ namespace APCC
                 {
                     SqlCommand updatePassword = new SqlCommand("UPDATE USERS SET usrPasswd = '" + Utilities.StringHash(textBox1.Text)+"' WHERE usrID = " + LoginData.GetUserID(), SqlConn.Connection);
                     updatePassword.ExecuteNonQuery();
-                    MessageBox.Show("You have changed
- your password");
+                    MessageBox.Show("You have changed your password");
                 }
             }
             else
