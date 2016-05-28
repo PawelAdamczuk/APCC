@@ -70,6 +70,7 @@ namespace APCC
                 Type lType = pActiveForm.GetType();
                 bool lTypeFound = false;
 
+                // Types of Forms
                 if (lType == typeof(Forms.GlobalStatisticsForm)) {
                     activeHints = hintGlobalStats;
                     lTypeFound = true;
@@ -89,6 +90,8 @@ namespace APCC
                         activeHints = hintDefault;
                         hintNumber = 0;
                     }
+
+                    activeForm = null;
                 } else {
 
                     if (activeForm != null && activeForm.GetType() == pActiveForm.GetType())
