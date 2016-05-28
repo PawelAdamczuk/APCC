@@ -96,6 +96,7 @@ namespace APCC
             if (LoginData.havePermission("SHOW_TOOLS_PANEL", LoginData.AccessControl.YES)){
                 this.menuTools.Visible = true;
                 this.menuTools_Options.Visible = true;
+                this.menuTools_Profil.Visible = true;
             }
 
  
