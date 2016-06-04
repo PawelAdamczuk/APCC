@@ -21,6 +21,18 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        internal Properties.Resources Resources
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // On load
         private void Options_Load(object sender, EventArgs e)
         {

@@ -22,6 +22,30 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public EditForms.BuildEditForm BuildEditForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public Description Description
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // On load
         private void BuildsManagerForm_Load(object sender, EventArgs e)
         {

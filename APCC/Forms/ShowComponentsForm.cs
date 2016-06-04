@@ -29,6 +29,18 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public EditForms.AddComponentForm AddComponentForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // On load
         private void ShowComponentsForm_Load(object sender, EventArgs e)
         {
