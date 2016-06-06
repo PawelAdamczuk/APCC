@@ -200,5 +200,7 @@ namespace APCC
             hintNumber = hintNumber % activeHints.Length;
             return activeHints[hintNumber];
         }
+        
+
     }
 }

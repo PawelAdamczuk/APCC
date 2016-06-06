@@ -13,7 +13,6 @@ namespace APCC.Forms
 {
     public partial class UsersManageForm : Form
     {
-
         private int lastId;
         private bool usersLoaded = false;
 
@@ -49,18 +48,25 @@ namespace APCC.Forms
             usersLoaded = true;
         }
 
+        private void setPermissions() {
+            btnAdd.Enabled = false;
+            btnDelete.Enabled = false;
+            btnDetails.Enabled = false;
+
+            if (LoginData.havePermission("ADD_USERS", LoginData.AccessControl.YES))
+                btnAdd.Enabled = true;
+            if (LoginData.havePermission("DELETE_USERS", LoginData.AccessControl.YES))
+                btnDelete.Enabled = true;
+            if (LoginData.havePermission("SHOW_BUILDS", LoginData.AccessControl.YES))
+                btnDetails.Enabled = true;
+        }
+
         private void UsersManageForm_Load(object sender, EventArgs e)
         {
-            // Privilege
-            if (!(LoginData.GetUserRoleID() == (int)LoginData.Role.ADMINISTRATOR))
-            {
-                btnAdd.Visible = false;
-            }
+            this.setPermissions();
 
-            btnEdit.Visible = false;
             LoadUsers();
             dgvUsers.ClearSelection();
-
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -157,10 +163,14 @@ namespace APCC.Forms
                 {
                     tmpForm.Activate();
                     ((BuildsManagerForm)tmpForm).selectIndex(buildName);
-                    tmpForm.WindowState = FormWindowState.Normal;
-                    
+                    tmpForm.WindowState = FormWindowState.Normal;        
                 }
             }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

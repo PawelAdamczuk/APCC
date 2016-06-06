@@ -39,17 +39,16 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.btnDetails = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(621, 328);
+            this.btnExit.Location = new System.Drawing.Point(621, 326);
             this.btnExit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(109, 44);
+            this.btnExit.Size = new System.Drawing.Size(109, 42);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Close";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -163,22 +162,12 @@
             this.Column4.ReadOnly = true;
             this.Column4.Width = 66;
             // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(287, 327);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(129, 44);
-            this.btnEdit.TabIndex = 8;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
             // btnDetails
             // 
             this.btnDetails.Location = new System.Drawing.Point(438, 280);
             this.btnDetails.Margin = new System.Windows.Forms.Padding(4);
             this.btnDetails.Name = "btnDetails";
-            this.btnDetails.Size = new System.Drawing.Size(131, 40);
+            this.btnDetails.Size = new System.Drawing.Size(292, 40);
             this.btnDetails.TabIndex = 9;
             this.btnDetails.Text = "Details";
             this.btnDetails.UseVisualStyleBackColor = true;
@@ -188,9 +177,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 381);
+            this.ClientSize = new System.Drawing.Size(738, 380);
             this.Controls.Add(this.btnDetails);
-            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.dgvUsers);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label2);
@@ -220,7 +208,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDetails;
     }
 }
