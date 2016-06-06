@@ -22,6 +22,18 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public EditForms.RoleEditForm RoleEditForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // On load
         private void RolesEditForm_Load(object sender, EventArgs e)
         {

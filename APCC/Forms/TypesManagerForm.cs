@@ -22,6 +22,18 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public EditForms.TypesEditForm TypesEditForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // On Load
         private void TypesManagerForm_Load(object sender, EventArgs e)
         {

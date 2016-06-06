@@ -21,6 +21,18 @@ namespace APCC.Forms
             InitializeComponent();
         }
 
+        public addingNewUserForm addingNewUserForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         public void LoadUsers()
         {
             dgvUsers.Rows.Clear();

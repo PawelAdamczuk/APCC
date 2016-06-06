@@ -25,6 +25,114 @@ namespace APCC
             InitializeComponent();
         }
 
+        public LoginForm LoginForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public BuildsManagerForm BuildsManagerForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ProfilManage ProfilManage
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public TypesManagerForm TypesManagerForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public RolesManagerForm RolesManagerForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public UsersManageForm UsersManageForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ShowComponentsForm ShowComponentsForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public UserStatisticsForm UserStatisticsForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public GlobalStatisticsForm GlobalStatisticsForm
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         // Otter module
         private void picOtter_Click(object sender, EventArgs e)
         {

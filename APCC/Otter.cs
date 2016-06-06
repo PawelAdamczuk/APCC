@@ -15,71 +15,71 @@ namespace APCC
 
         // Default 
         static string[] hintDefault = new string[]{
-            "Cześć, jestem wyderką",
-            "Witam serdecznie",
-            "Słodka wyderka zawsze spoko",
-            "Ten program jest najlepszy",
-            "Dasz mi coś do jedzonka ?",
-            "Przestań klikać, niszczysz futerko",
-            "Nie rozumiesz ?",
-            "Java jest do kitu",
-            "Tylko C#",
-            "Albo C++ ze wskaźnikami",
-            "Czcij wyderkę i jej szlachetne futro",
-            "Zapraszam do kliknięcia w powyższe przyciski",
-            "Robienie buildów takie fajne",
-            "Czy ty też miewasz flashbacki z Wietnamu ?",
-            "Nie podam Ci łapki, jesteś z AGH",
-            "Nie lubie myszy",
-            "Możesz wziąć stąd tą mysz ?",
-            "Najpierw masa, potem futro",
-            "Być albo nie być wydrą, oto jest pytanie",
-            "Lubie czosnek",
-            "Bardzo lubie czosnek",
-            "Wiesz czemu inne wydry ode mnie uciekają ?",
-            "Ja też nie",
-            "Dobra, zajmij się sobą",
-            "Moja żona wydra była Miss Otter w '67",
-            "To były czasy..."
+            "Hi, I am an otter",
+            "Hello and welcome",
+            "Sweet otter FTW",
+            "This app is THE best",
+            "You gonna eat that?",
+            "Stop messing with my fur",
+            "Stop. Messing. With the fur.",
+            "Java sucks",
+            "C# rules",
+            "C++ is cool as well (dem pointerz)",
+            "Worship the otter and its aristocratic fur.",
+            "Feel free to try all the buttons up there",
+            "Creating builds is so cool",
+            "You got 'nam flashbacks as well..?",
+            "I ain't touchin' you, you're one of them AGH people.",
+            "I am not too fond of mice",
+            "Can you move that mouse thingie away?",
+            "Bulk first, fur later.",
+            "The best thing to hold onto in life is each otter.",
+            "I like garlic",
+            "I like garlic so much",
+            "Got any idea why the other otters always move away fronm me?",
+            "Neither do I",
+            "Alright, get back to your business",
+            "My wife was the Miss Otter in '67",
+            "Good ol' times..."
         };
 
         // User statistics
         static string[] hintUserStats = new string[]{
-            "Oto okienko statystyk użytkownika",
-            "Pokazuje jak bardzo obijasz się w pracy",
-            "Naciśnij 'Close' aby zamknąć"
+            "This is the user statistics view",
+            "It shows you your slacking off factor",
+            "Click 'Close' to... well, close"
         };
 
         // Global statistics
         static string[] hintGlobalStats = new string[]{
-            "Oto statystyki aplikacji",
-            "Zakładka 'Global' pokazuje statystyki ogólne",
-            "Zakładka 'Users' pokazuje statystyki poszczególnych użytkowników",
-            "Użyj rozwijanego menu aby zmienić wyświetlanego użytkownika"
+            "These are the system statistics",
+            "The 'Global' tab shows the overall statistics",
+            "The 'Users' tab shows single user statistics",
+            "Use the dropdown menu to change the shown user"
         };
 
         // Builds show
         static string[] hintBuilds = new string[]{
-            "Tutaj można wyświetlić buildy",
-            "A po kliknięciu na build wyświetlają się jego podzespoły",
-            "Poniżej znajdują się szczegóły takie jak twórca buildu i jego stan akceptacji",
-            "Po prawej znajdują się bardzo pomocne przyciski",
-            "'Add new' dodaje nowy build",
-            "'Edit panel' wyświetla panel gdzie można przeglądnąć szczegóły buildu \n oraz przeprowadzić jego edycję",
-            "Przycisk 'Delete' usuwa wskazany build",
-            "'Accept' pozwala na zaakceptowanie buildu i potwierdza jego poprawność",
-            "'Close' zamyka okno dialogowe"
+            "Here you can show the builds",
+            "After highlighting the build you can see its components",
+            "Below, there are build properties such as its status and author",
+            "On the right hand side you will find a bunch of useful buttons",
+            "'Add new' shows the build adding window",
+            "'Edit panel' shows the build properties and editing window",
+            "'Delete'... well, go figure.",
+            "'Accept' lets you accept the build after you proved it to be correct",
+            "'Close'... are you still wondering what that button does?"
         };
 
         // Show components
         static string[] hintComponents = new string[]{
-            "Oto miejsce gdzie możesz wyświetlić wszystkie podzespoły",
-            "Użyj rozwijanego menu po lewej stronie aby wyświetlić \n podzespoły poszczególnych typów",
-            "Dzięki 'Add new' możesz dodawać nowe podzespoły komputerowe",
-            "'Details' wyświetla podsumowane informacje o zaznaczonym podzespole",
-            "Przycisk 'Delete' służy jak można się domyślić do usuwania podzespołów",
-            "Jeżeli nie podoba Ci się jakiś podzespół możesz śmiało rozpocząć \n jego edycję klikająć na przycisk 'Edit'",
-            "Kliknij na 'Close' jeżeli masz dosyć oglądania podzespołów"
+            "This is the place where you can see all the available components",
+            "Use the dropdown menu on the left hand side to list \n the components of a given type",
+            "'Add new' lets you add new components",
+            "'Details' shows the highlighted component's summary",
+            "The 'Delete' button... you might be getting the hang of it already",
+            "If you don't like a particular component, go ahead and edit it after clicking the 'Edit' button",
+            "Click 'Close' if all the mambo jambo makes you feel dizzy"
         };
 
         // Show components
@@ -94,38 +94,42 @@ namespace APCC
 
         // Show roles and permissions
         static string[] hintRoles = new string[]{
-            "Witaj w oknie zarządzania uprawnieniami oraz rolami użytkowników",
-            "Widzisz tu poszczególne role które możesz potem przypisać użytkownikom",
-            "Dodaj nową role przyciskiem 'Add'",
-            "Możesz równierz usunąć role przyciskiem 'Delete'",
-            "Kliknij 'Edit' by zedytować zaznaczoną role",
-            "Uważaj ! Nie możesz edytować roli 'administrator' i 'null'",
-            "Żeby wyjść kliknij 'Close'"
+            "Velcome to the privilege management and user role editing window.",
+            "You can see the roles that can be assigned to the users",
+            "Add new role after clicking 'Add'",
+            "You can also delete a role with 'Delete'",
+            "Click 'Edit' to change the highlighted role's properties",
+            "Watch out! You cannot edit the 'administrator' and 'null' roles",
+            "Click 'Close' already, you megalomaniac"
         };
 
         // Show users
         static string[] hintShowUsers = new string[]{
-            "To okienko służy do zarządzania użytkowniami",
-            "Po lewej wyświetlją się użytkownicy",
-            "Natomiast po prawej buildy które stworzył zaznaczony użytkownik",
-            "Przycisk 'Add' służy do dodawania użytkowników",
-            "Kliknij 'Delete' aby usunąć użytkownika",
-            "'Edit' edytuje zaznaczone użytkownika",
-            "'Details' wyświetla szczegóły o zaznaczonym buildzie",
-            "'Close' zamyka okienko"
+            "This window lets you manage the system's users",
+            "The left hand side shows the user list",
+            "The right side, on the otter hand, shows the builds created by the highlighted user",
+            "The 'Add' button opens the user adding window",
+            "Click 'Delete' to delete the user.",
+            "No, just his account you psychopath.",
+            "'Edit' edits the selected user ACCOUNT",
+            "'Details' shows the build details",
+            "'Close' ends the dreams of getting rid of your coworkers"
         };
 
         // Show options
         static string[] hintOptions = new string[]{
-            "Tutaj możesz zmienić opcje mój przyjacielu",
-            "Pierwsza opcja z góry to opcja pokazywania i chowania wydry",
-            "Masz jej nie klikac bo chce tu być"
+            "Here you can change some options, friendo",
+            "The first and only option lets you turn me on",
+            "That's awkward though, I only see you as a friend",
+            "So yeah, don't mess with that checkbox",
+            "BFF's <3"
         };
 
         // Show options
         static string[] hintProfil = new string[]{
-            "Zarządzanie profilem użytkownika",
-            "Możesz sobie tutaj zmienić hasło"
+            "User profile management",
+            "You can change your password here.",
+            "No password confirmation textbox, don't use when drunk"
         };
 
         //

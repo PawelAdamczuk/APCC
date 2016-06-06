@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="APCC.Forms.addingNewUserForm" Collapsed="true">
+    <Position X="11.25" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAEAACAAABAAAACACABSIBAYAAAAMHBAEACAAAA=</HashCode>
+      <FileName>Forms\addingNewUserForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.BuildsManagerForm" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="2" />
+    <AssociationLine Name="Description" Type="APCC.Forms.Description" ManuallyRouted="true">
+      <Path>
+        <Point X="8.5" Y="2.191" />
+        <Point X="8.5" Y="2.341" />
+        <Point X="10.371" Y="2.341" />
+        <Point X="10.371" Y="2.846" />
+        <Point X="11.25" Y="2.846" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EAIAgBAAACggABggAQGEQAIDAAAAAQAFAfAAQAACIRQ=</HashCode>
+      <FileName>Forms\BuildsManagerForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BuildEditForm" />
+      <Property Name="Description" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Forms.Description" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAQAAAAAAgAAQAAABAAA=</HashCode>
+      <FileName>Forms\Description.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.GlobalStatisticsForm" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAASCAAQjAACACAAAADAQAAQACAAIAAAAIBAAA=</HashCode>
+      <FileName>Forms\GlobalStatisticsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.LoginForm" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAACAAABBAAACAAAACAAAIAAACAEAgAAAAAAA=</HashCode>
+      <FileName>Forms\LoginForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.RolesManagerForm" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EACAgAAAACAAAAAAAACAAAACAAAAwAAAAYAQCAIAAQY=</HashCode>
+      <FileName>Forms\RolesManagerForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RoleEditForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Forms.ShowComponentsForm" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAAAgAIAACCAMBAAAACAAAACAEAAgAABAeEICAAAgYQ=</HashCode>
+      <FileName>Forms\ShowComponentsForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AddComponentForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Forms.TypesManagerForm" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAIAgAAAEKEAAAAAAACAAQACACAAgAAABQAAAAAAAQY=</HashCode>
+      <FileName>Forms\TypesManagerForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TypesEditForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Forms.UsersManageForm" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAEDAAIBAAAACBAAACAWA4hAJBAAIAAAAAAQY=</HashCode>
+      <FileName>Forms\UsersManageForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="addingNewUserForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Forms.UserStatisticsForm" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAICAAABAAAACAAAQDAAAAQACAAKAAAAAAAAA=</HashCode>
+      <FileName>Forms\UserStatisticsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.EditForms.AddComponentForm" Collapsed="true">
+    <Position X="11.25" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>/yAICAAAISQEEBCAEgCAAABCIAAQYAAAEYAAADACALQ=</HashCode>
+      <FileName>Forms\EditForms\AddComponentForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.EditForms.BuildEditForm" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EADAAAAAIClREBACIwDACEACIBAAwhIFkOAIKApBhYY=</HashCode>
+      <FileName>Forms\EditForms\BuildEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.EditForms.RoleEditForm" Collapsed="true">
+    <Position X="11.25" Y="4.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAACAAICAAABAAAACAAAACAAAQQBAAAqAAAEIAAAQ=</HashCode>
+      <FileName>Forms\EditForms\RoleEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Forms.EditForms.TypesEditForm" Collapsed="true">
+    <Position X="11.25" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>/wAAAAAAIKAAABkAEACAAEISAAAAAAIAgCAAAAAAADQ=</HashCode>
+      <FileName>Forms\EditForms\TypesEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.ProfilManage" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABQAAACAAAACAAAIQAAAEOAAAAAAAgA=</HashCode>
+      <FileName>Forms\ProfilManage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.LoginData">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <Members>
+      <Method Name="getPermissions" Hidden="true" />
+      <Method Name="GetUserID" Hidden="true" />
+      <Method Name="GetUserName" Hidden="true" />
+      <Method Name="GetUserRoleID" Hidden="true" />
+      <Method Name="GetUserRoleName" Hidden="true" />
+      <Method Name="havePermission" Hidden="true" />
+      <Method Name="Login" Hidden="true" />
+      <Method Name="LoginData" Hidden="true" />
+      <Method Name="LogOut" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="APCC.LoginData.Role" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>LoginData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="APCC.LoginData.AccessControl" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>LoginData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AoAAAAIAAAIAABAAAwAAAAgAIACAAAAAAAIQFAAAAQA=</HashCode>
+      <FileName>LoginData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.MainForm" Collapsed="true">
+    <Position X="2.75" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EYaBQIAiAGAgEiEAOADBFAQiAAAghghEIwBBAQAhhEk=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LoginForm" />
+      <Property Name="BuildsManagerForm" />
+      <Property Name="ProfilManage" />
+      <Property Name="TypesManagerForm" />
+      <Property Name="RolesManagerForm" />
+      <Property Name="UsersManageForm" />
+      <Property Name="ShowComponentsForm" />
+      <Property Name="UserStatisticsForm" />
+      <Property Name="GlobalStatisticsForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="APCC.Otter">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <Members>
+      <Method Name="Click" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CSAAEBAAAABACAAAAAAIAAAAAAAAAACIAAAAgBAAggA=</HashCode>
+      <FileName>Otter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.SqlConn">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="mSC" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>SqlConn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="APCC.Utilities">
+    <Position X="2.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAgAAAAAAAAQAAAQAACAAAAAAAg=</HashCode>
+      <FileName>Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
