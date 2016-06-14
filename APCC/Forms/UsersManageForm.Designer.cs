@@ -35,21 +35,21 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDetails = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDetails = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(621, 326);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnExit.Location = new System.Drawing.Point(601, 327);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(109, 42);
+            this.btnExit.Size = new System.Drawing.Size(128, 46);
             this.btnExit.TabIndex = 1;
             this.btnExit.Text = "Close";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -57,10 +57,10 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(112, 266);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Location = new System.Drawing.Point(149, 327);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(98, 37);
+            this.btnDelete.Size = new System.Drawing.Size(131, 46);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -69,36 +69,40 @@
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(328, 23);
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(437, 28);
+            this.listBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(220, 199);
+            this.listBox2.Size = new System.Drawing.Size(292, 244);
             this.listBox2.TabIndex = 3;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(326, 7);
+            this.label1.Location = new System.Drawing.Point(435, 9);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.Size = new System.Drawing.Size(79, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "User builds";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 7);
+            this.label2.Location = new System.Drawing.Point(13, 9);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.Size = new System.Drawing.Size(45, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "Users";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(9, 266);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdd.Location = new System.Drawing.Point(12, 327);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(98, 36);
+            this.btnAdd.Size = new System.Drawing.Size(131, 44);
             this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -116,34 +120,16 @@
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dgvUsers.Location = new System.Drawing.Point(9, 23);
+            this.dgvUsers.Location = new System.Drawing.Point(12, 28);
+            this.dgvUsers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvUsers.MultiSelect = false;
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersVisible = false;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(303, 237);
+            this.dgvUsers.Size = new System.Drawing.Size(404, 292);
             this.dgvUsers.TabIndex = 7;
             this.dgvUsers.SelectionChanged += new System.EventHandler(this.dgvUsers_SelectionChanged);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(215, 266);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(97, 36);
-            this.btnEdit.TabIndex = 8;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
-            // btnDetails
-            // 
-            this.btnDetails.Location = new System.Drawing.Point(328, 228);
-            this.btnDetails.Name = "btnDetails";
-            this.btnDetails.Size = new System.Drawing.Size(98, 32);
-            this.btnDetails.TabIndex = 9;
-            this.btnDetails.Text = "Details";
-            this.btnDetails.UseVisualStyleBackColor = true;
-            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
             // 
             // Column1
             // 
@@ -176,12 +162,21 @@
             this.Column4.ReadOnly = true;
             this.Column4.Width = 66;
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(215, 266);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(97, 36);
+            this.btnEdit.TabIndex = 8;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
             // btnDetails
             // 
-            this.btnDetails.Location = new System.Drawing.Point(438, 280);
-            this.btnDetails.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDetails.Location = new System.Drawing.Point(437, 281);
+            this.btnDetails.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnDetails.Name = "btnDetails";
-            this.btnDetails.Size = new System.Drawing.Size(292, 40);
+            this.btnDetails.Size = new System.Drawing.Size(292, 39);
             this.btnDetails.TabIndex = 9;
             this.btnDetails.Text = "Details";
             this.btnDetails.UseVisualStyleBackColor = true;
@@ -189,9 +184,9 @@
             // 
             // UsersManageForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 380);
+            this.ClientSize = new System.Drawing.Size(735, 380);
             this.Controls.Add(this.btnDetails);
             this.Controls.Add(this.dgvUsers);
             this.Controls.Add(this.btnAdd);
@@ -200,7 +195,7 @@
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnExit);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UsersManageForm";
             this.Text = "Users manager";
             this.Load += new System.EventHandler(this.UsersManageForm_Load);
